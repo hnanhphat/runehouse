@@ -8,6 +8,7 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 
 import ProductPage from "../pages/ProductPage";
+// import CollectionPage from "../pages/CollectionPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 
 import NewsPage from "../pages/NewsPage";
@@ -17,6 +18,8 @@ import ReaderPage from "../pages/ReaderPage";
 // import ReaderDetailPage from "../pages/ReaderDetailPage";
 
 import CartPage from "../pages/CartPage";
+
+// import OrderPage from "../pages/OrderPage";
 
 import VerifyPage from "../pages/VerifyPage";
 
@@ -34,6 +37,7 @@ const PublicLayout = () => {
 
         {/* PRODUCTS */}
         <Route exact path="/products" component={ProductPage} />
+        {/* <Route exact path="/collection" component={CollectionPage} /> */}
         <Route exact path="/products/:id" component={ProductDetailPage} />
 
         {/* NEWS */}
@@ -46,6 +50,9 @@ const PublicLayout = () => {
 
         {/* CARTS */}
         <Route exact path="/cart" component={CartPage} />
+
+        {/* ORDER */}
+        {/* <Route exact path="/order" component={OrderPage} /> */}
 
         {/* VERIFY */}
         <Route exact path="/verify/:code" component={VerifyPage} />
