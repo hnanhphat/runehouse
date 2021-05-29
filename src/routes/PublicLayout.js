@@ -11,8 +11,10 @@ import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 
 import NewsPage from "../pages/NewsPage";
+// import NewsDetailPage from "../pages/NewsDetailPage";
 
 import ReaderPage from "../pages/ReaderPage";
+// import ReaderDetailPage from "../pages/ReaderDetailPage";
 
 import CartPage from "../pages/CartPage";
 
@@ -36,9 +38,11 @@ const PublicLayout = () => {
 
         {/* NEWS */}
         <Route exact path="/news" component={NewsPage} />
+        {/* <Route exact path="/news/:id" component={NewsDetailPage} /> */}
 
         {/* READERS */}
         <Route exact path="/readers" component={ReaderPage} />
+        {/* <Route exact path="/readers/:id" component={ReaderDetailPage} /> */}
 
         {/* CARTS */}
         <Route exact path="/cart" component={CartPage} />
