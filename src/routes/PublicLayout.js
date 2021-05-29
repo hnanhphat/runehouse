@@ -5,6 +5,8 @@ import { Route, Switch } from "react-router";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 
+import ProfilePage from "../pages/ProfilePage";
+
 import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 
@@ -25,6 +27,9 @@ const PublicLayout = () => {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />
 
+        {/* PROFILE */}
+        <Route exact path="/profile" component={ProfilePage} />
+
         {/* PRODUCTS */}
         <Route exact path="/products" component={ProductPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
@@ -38,6 +43,7 @@ const PublicLayout = () => {
         {/* CARTS */}
         <Route exact path="/cart" component={CartPage} />
 
+        {/* VERIFY */}
         <Route exact path="/verify/:code" component={VerifyPage} />
 
         <Route path="*" component={NotFoundPage} />
