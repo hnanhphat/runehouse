@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../redux/actions/news.actions";
+
 import Moment from "react-moment";
+import LinesEllipsis from "react-lines-ellipsis";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
@@ -134,7 +136,7 @@ const NewsPage = () => {
                           }}
                         ></div>
                         <div className="info">
-                          <p className="name">{el.author.username}</p>
+                          <p className="name">{el.author.fullname}</p>
                           <p className="time">
                             <Moment fromNow>{el.createdAt}</Moment>
                           </p>
@@ -162,11 +164,20 @@ const NewsPage = () => {
                     </div>
                     <div className="mid">
                       <div className="content">
-                        <p className="tit">{el.title}</p>
-                        <p className="txt">{el.content}</p>
+                        <Link to={`/news/${el._id}`} className="tit">
+                          {el.title}
+                        </Link>
+                        <LinesEllipsis
+                          className="txt"
+                          text={el.content}
+                          maxLine="3"
+                          ellipsis="..."
+                          trimRight
+                          basedOn="letters"
+                        />
                       </div>
                       <div className="img">
-                        <img src={el.image ? el.image : noimg} alt={el.title} />
+                        {el.image ? <img src={el.image} alt={el.title} /> : ""}
                       </div>
                     </div>
                     <div className="bot">
@@ -283,7 +294,7 @@ const NewsPage = () => {
                         </div>
                         <div className="group">
                           <a
-                            href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//hnanhphatecommerce.netlify.app/`}
+                            href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//hnanhphatecommerce.netlify.app/news/${el._id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="upper"

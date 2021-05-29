@@ -41,9 +41,6 @@ const Header = ({ t }) => {
     Math.floor(Math.random() * 2),
   ]);
 
-  console.log(card);
-  console.log(randomArray);
-
   const handleLogout = () => {
     localStorage.clear();
     dispatch(authActions.logout());

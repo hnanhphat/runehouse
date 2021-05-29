@@ -17,6 +17,16 @@ const getListOfNews = (pageNumber, option) => async (dispatch) => {
   }
 };
 
+const getSingleNews = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_SINGLE_REQUEST });
+    const res = await api.get(`/news/${id}`);
+    dispatch({ type: types.GET_SINGLE_SUCCESS, payload: res });
+  } catch (error) {
+    dispatch({ type: types.GET_SINGLE_FAILURE, payload: error.message });
+  }
+};
+
 const createReaction = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_REACTION_REQUEST, payload: null });
@@ -41,6 +51,7 @@ const createReview = (data) => async (dispatch) => {
 
 export const newsActions = {
   getListOfNews,
+  getSingleNews,
   createReaction,
   createReview,
 };
