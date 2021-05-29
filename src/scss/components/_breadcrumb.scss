@@ -1,0 +1,29 @@
+#breadcrumb {
+  display: flex;
+  align-items: center;
+  padding: 10px 2vw;
+  li {
+    position: relative;
+    &:not(:last-child) {
+      padding-right: 20px;
+      &::before {
+        content: ">";
+        position: absolute;
+        font-size: 14px;
+        line-height: 22px;
+        top: 50%;
+        right: 6px;
+        @include tranform_c(translateY(-50%));
+      }
+    }
+    a,
+    span {
+      display: flex;
+      align-items: center;
+      line-height: 22px;
+      svg {
+        width: 16px;
+      }
+    }
+  }
+}

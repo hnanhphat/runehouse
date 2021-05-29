@@ -1,0 +1,123 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76%;
+  padding-top: 20px;
+  margin-left: auto;
+
+  .page-item {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+
+    .page-link {
+      border-radius: 50%;
+      color: $black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-weight: bold;
+      position: relative;
+      z-index: 10;
+      @include transition_c(all 0.5s ease-out);
+
+      &::before {
+        content: "";
+        position: absolute;
+        background: $black;
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        transform-origin: center;
+        @include tranform_c(translate(-50%, -50%) scale(0));
+        @include transition_c(all 0.5s ease-out);
+      }
+
+      span {
+        &.sr-only {
+          font-size: 0;
+        }
+      }
+
+      @include respond(hover) {
+        &:hover {
+          color: $white;
+          opacity: 1;
+
+          &::before {
+            @include tranform_c(translate(-50%, -50%) scale(1));
+          }
+        }
+      }
+    }
+
+    &.disabled,
+    &.active {
+      pointer-events: none;
+    }
+
+    &.active .page-link {
+      color: $black;
+    }
+
+    &.disabled {
+      visibility: hidden;
+    }
+
+    &.dotted {
+      pointer-events: none;
+    }
+
+    &:first-child .page-link,
+    &:last-child .page-link {
+      font-size: 0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        border-top: 2px solid $black;
+        border-right: 2px solid $black;
+        width: 8px;
+        height: 8px;
+        top: 50%;
+        @include transition_c(all 0.3s ease-out);
+      }
+    }
+
+    &:first-child .page-link {
+      &::after {
+        left: calc(50% + 2px);
+        @include tranform_c(translate(-50%, -50%) rotate(-135deg));
+      }
+
+      @include respond(hover) {
+        &:hover::after {
+          border-color: $white;
+        }
+      }
+    }
+
+    &:last-child .page-link {
+      &::after {
+        left: calc(50% - 2px);
+        @include tranform_c(translate(-50%, -50%) rotate(45deg));
+      }
+
+      @include respond(hover) {
+        &:hover::after {
+          border-color: $white;
+        }
+      }
+    }
+  }
+}

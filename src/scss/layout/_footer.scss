@@ -1,0 +1,39 @@
+.footer {
+  background: $black;
+  padding: 60px 2vw;
+  text-align: center;
+  &__scroll {
+  }
+  &__social {
+    a {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin: 0 24px;
+      position: relative;
+      svg {
+        fill: $white;
+        height: 30px;
+        position: relative;
+        @include transition_c(all 0.3s ease-out);
+      }
+    }
+  }
+  &__copyright {
+    color: $white;
+    font-size: 13px;
+    padding-top: 20px;
+    margin-top: 40px;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      background: $white;
+      width: 30%;
+      height: 1px;
+      top: 0;
+      left: 50%;
+      @include tranform_c(translateX(-50%));
+    }
+  }
+}

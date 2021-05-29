@@ -1,0 +1,103 @@
+.products {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px 0;
+  }
+  &__sidebar {
+    width: 24%;
+    li {
+      display: flex;
+      flex-direction: column;
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+      .tit {
+        font-size: 18px;
+        padding-bottom: 18px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background: $yellow;
+          width: 30px;
+          height: 3px;
+          bottom: 0;
+          left: 0;
+        }
+      }
+      button {
+        font-size: 16px;
+        text-align: left;
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    margin: 0 -15px;
+    padding: 50px 0;
+    li {
+      width: 25%;
+      padding: 0 15px 30px;
+      position: relative;
+      a {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .img {
+          aspect-ratio: 1 / 1;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: 5px;
+          width: 100%;
+        }
+        .sale {
+          background: rgba($color: $black, $alpha: 0.8);
+          border-top-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          color: $white;
+          font-size: 12px;
+          padding: 0 6px;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+        .name {
+          color: $grey;
+          font-size: 14px;
+          margin: 10px 0;
+        }
+        .price {
+          display: flex;
+          align-items: center;
+          line-height: 30px;
+          &__before {
+            color: $grey;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 8px;
+            text-decoration: line-through;
+          }
+          &__after {
+            font-size: 18px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  &__not-found {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,62 @@
+.btn-view {
+  background: $black;
+  border: 2px solid $black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 136px;
+  height: 42px;
+  @include transition_c(all 0.3s ease-out);
+  span {
+    color: $white;
+  }
+
+  @include respond(hover) {
+    &:hover {
+      background: $white;
+      span {
+        color: $black;
+      }
+    }
+  }
+
+  &--center {
+    margin: 0 auto;
+  }
+
+  &--white {
+    background: $white;
+    border-color: $white;
+    span {
+      color: $black;
+    }
+
+    @include respond(hover) {
+      &:hover {
+        background: $black;
+        span {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.btn-cart {
+  background: $yellow;
+  border-radius: 5px;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 140px;
+  height: 38px;
+  svg {
+    width: 20px;
+    margin-right: 6px;
+  }
+  span {
+  }
+}

@@ -1,0 +1,28 @@
+// COLOR
+$black: #000;
+$white: #fff;
+
+$grey-pale: #fafafa;
+$grey-light: #dbdbdb;
+$grey: #888;
+
+$red: #ff0000;
+
+$blue: #2078f4;
+
+$pink-pale: #d3ced2;
+
+$yellow: #ba933e;
+
+$orange: #d67b35;
+
+// PROPERTIES
+$bs: 0 2px 4px 0
+  rgba(
+    $color: $black,
+    $alpha: 0.1,
+  );
+
+// FONT
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+$open: "Open Sans";

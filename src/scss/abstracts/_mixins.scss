@@ -1,0 +1,51 @@
+@mixin tranform_c($value) {
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  -o-transform: $value;
+  transform: $value;
+}
+
+@mixin transition_c($value) {
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -ms-transition: $value;
+  -o-transition: $value;
+  transition: $value;
+}
+
+@mixin addPrefix($name, $value) {
+  -webkit-#{$name}: $value;
+  -moz-#{$name}: $value;
+  -ms-#{$name}: $value;
+  -o-#{$name}: $value;
+  #{$name}: $value;
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 48em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    }
+  }
+  @if $breakpoint == hover {
+    @media only screen and (min-width: 48em) {
+      @content;
+    }
+  }
+}

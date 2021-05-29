@@ -1,0 +1,11 @@
+#admin {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  #admin-sidebar {
+    background: rgba($color: $orange, $alpha: 0.2);
+    width: 25%;
+  }
+  #admin-content {
+    width: 75%;
+  }
+}

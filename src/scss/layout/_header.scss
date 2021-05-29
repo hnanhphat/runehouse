@@ -1,0 +1,412 @@
+.header {
+  background: $black;
+  position: fixed;
+  width: 100%;
+  height: 128px;
+  padding: 15px 2vw;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  @include transition_c(all 0.3s ease-out);
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+  }
+  .directory {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include transition_c(all 0.3s ease-out);
+    &__item {
+      margin-right: 15px;
+      &--dropdown {
+        padding-right: 15px;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          border-top: 5px solid $white;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          top: 50%;
+          right: 0;
+          @include tranform_c(translateY(-50%));
+        }
+      }
+      a {
+        color: $white;
+      }
+    }
+  }
+  .user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    @include transition_c(all 0.3s ease-out);
+    &__login {
+      color: $white;
+      display: block;
+      svg {
+        width: 26px;
+      }
+    }
+    &__avatar {
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        border-top: 4px solid $white;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        top: 50%;
+        right: -12px;
+        @include tranform_c(translateY(-50%));
+      }
+    }
+    &__name {
+      color: $white;
+      margin-right: 8px;
+      @include transition_c(all 0.3s ease-out);
+    }
+    &__dropdown {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      top: 100%;
+      right: -8px;
+      width: 200px;
+      padding-top: 20px;
+      z-index: 20;
+      transform-origin: top right;
+      @include tranform_c(scale(0));
+      @include transition_c(all 0.3s ease-out);
+      &::before {
+        content: "";
+        position: absolute;
+        background: $white;
+        width: 100%;
+        height: calc(100% - 20px);
+        bottom: 0;
+        left: 0;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        border-bottom: 5px solid $white;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        top: 15px;
+        right: 15px;
+      }
+      .group {
+        border-bottom: 1px solid $grey-light;
+        display: flex;
+        height: 48px;
+        padding: 10px 15px;
+        position: relative;
+        button {
+          border-radius: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50%;
+          &.active {
+            background: rgba($color: $orange, $alpha: 0.2);
+          }
+          img {
+            width: 20px;
+          }
+          span {
+            font-size: 14px;
+            padding-left: 8px;
+          }
+        }
+      }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+        &:not(:last-child) {
+          border-bottom: 1px solid $grey-light;
+        }
+        svg {
+          width: 16px;
+        }
+      }
+    }
+
+    @include respond(hover) {
+      &:hover {
+        .user__dropdown {
+          @include tranform_c(scale(1));
+        }
+      }
+    }
+  }
+  .logo {
+    display: block;
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    img {
+      width: 100%;
+    }
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 126px);
+    height: 50px;
+    padding: 0 20px;
+    position: absolute;
+    bottom: 0;
+    right: 76px;
+    @include transition_c(all 0.3s ease-out);
+    form {
+      position: relative;
+      @include transition_c(all 0.3s ease-out);
+      input {
+        border: 1px solid $white;
+        border-radius: 2px;
+        width: 440px;
+        height: 38px;
+        padding: 8px 15px 8px 40px;
+        @include transition_c(all 0.3s ease-out);
+      }
+      button {
+        position: absolute;
+        background: $black;
+        border-radius: 3px;
+        color: $white;
+        width: 30px;
+        padding: 4px;
+        top: 50%;
+        left: 5px;
+        @include tranform_c(translateY(-50%));
+      }
+    }
+  }
+  .other {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    @include transition_c(all 0.3s ease-out);
+    &__item {
+      &:not(:first-child) {
+        margin-left: 24px;
+      }
+      .icon {
+        color: $white;
+        position: relative;
+        svg {
+          &.fa-dice {
+            width: 34px;
+          }
+          &.fa-shopping-cart {
+            width: 30px;
+          }
+        }
+        .number {
+          background: $yellow;
+          border: 2px solid $black;
+          border-radius: 50%;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px;
+          height: 22px;
+          font-size: 13px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          @include tranform_c(translate(50%, -50%));
+        }
+      }
+      .dropdown {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 100%;
+        right: -8px;
+        width: 400px;
+        max-height: 400px;
+        padding-top: 20px;
+        overflow: auto;
+        z-index: 20;
+        transform-origin: top right;
+        @include tranform_c(scale(0));
+        @include transition_c(all 0.3s ease-out);
+        &::after {
+          content: "";
+          position: absolute;
+          border-bottom: 5px solid $white;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          top: 15px;
+          right: 15px;
+        }
+        li {
+          background: $white;
+          display: flex;
+          align-items: center;
+          padding: 15px;
+          position: relative;
+          &:not(:last-child) {
+            border-bottom: 1px solid $grey-light;
+          }
+          .img {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 3px;
+            width: 80px;
+            height: 80px;
+          }
+          .content {
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% - 95px);
+            padding: 0 20px;
+            .name {
+              color: $grey;
+              width: 100%;
+              font-size: 16px;
+              margin-bottom: 5px;
+              line-height: 20px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+            .price {
+              display: flex;
+              align-items: center;
+              line-height: 20px;
+              &__before {
+                color: $grey;
+                font-size: 14px;
+                font-weight: bold;
+                margin-right: 8px;
+                text-decoration: line-through;
+              }
+              &__after {
+                font-size: 16px;
+                font-weight: bold;
+              }
+            }
+            .quantity {
+              font-size: 14px;
+              padding-left: 10px;
+              margin-left: 10px;
+              position: relative;
+              &::before {
+                content: "";
+                position: absolute;
+                background: $black;
+                width: 1px;
+                height: 60%;
+                top: 50%;
+                left: 0;
+                @include tranform_c(translateY(-50%));
+              }
+            }
+          }
+          button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+
+      @include respond(hover) {
+        &:hover {
+          .dropdown {
+            @include tranform_c(scale(1));
+          }
+        }
+      }
+    }
+  }
+
+  &--scroll {
+    height: 80px;
+    .directory {
+      width: 100%;
+      max-width: 340px;
+      height: 50px;
+      left: 65px;
+    }
+    .user {
+      width: 26px;
+      height: 50px;
+      &__name {
+        display: none;
+      }
+      &__dropdown {
+        padding-top: 5px;
+        &::before {
+          height: calc(100% - 5px);
+        }
+        &::after {
+          top: 0;
+        }
+      }
+    }
+    .search {
+      width: auto;
+      padding: 0;
+      right: 158px;
+      form {
+        input {
+          width: 0;
+          opacity: 0;
+          padding: 0 19px;
+          &:focus {
+            width: 320px;
+            opacity: 1;
+            padding: 8px 15px 8px 40px;
+          }
+        }
+
+        @include respond(hover) {
+          &:hover {
+            input {
+              width: 320px;
+              opacity: 1;
+              padding: 8px 15px 8px 40px;
+            }
+          }
+        }
+      }
+    }
+    .other {
+      right: 52px;
+    }
+  }
+}

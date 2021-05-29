@@ -1,0 +1,232 @@
+.login {
+  .account {
+    min-height: calc(100vh - 122px);
+    position: relative;
+
+    &--signin {
+      .container {
+        &::before {
+          left: 60%;
+        }
+        &--signup {
+          opacity: 0;
+          pointer-events: none;
+          .account__form {
+            @include tranform_c(translateX(-40%));
+          }
+          .account__shape {
+            @include tranform_c(translateX(-100px));
+          }
+        }
+      }
+    }
+
+    &--signup {
+      .container {
+        &::before {
+          left: 0;
+        }
+        &--signin {
+          opacity: 0;
+          pointer-events: none;
+          .account__form {
+            @include tranform_c(translateX(40%));
+          }
+          .account__shape {
+            @include tranform_c(translateX(100px));
+          }
+        }
+      }
+    }
+
+    .container {
+      background: $white;
+      border: 1px solid $pink-pale;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      height: calc(100vh - 360px);
+      overflow: hidden;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include tranform_c(translate(-50%, -50%));
+      @include transition_c(all 0.5s ease-out);
+      &::before {
+        content: "";
+        position: absolute;
+        background: $black;
+        width: 40%;
+        height: 100%;
+        top: 0;
+        @include transition_c(all 0.5s ease-out);
+      }
+    }
+
+    &__form {
+      width: 60%;
+      position: relative;
+      z-index: 10;
+      @include transition_c(all 0.5s ease-out);
+
+      .title {
+        color: $black;
+        font-size: 26px;
+      }
+
+      .social {
+        display: flex;
+        justify-content: center;
+        padding: 14px;
+
+        &__btn {
+          display: block;
+          // width: 32px;
+          // height: 32px;
+          span button {
+            font-size: 0;
+            margin: 0;
+            padding: 0;
+          }
+          svg {
+            height: 16px;
+          }
+        }
+
+        button {
+          border: 1px solid $pink-pale;
+          border-radius: 50%;
+          color: $black;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          font-size: 0;
+          margin: 0 5px;
+          svg {
+            height: 16px;
+          }
+        }
+      }
+
+      .note {
+        color: $pink-pale;
+        font-size: 14px;
+        padding-bottom: 10px;
+      }
+
+      .form {
+        &__group {
+          color: $pink-pale;
+          width: 100%;
+          max-width: 320px;
+          margin: 0 auto;
+          position: relative;
+
+          &:not(:first-child) {
+            margin-top: 12px;
+          }
+
+          input {
+            // background: $black;
+            border: 1px solid $pink-pale;
+            width: 100%;
+            height: 40px;
+            padding: 8px 12px 8px 38px;
+
+            &::placeholder {
+              color: $pink-pale;
+            }
+          }
+
+          svg {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            height: 14px;
+            @include tranform_c(translateY(-50%));
+          }
+
+          &--name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            input {
+              width: calc(100% - 50px);
+            }
+
+            button {
+              color: $grey;
+              width: 40px;
+              height: 40px;
+              position: relative;
+
+              &.active {
+                color: $black;
+              }
+
+              svg {
+                position: absolute;
+                width: 28px;
+                height: 28px;
+                top: 50%;
+                left: 50%;
+                @include tranform_c(translate(-50%, -50%));
+              }
+            }
+          }
+        }
+
+        button[type="submit"] {
+          background: $black;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 120px;
+          height: 34px;
+          margin: 20px auto 0;
+        }
+      }
+    }
+
+    &__shape {
+      color: $white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 40%;
+      height: 100%;
+      position: relative;
+      z-index: 10;
+      @include transition_c(all 0.3s ease-out);
+
+      .title {
+        font-size: 26px;
+      }
+
+      .txt {
+        padding: 20px 0 40px;
+      }
+
+      button {
+        border: 1px solid $white;
+        border-radius: 100px;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 120px;
+        height: 34px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

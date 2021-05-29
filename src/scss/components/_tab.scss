@@ -1,0 +1,35 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  &.nav-tabs {
+    border-bottom: 1px solid $orange;
+    .nav-link {
+      border: 1px solid transparent;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      display: block;
+      font-size: 14px;
+      padding: 5px 10px;
+      margin-bottom: -1px;
+      &.active {
+        background-color: $white;
+        border-color: $orange $orange $white;
+        color: $orange;
+      }
+    }
+  }
+}
+
+.tab-content {
+  & > .tab-pane {
+    display: none;
+  }
+  & > .active {
+    display: block;
+  }
+  .tab-pane {
+    min-height: 200px;
+    overflow: auto;
+    padding: 10px 5px;
+  }
+}

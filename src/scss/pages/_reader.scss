@@ -1,0 +1,197 @@
+.readers {
+  .container {
+    padding: 40px 0 80px;
+  }
+  &__controller {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    padding: 20px 15px;
+    .search {
+      position: relative;
+      input {
+        border: 1px solid $grey-light;
+        border-radius: 2px;
+        width: 100%;
+        height: 38px;
+        padding: 8px 15px 8px 44px;
+      }
+      button {
+        position: absolute;
+        background: $black;
+        border-radius: 3px;
+        color: $white;
+        width: 30px;
+        height: 30px;
+        top: 50%;
+        left: 5px;
+        @include tranform_c(translateY(-50%));
+        svg {
+          width: 22px;
+        }
+      }
+    }
+    .filter {
+      display: flex;
+      align-items: center;
+      padding-top: 15px;
+      margin: 15px -10px 0;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        background: $grey-light;
+        width: calc(100% - 20px);
+        height: 1px;
+        top: 0;
+        left: 10px;
+      }
+      li {
+        width: calc(100% / 6);
+        padding: 0 10px;
+        button {
+          border: 1px solid $grey-light;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 112px;
+          img {
+            height: 48px;
+          }
+          span {
+            font-size: 16px;
+            margin-top: 10px;
+          }
+          &.active {
+            background: rgba($color: $orange, $alpha: 0.02);
+            border: 2px solid $orange;
+            span {
+              color: $orange;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 20px;
+    li {
+      background: $white;
+      border-radius: 10px;
+      box-shadow: $bs;
+      display: flex;
+      align-items: center;
+      width: calc(50% - 10px);
+      margin-bottom: 20px;
+      overflow: hidden;
+      .avatar {
+        background: rgba($color: $orange, $alpha: 0.2);
+        width: 40%;
+        height: 100%;
+        min-height: 250px;
+        position: relative;
+        &__circle {
+          aspect-ratio: 1 / 1;
+          border-color: $white;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border: 4px solid $white;
+          border-radius: 50%;
+          width: 80%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          overflow: hidden;
+          @include tranform_c(translate(-50%, -50%));
+          @supports not (aspect-ratio: 1 / 1) {
+            &::before {
+              float: left;
+              padding-top: 100%;
+              content: "";
+            }
+            &::after {
+              display: block;
+              content: "";
+              clear: both;
+            }
+          }
+        }
+      }
+      .info {
+        width: 60%;
+        padding: 30px;
+        .name {
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 28px;
+        }
+        .position {
+          color: $orange;
+          font-size: 15px;
+          line-height: 22px;
+        }
+        .quote {
+          display: block;
+          font-size: 14px;
+          margin-top: 8px;
+          line-height: 22px;
+        }
+        button {
+          background: $orange;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 38px;
+          margin-top: 20px;
+          svg {
+            width: 18px;
+          }
+          span {
+            margin-left: 8px;
+          }
+        }
+      }
+
+      &.no-item {
+        background: $white;
+        border-radius: 10px;
+        box-shadow: $bs;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        a,
+        button {
+          background: $orange;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 120px;
+          height: 38px;
+          font-size: 16px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  &__contact {
+  }
+}
