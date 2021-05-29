@@ -4,11 +4,11 @@ import { useHistory } from "react-router";
 import { authActions } from "../redux/actions/auth.actions";
 import { routeActions } from "../redux/actions/route.actions";
 import Breadcrumb from "../components/Breadcrumb";
-// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 
 const LoginPage = () => {
-  // const FB_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+  const FB_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
   const GG_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   const history = useHistory();
@@ -73,7 +73,7 @@ const LoginPage = () => {
     e.target.reset();
   };
 
-  // const handleFacebookLogin = () => {};
+  const handleFacebookLogin = () => {};
 
   const handleGoogleLogin = () => {};
 
@@ -96,7 +96,7 @@ const LoginPage = () => {
             <h3 className="title">Sign in to Rune House</h3>
             <div className="social">
               <div className="social__fb">
-                {/* <FacebookLogin
+                <FacebookLogin
                   appId={FB_ID}
                   fields="name,email,picture"
                   callback={(user) => {
@@ -125,7 +125,7 @@ const LoginPage = () => {
                       </svg>
                     </button>
                   )}
-                /> */}
+                />
               </div>
               <div className="social__gg">
                 <GoogleLogin
@@ -239,7 +239,7 @@ const LoginPage = () => {
             <h3 className="title">Create Account</h3>
             <div className="social">
               <div className="social__fb">
-                {/* <FacebookLogin
+                <FacebookLogin
                   appId={FB_ID}
                   fields="name,email,picture"
                   callback={(user) => {
@@ -268,7 +268,7 @@ const LoginPage = () => {
                       </svg>
                     </button>
                   )}
-                /> */}
+                />
               </div>
               <div className="social__gg">
                 <GoogleLogin
