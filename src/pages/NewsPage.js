@@ -17,12 +17,12 @@ const NewsPage = () => {
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showComment, setShowComment] = useState(false);
-  const [showAllComments, setShowAllComments] = useState(false);
+  const [showComment, setShowComment] = useState(Array(10).fill(false));
+  const [showAllComments, setShowAllComments] = useState(Array(10).fill(false));
   const [searchInput, setSearchInput] = useState("");
   const [cateStt, setCateStt] = useState("All");
 
-  console.log(news);
+  console.log(showAllComments);
 
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
@@ -30,19 +30,31 @@ const NewsPage = () => {
       targetId: idVal,
       emoji: emojiVal,
     };
-    dispatch(newsActions.createReaction({ targetType, targetId, emoji }));
+    dispatch(
+      newsActions.createReaction(
+        { targetType, targetId, emoji },
+        currentPage,
+        searchInput,
+        ""
+      )
+    );
   };
 
   const handleReview = (e, id) => {
     e.preventDefault();
-    console.log(id);
-    console.log(e.target.comment.value);
     const { targetType, targetId, content } = {
       targetType: "News",
       targetId: id,
       content: e.target.comment.value,
     };
-    dispatch(newsActions.createReview({ targetType, targetId, content }));
+    dispatch(
+      newsActions.createReview(
+        { targetType, targetId, content },
+        currentPage,
+        searchInput,
+        ""
+      )
+    );
     e.target.reset();
   };
 
@@ -123,7 +135,7 @@ const NewsPage = () => {
             </ul>
             <ul className="news-page__list">
               {news &&
-                news.data.news.map((el) => (
+                news.data.news.map((el, i) => (
                   <li key={el._id}>
                     <div className="top">
                       <div className="top__left">
@@ -276,17 +288,25 @@ const NewsPage = () => {
                           </div>
                         </div>
                         <div className="group">
-                          {showComment ? (
+                          {showComment[i] ? (
                             <button
                               className="upper"
-                              onClick={() => setShowComment(false)}
+                              onClick={() => {
+                                let arr = [...showComment];
+                                arr[i] = false;
+                                setShowComment(arr);
+                              }}
                             >
                               Hide
                             </button>
                           ) : (
                             <button
                               className="upper"
-                              onClick={() => setShowComment(true)}
+                              onClick={() => {
+                                let arr = [...showComment];
+                                arr[i] = true;
+                                setShowComment(arr);
+                              }}
                             >
                               Comment
                             </button>
@@ -305,17 +325,29 @@ const NewsPage = () => {
                       </div>
                       <div
                         className={`bot__hidden ${
-                          showComment ? "bot__hidden--show" : ""
+                          showComment[i] ? "bot__hidden--show" : ""
                         }`}
                       >
                         {el.reviews.length > 1 ? (
                           <div className="setting">
-                            {showAllComments ? (
-                              <button onClick={() => setShowAllComments(false)}>
+                            {showAllComments[i] ? (
+                              <button
+                                onClick={() => {
+                                  let arr = [...showAllComments];
+                                  arr[i] = false;
+                                  setShowAllComments(arr);
+                                }}
+                              >
                                 Hide comments
                               </button>
                             ) : (
-                              <button onClick={() => setShowAllComments(true)}>
+                              <button
+                                onClick={() => {
+                                  let arr = [...showAllComments];
+                                  arr[i] = true;
+                                  setShowAllComments(arr);
+                                }}
+                              >
                                 See all comments
                               </button>
                             )}
@@ -326,7 +358,7 @@ const NewsPage = () => {
                         {el.reviews.length ? (
                           <div
                             className={`list ${
-                              showAllComments ? "list--all" : ""
+                              showAllComments[i] ? "list--all" : ""
                             }`}
                           >
                             {el.reviews.map((review) => (

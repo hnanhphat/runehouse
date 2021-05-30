@@ -25,7 +25,9 @@ const NewsDetailPage = () => {
       targetId: idVal,
       emoji: emojiVal,
     };
-    dispatch(newsActions.createReaction({ targetType, targetId, emoji }));
+    dispatch(
+      newsActions.createReaction({ targetType, targetId, emoji }, "", "", id)
+    );
   };
 
   const handleReview = (e, id) => {
@@ -37,7 +39,9 @@ const NewsDetailPage = () => {
       targetId: id,
       content: e.target.comment.value,
     };
-    dispatch(newsActions.createReview({ targetType, targetId, content }));
+    dispatch(
+      newsActions.createReview({ targetType, targetId, content }, "", "", id)
+    );
     e.target.reset();
   };
 

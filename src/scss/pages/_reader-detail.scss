@@ -1,4 +1,4 @@
-.news-page {
+.reader-detail {
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -6,83 +6,96 @@
     justify-content: space-between;
     padding: 40px 0 80px;
   }
-  &__sidebar {
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $bs;
+  &__info {
     width: 30%;
-    padding: 20px 15px;
-    li {
-      &.search {
-        border-bottom: 1px solid $grey-light;
-        padding-bottom: 15px;
-        margin-bottom: 15px;
-        position: relative;
-        form {
-          position: relative;
-          input {
-            border: 1px solid $grey-light;
-            border-radius: 2px;
-            width: 100%;
-            height: 38px;
-            padding: 8px 15px 8px 44px;
-          }
-          button {
-            position: absolute;
-            background: $black;
-            border-radius: 3px;
-            color: $white;
-            width: 30px;
-            height: 30px;
-            top: 50%;
-            left: 5px;
-            @include tranform_c(translateY(-50%));
-            svg {
-              width: 22px;
+    .user {
+      background: $white;
+      border-radius: 10px;
+      box-shadow: $bs;
+      overflow: hidden;
+      .avatar {
+        background: rgba($color: $orange, $alpha: 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        &__circle {
+          aspect-ratio: 1 / 1;
+          border-color: $white;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border: 4px solid $white;
+          border-radius: 50%;
+          width: 100%;
+          max-width: 140px;
+
+          @supports not (aspect-ratio: 1 / 1) {
+            &::before {
+              float: left;
+              padding-top: 100%;
+              content: "";
+            }
+            &::after {
+              display: block;
+              content: "";
+              clear: both;
             }
           }
         }
       }
-      &.filter {
-        display: flex;
-        flex-direction: column;
-        &:not(:last-of-type) {
-          margin-bottom: 30px;
+      .info {
+        padding: 15px;
+        margin-bottom: 15px;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background: $orange;
+          width: calc(100% - 30px);
+          height: 1px;
+          bottom: 0;
+          left: 15px;
         }
-        .tit {
-          font-size: 20px;
-          padding-bottom: 18px;
-          margin-bottom: 18px;
-          text-transform: uppercase;
-          position: relative;
-          &::before {
-            content: "";
-            position: absolute;
-            background: $orange;
-            width: 30px;
-            height: 3px;
-            bottom: 0;
-            left: 0;
-          }
-        }
-        button {
+        .name {
           font-size: 18px;
-          text-align: left;
-          padding: 10px 15px;
-          margin: 0 -15px;
-          &:not(:last-child) {
-            margin-bottom: 10px;
-          }
-          &.active {
-            background: rgba($color: $grey-light, $alpha: 0.6);
-            color: $orange;
-            pointer-events: none;
-          }
+          font-weight: bold;
+          text-align: center;
+          line-height: 28px;
+        }
+        .position {
+          color: $orange;
+          font-size: 15px;
+          text-align: center;
+          line-height: 22px;
+        }
+        .quote {
+          display: block;
+          font-size: 14px;
+          margin-top: 8px;
+          line-height: 22px;
+        }
+      }
+      button {
+        background: $orange;
+        border-radius: 100px;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(100% - 30px);
+        height: 38px;
+        margin: 20px auto;
+        svg {
+          width: 18px;
+        }
+        span {
+          margin-left: 8px;
         }
       }
     }
   }
-  &__list {
+  &__posts {
     width: calc(70% - 40px);
     li {
       background: $white;
@@ -523,38 +536,5 @@
         }
       }
     }
-  }
-  &__no-item {
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $bs;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    padding: 20px;
-    a,
-    button {
-      background: $orange;
-      border-radius: 100px;
-      color: $white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 120px;
-      height: 38px;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-  }
-  .pagination {
-    width: calc(70% - 40px);
-    margin-top: 40px;
-    margin-left: auto;
   }
 }

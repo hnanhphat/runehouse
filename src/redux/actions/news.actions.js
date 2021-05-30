@@ -4,6 +4,7 @@ import * as types from "../constants/news.constants";
 const getListOfNews = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
+    console.log(`/news?page=${pageNumber + option}`);
     const res = await api.get(`/news?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,
@@ -27,23 +28,25 @@ const getSingleNews = (id) => async (dispatch) => {
   }
 };
 
-const createReaction = (data) => async (dispatch) => {
+const createReaction = (data, pageNumber, option, id) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_REACTION_REQUEST, payload: null });
     const res = await api.post(`/reaction`, data);
     dispatch({ type: types.CREATE_REACTION_SUCCESS, payload: res });
-    dispatch(getListOfNews());
+    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getSingleNews(id));
   } catch (error) {
     dispatch({ type: types.CREATE_REACTION_FAILURE, payload: error.message });
   }
 };
 
-const createReview = (data) => async (dispatch) => {
+const createReview = (data, pageNumber, option, id) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
     const res = await api.post(`/review`, data);
     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res });
-    dispatch(getListOfNews());
+    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getSingleNews(id));
   } catch (error) {
     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error.message });
   }

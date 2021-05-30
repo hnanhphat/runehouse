@@ -184,7 +184,7 @@ const ReaderPage = () => {
                   ></div>
                 </div>
                 <div className="info">
-                  <Link to="/" className="name">
+                  <Link to={`readers/${user._id}`} className="name">
                     {user.fullname}
                   </Link>
                   <p className="position">{user.position} Reader</p>

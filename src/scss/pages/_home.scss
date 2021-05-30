@@ -54,7 +54,7 @@
         &::before {
           content: "";
           position: absolute;
-          background: $yellow;
+          background: $orange;
           width: 50px;
           height: 4px;
           bottom: 0;
@@ -140,7 +140,7 @@
         text-transform: uppercase;
       }
       .txt {
-        color: $yellow;
+        color: $orange;
         font-size: 20px;
         padding-bottom: 30px;
         line-height: 28px;
