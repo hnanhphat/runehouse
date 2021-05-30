@@ -8,7 +8,7 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 
 import ProductPage from "../pages/ProductPage";
-// import CollectionPage from "../pages/CollectionPage";
+import CollectionPage from "../pages/CollectionPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 
 import NewsPage from "../pages/NewsPage";
@@ -37,7 +37,7 @@ const PublicLayout = () => {
 
         {/* PRODUCTS */}
         <Route exact path="/products" component={ProductPage} />
-        {/* <Route exact path="/collection" component={CollectionPage} /> */}
+        <Route exact path="/collection" component={CollectionPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
 
         {/* NEWS */}

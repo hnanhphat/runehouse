@@ -6,8 +6,8 @@ import { decksActions } from "../redux/actions/decks.actions";
 import Breadcrumb from "../components/Breadcrumb";
 
 // Image
-import tarot from "../img/tarot.jpeg";
-import oracle from "../img/oracle.jpeg";
+import tarot from "../img/collections/tarot.jpeg";
+import oracle from "../img/collections/oracle.jpeg";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const HomePage = () => {
                 <p className="txt">
                   It is a long established fact that a reader will bedistracted
                 </p>
-                <Link to="/collections" className="btn-view">
+                <Link to="/collection" className="btn-view">
                   <span>View All</span>
                 </Link>
               </div>

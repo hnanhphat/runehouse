@@ -2,47 +2,132 @@
   .container {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
     padding: 40px 0;
   }
   &__sidebar {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
     width: 24%;
+    padding: 20px 15px;
     li {
-      display: flex;
-      flex-direction: column;
-      &:not(:last-child) {
-        margin-bottom: 30px;
-      }
-      .tit {
-        font-size: 18px;
-        padding-bottom: 18px;
-        margin-bottom: 25px;
-        text-transform: uppercase;
+      &.search {
+        border-bottom: 1px solid $grey-light;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
         position: relative;
-        &::before {
-          content: "";
-          position: absolute;
-          background: $orange;
-          width: 30px;
-          height: 3px;
-          bottom: 0;
-          left: 0;
+        form {
+          position: relative;
+          input {
+            border: 1px solid $grey-light;
+            border-radius: 2px;
+            width: 100%;
+            height: 38px;
+            padding: 8px 15px 8px 44px;
+          }
+          button {
+            position: absolute;
+            background: $black;
+            border-radius: 3px;
+            color: $white;
+            width: 30px;
+            height: 30px;
+            top: 50%;
+            left: 5px;
+            @include tranform_c(translateY(-50%));
+            svg {
+              width: 22px;
+            }
+          }
         }
       }
-      button {
-        font-size: 16px;
-        text-align: left;
-        &:not(:last-child) {
-          margin-bottom: 10px;
+      &.filter {
+        display: flex;
+        flex-direction: column;
+        &__list {
+          > button:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
+            display: none;
+          }
+          &--show {
+            > button:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
+              display: block;
+            }
+          }
+        }
+        @include transition_c(all 0.3s ease-out);
+        &:not(:last-of-type) {
+          margin-bottom: 30px;
+        }
+        .tit {
+          font-size: 20px;
+          padding-bottom: 18px;
+          margin-bottom: 18px;
+          text-transform: uppercase;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            background: $orange;
+            width: 30px;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+          }
+          .more {
+            position: absolute;
+            background: $orange;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            top: 7px;
+            right: 0;
+            &::before {
+              content: "";
+              position: absolute;
+              border-top: 8px solid $white;
+              border-left: 6px solid transparent;
+              border-right: 6px solid transparent;
+              top: calc(50% + 1px);
+              left: 50%;
+              @include tranform_c(translate(-50%, -50%));
+              @include transition_c(all 0.3s ease-out);
+            }
+
+            &--show::before {
+              top: calc(50% - 1px);
+              @include tranform_c(translate(-50%, -50%) rotate(180deg));
+            }
+          }
+        }
+        button {
+          font-size: 18px;
+          text-align: left;
+          padding: 10px 15px;
+          margin: 0 -15px;
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
+          &.active {
+            background: rgba($color: $grey-light, $alpha: 0.6);
+            color: $orange;
+            pointer-events: none;
+          }
         }
       }
     }
   }
   &__list {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
     display: flex;
     flex-wrap: wrap;
-    flex: 1;
-    margin: 0 -15px;
-    padding: 50px 0;
+    width: calc(76% - 40px);
+    padding: 20px 5px 0;
     li {
       width: 25%;
       padding: 0 15px 30px;
@@ -94,10 +179,35 @@
       }
     }
   }
-  &__not-found {
+  &__no-item {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
     display: flex;
-    flex: 1;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: calc(76% - 40px);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    a,
+    button {
+      background: $orange;
+      border-radius: 100px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 120px;
+      height: 38px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
+  .pagination {
+    justify-content: flex-end;
   }
 }

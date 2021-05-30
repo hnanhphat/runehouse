@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { decksActions } from "../redux/actions/decks.actions";
+
+import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
 
@@ -10,69 +12,148 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
-  console.log(totalPage);
-  const [genres, setGenres] = useState("");
-  const [size, setSize] = useState("");
-  const [color, setColor] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [cateStt, setCateStt] = useState("All");
+  const [showFilter, setShowFilter] = useState(Array(2).fill(false));
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleGenres = (val) => {
-    setGenres(val);
-  };
+  console.log(decks);
 
-  const handleSize = (val) => {
-    setSize(val);
-  };
-
-  const handleColor = (val) => {
-    setColor(val);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchInput(`&name=${e.target.searchInput.value}`);
+    if (e.target.searchInput.value) {
+      setCateStt("");
+    } else {
+      setCateStt("All");
+    }
+    e.target.reset();
   };
 
   useEffect(() => {
-    dispatch(
-      decksActions.getListOfDecks(
-        currentPage,
-        `&limit=20${genres ? `&genres=${genres}` : ""}${
-          size ? `&size=${size}` : ""
-        }${color ? `&color=${color}` : ""}`,
-        "decks"
-      )
-    );
-  }, [dispatch, genres, size, color, currentPage]);
+    dispatch(decksActions.getListOfDecks(currentPage, searchInput, "decks"));
+  }, [dispatch, currentPage, searchInput]);
 
   return (
-    <div id="products" className="products">
+    <div id="products" className="products bg-grey">
+      <MainVisual heading="Products" />
       <Breadcrumb leaf="products" />
       <div className="container">
         <ul className="products__sidebar">
-          <li>
-            <h3 className="tit">Product Categories</h3>
+          <li className="search">
+            <form onSubmit={handleSearch} className="search__form">
+              <input type="text" name="searchInput" placeholder="Search" />
+              <button>
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="search"
+                  className="svg-inline--fa fa-search fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                  ></path>
+                </svg>
+              </button>
+            </form>
+          </li>
+          <li className="filter">
             <button
+              className={`${cateStt === "All" ? "active" : ""}`}
               onClick={() => {
-                handleGenres("");
-                handleSize("");
-                handleColor("");
+                setCateStt("All");
+                setSearchInput(``);
               }}
             >
               All
             </button>
-            <button onClick={() => handleGenres("Tarot")}>Tarot</button>
-            <button onClick={() => handleGenres("Oracle")}>Oracle</button>
-            <button onClick={() => handleGenres("Lenormand")}>Lenormand</button>
-            <button onClick={() => handleGenres("I Ching")}>I Ching</button>
-            <button onClick={() => handleGenres("Tea Leaf")}>Tea Leaf</button>
           </li>
-          <li>
-            <h3 className="tit">Filter by size</h3>
-            <button onClick={() => handleSize("Large")}>Large</button>
-            <button onClick={() => handleSize("Small")}>Small</button>
-            <button onClick={() => handleSize("Normal")}>Normal</button>
+          <li
+            className={`filter filter__list ${
+              showFilter[1] ? "filter__list--show" : ""
+            }`}
+          >
+            <h3 className="tit">
+              Categories
+              {showFilter[1] ? (
+                <button
+                  className="more more--show"
+                  onClick={() => {
+                    let arr = [...showFilter];
+                    arr[1] = false;
+                    setShowFilter(arr);
+                  }}
+                ></button>
+              ) : (
+                <button
+                  className="more"
+                  onClick={() => {
+                    let arr = [...showFilter];
+                    arr[1] = true;
+                    setShowFilter(arr);
+                  }}
+                ></button>
+              )}
+            </h3>
+            {decks &&
+              decks.data.categories.map((cate) => (
+                <button
+                  key={cate._id}
+                  className={`${cateStt === cate._id ? "active" : ""}`}
+                  onClick={() => {
+                    setCateStt(cate._id);
+                    setSearchInput(`&category=${cate._id}`);
+                  }}
+                >
+                  {cate._id}
+                </button>
+              ))}
           </li>
-          <li>
-            <h3 className="tit">Color</h3>
-            <button onClick={() => handleColor("Black")}>Black</button>
-            <button onClick={() => handleColor("White")}>White</button>
-            <button onClick={() => handleColor("Gold")}>Gold</button>
+          <li
+            className={`filter filter__list ${
+              showFilter[2] ? "filter__list--show" : ""
+            }`}
+          >
+            <h3 className="tit">
+              Genres
+              {showFilter[2] ? (
+                <button
+                  className="more more--show"
+                  onClick={() => {
+                    let arr = [...showFilter];
+                    arr[2] = false;
+                    setShowFilter(arr);
+                  }}
+                ></button>
+              ) : (
+                <button
+                  className="more"
+                  onClick={() => {
+                    let arr = [...showFilter];
+                    arr[2] = true;
+                    setShowFilter(arr);
+                  }}
+                ></button>
+              )}
+            </h3>
+            {decks &&
+              decks.data.genres.map((genre) => (
+                <button
+                  key={genre._id}
+                  className={`${cateStt === genre._id ? "active" : ""}`}
+                  onClick={() => {
+                    setCateStt(genre._id);
+                    setSearchInput(`&genres=${genre._id}`);
+                  }}
+                >
+                  {genre._id}
+                </button>
+              ))}
           </li>
         </ul>
         {decks && decks.data.decks.length ? (
@@ -84,7 +165,7 @@ const ProductPage = () => {
                     className="img"
                     style={{
                       backgroundImage: `url('${
-                        deck.images ? deck.images : noimg
+                        deck.image ? deck.image : noimg
                       }')`,
                     }}
                   ></div>
@@ -105,13 +186,31 @@ const ProductPage = () => {
             ))}
           </ul>
         ) : (
-          <p className="products__not-found">No products were found</p>
+          <p className="products__no-item">
+            Don't have any products.
+            {searchInput ? (
+              <button
+                onClick={() => {
+                  setCateStt("All");
+                  setSearchInput(``);
+                }}
+              >
+                Go back
+              </button>
+            ) : (
+              <Link to="/">Go home</Link>
+            )}
+          </p>
         )}
-        <PaginationBar
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPage={totalPage}
-        />
+        {totalPage > 1 && decks && decks.data.decks.length ? (
+          <PaginationBar
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPage={totalPage}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

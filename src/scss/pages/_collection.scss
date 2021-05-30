@@ -1,0 +1,114 @@
+.collection {
+  .container {
+    padding: 40px 0 80px;
+  }
+  &__list {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 20px 5px;
+    li {
+      padding: 0 15px 30px;
+      width: 25%;
+      button {
+        border-radius: 5px;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background: rgba($color: $black, $alpha: 0.5);
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          @include transition_c(all 0.3s ease-out);
+        }
+        .img {
+          aspect-ratio: 1 / 1;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+
+          @supports not (aspect-ratio: 1 / 1) {
+            &::before {
+              float: left;
+              padding-top: 100%;
+              content: "";
+            }
+            &::after {
+              display: block;
+              content: "";
+              clear: both;
+            }
+          }
+
+          &--1 {
+            background-image: url("./img/collections/all.jpeg");
+          }
+          &--2 {
+            background-image: url("./img/collections/tarot.jpeg");
+          }
+          &--3 {
+            background-image: url("./img/collections/oracle.jpeg");
+          }
+          &--4 {
+            background-image: url("./img/collections/lenormand.jpeg");
+          }
+          &--5 {
+            background-image: url("./img/collections/iching.jpeg");
+          }
+          &--6 {
+            background-image: url("./img/collections/tealeaf.jpeg");
+          }
+          &--7 {
+            background-image: url("./img/collections/blanket.jpeg");
+          }
+          &--8 {
+            background-image: url("./img/collections/book.jpeg");
+          }
+          &--9 {
+            background-image: url("./img/collections/rune.jpeg");
+          }
+          &--10 {
+            background-image: url("./img/collections/accessories.jpeg");
+          }
+        }
+        .txt {
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          font-size: 26px;
+          font-weight: bold;
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          @include tranform_c(translateY(20px));
+          @include transition_c(all 0.3s ease-out);
+        }
+
+        @include respond(hover) {
+          &:hover {
+            &::before {
+              opacity: 1;
+            }
+            .txt {
+              opacity: 1;
+              @include tranform_c(translateY(0));
+            }
+          }
+        }
+      }
+    }
+  }
+}
