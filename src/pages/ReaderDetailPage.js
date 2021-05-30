@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { userActions } from "../redux/actions/user.actions";
 import { newsActions } from "../redux/actions/news.actions";
+import { appointmentActions } from "../redux/actions/appointment.actions";
 
+import { Modal } from "react-bootstrap";
 import Moment from "react-moment";
 import LinesEllipsis from "react-lines-ellipsis";
 
@@ -23,6 +25,12 @@ const ReaderDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showComment, setShowComment] = useState(Array(10).fill(false));
   const [showAllComments, setShowAllComments] = useState(Array(10).fill(false));
+  const [showModal, setShowModal] = useState(false);
+  const [formInput, setFormInput] = useState({
+    serviceType: "Offline",
+    appointmentDate: "",
+    clientPhone: "",
+  });
 
   console.log(news);
 
@@ -62,6 +70,22 @@ const ReaderDetailPage = () => {
     e.target.reset();
   };
 
+  const handleChange = (e) => {
+    setFormInput({ ...formInput, [e.target.name]: e.target.value });
+  };
+
+  const handleSend = () => {
+    const { serviceType, appointmentDate, clientPhone } = formInput;
+    dispatch(
+      appointmentActions.sendAppointment(id, {
+        serviceType,
+        appointmentDate,
+        clientPhone,
+      })
+    );
+    setShowModal(false);
+  };
+
   useEffect(() => {
     dispatch(userActions.getSingleUser(id));
   }, [dispatch, id]);
@@ -98,7 +122,7 @@ const ReaderDetailPage = () => {
               </p>
               <em className="quote">{singleUser && singleUser.data.quote}</em>
             </div>
-            <button>
+            <button onClick={() => setShowModal(true)}>
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -513,6 +537,78 @@ const ReaderDetailPage = () => {
           ""
         )}
       </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Make an appointment</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="reader">
+            <div
+              className="reader__avatar"
+              style={{
+                backgroundImage: `url('${
+                  singleUser && singleUser.data.avatar
+                    ? singleUser.data.avatar
+                    : noimg
+                }')`,
+              }}
+            ></div>
+            <div className="reader__info">
+              <p className="name">{singleUser && singleUser.data.fullname}</p>
+              <p className="position">
+                {singleUser && singleUser.data.position} Reader
+              </p>
+            </div>
+          </div>
+          <form className="form">
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="text"
+                  value={currentUser && currentUser.data.fullname}
+                  disabled
+                />
+              </div>
+              <div className="item">
+                <select name="serviceType" onChange={handleChange}>
+                  <option value="Offline">Offline</option>
+                  <option value="Online">Online</option>
+                </select>
+              </div>
+            </div>
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="date"
+                  name="appointmentDate"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="item">
+                <input
+                  type="number"
+                  name="clientPhone"
+                  placeholder="Phone Number"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            onClick={handleSend}
+            className={
+              formInput.appointmentDate && formInput.clientPhone ? "active" : ""
+            }
+          >
+            Send
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
