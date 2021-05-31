@@ -18,8 +18,6 @@ const ProfilePage = () => {
     username: currentUser && currentUser.data.username,
   });
 
-  console.log(currentUser);
-
   const handleEditAvatar = (e) => {
     e.preventDefault();
     window.cloudinary.openUploadWidget(
@@ -41,7 +39,6 @@ const ProfilePage = () => {
   };
 
   const handleChange = (e) => {
-    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 

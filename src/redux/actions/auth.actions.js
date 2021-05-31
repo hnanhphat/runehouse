@@ -39,14 +39,48 @@ const login = (data) => async (dispatch) => {
   }
 };
 
-const loginWithFb = (data) => async (dispatch) => {
+const loginWithFb = (access_token) => async (dispatch) => {
   try {
-  } catch (error) {}
+    dispatch({ type: types.FACEBOOK_REQUEST, payload: null });
+    const res = await api.post("/auth/login/facebook", { access_token });
+    console.log(res);
+    localStorage.setItem("accessToken", res.data.data.accessToken);
+    localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
+    api.defaults.headers["authorization"] =
+      "Bearer " + localStorage.getItem("accessToken");
+    dispatch(routeActions.redirect("/"));
+    dispatch({
+      type: types.FACEBOOK_SUCCESS,
+      payload: {
+        accessToken: res.data.data.accessToken,
+        isAdmin: res.data.data.user.isAdmin,
+      },
+    });
+  } catch (error) {
+    dispatch({ type: types.FACEBOOK_FAILURE, payload: error.message });
+  }
 };
 
 const loginWithGg = (data) => async (dispatch) => {
   try {
-  } catch (error) {}
+    dispatch({ type: types.GOOGLE_REQUEST, payload: null });
+    const res = await api.post("/auth/login/google", data);
+    console.log(res);
+    localStorage.setItem("accessToken", res.data.data.accessToken);
+    localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
+    api.defaults.headers["authorization"] =
+      "Bearer " + localStorage.getItem("accessToken");
+    dispatch(routeActions.redirect("/"));
+    dispatch({
+      type: types.GOOGLE_SUCCESS,
+      payload: {
+        accessToken: res.data.data.accessToken,
+        isAdmin: res.data.data.user.isAdmin,
+      },
+    });
+  } catch (error) {
+    dispatch({ type: types.GOOGLE_FAILURE, payload: error.message });
+  }
 };
 
 const logout = () => async (dispatch) => {

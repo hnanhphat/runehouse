@@ -2401,11 +2401,11 @@ input:focus {
 }
 
 .login .account {
-  min-height: calc(100vh - 122px);
+  min-height: calc(100vh - 260px);
   position: relative;
 }
 .login .account--signin .container::before {
-  left: 60%;
+  left: calc(60% + 2px);
 }
 .login .account--signin .container--signup {
   opacity: 0;
@@ -2448,12 +2448,12 @@ input:focus {
 }
 .login .account .container {
   background: #fff;
-  border: 1px solid #d3ced2;
+  border: 1px solid #d67b35;
   border-radius: 20px;
   display: flex;
   align-items: center;
   text-align: center;
-  height: calc(100vh - 360px);
+  height: calc(100vh - 400px);
   overflow: hidden;
   position: absolute;
   top: 50%;
@@ -2472,7 +2472,7 @@ input:focus {
 .login .account .container::before {
   content: "";
   position: absolute;
-  background: #000;
+  background: #d67b35;
   width: 40%;
   height: 100%;
   top: 0;
@@ -2493,7 +2493,7 @@ input:focus {
   transition: all 0.5s ease-out;
 }
 .login .account__form .title {
-  color: #000;
+  color: #d67b35;
   font-size: 26px;
 }
 .login .account__form .social {
@@ -2515,7 +2515,7 @@ input:focus {
 .login .account__form .social button {
   border: 1px solid #d3ced2;
   border-radius: 50%;
-  color: #000;
+  color: #d67b35;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2577,7 +2577,10 @@ input:focus {
   position: relative;
 }
 .login .account__form .form__group--name button.active {
-  color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
 }
 .login .account__form .form__group--name button svg {
   position: absolute;
@@ -2592,7 +2595,7 @@ input:focus {
   transform: translate(-50%, -50%);
 }
 .login .account__form .form button[type=submit] {
-  background: #000;
+  background: #d67b35;
   border-radius: 100px;
   color: #fff;
   display: flex;

@@ -35,12 +35,12 @@ const PublicLayout = () => {
 
         {/* PROFILE */}
         <Route exact path="/profile" component={ProfilePage} />
-        {/* <Route exact path="/profile" component={ProfilePage} /> */}
 
         {/* PRODUCTS */}
         <Route exact path="/products" component={ProductPage} />
         <Route exact path="/collection" component={CollectionPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
+        {/* <Route exact path="/products/:id" component={ProductDetailPage} /> */}
 
         {/* NEWS */}
         <Route exact path="/news" component={NewsPage} />
