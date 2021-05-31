@@ -105,6 +105,30 @@
             border-radius: 50%;
             width: 80px;
             height: 80px;
+            overflow: hidden;
+            position: relative;
+            span {
+              position: absolute;
+              background: rgba($color: $black, $alpha: 0.5);
+              color: $white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 22px;
+              bottom: 0;
+              left: 0;
+              opacity: 0;
+              @include transition_c(all 0.3s ease-out);
+            }
+
+            @include respond(hover) {
+              &:hover {
+                span {
+                  opacity: 1;
+                }
+              }
+            }
           }
           &__info {
             padding-left: 15px;

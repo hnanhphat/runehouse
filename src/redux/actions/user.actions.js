@@ -38,18 +38,17 @@ const getSingleUser = (id) => async (dispatch) => {
   }
 };
 
-const updateCurrentUser =
-  ({ username, avatar }) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: types.UPDATE_USER_REQUEST, payload: null });
-      const data = await api.put("/users", { username, avatar });
-      dispatch({ type: types.UPDATE_USER_SUCCESS, payload: data });
-      toast.success(data.data.message);
-    } catch (error) {
-      dispatch({ type: types.UPDATE_USER_FAILURE, payload: error.message });
-    }
-  };
+const updateCurrentUser = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.UPDATE_USER_REQUEST, payload: null });
+    const res = await api.put("/users", data);
+    dispatch({ type: types.UPDATE_USER_SUCCESS, payload: data });
+    dispatch(getCurrentUser());
+    toast.success(res.data.message);
+  } catch (error) {
+    dispatch({ type: types.UPDATE_USER_FAILURE, payload: error.message });
+  }
+};
 
 export const userActions = {
   getListOfUsers,

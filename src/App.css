@@ -428,6 +428,31 @@ input:focus {
   border-radius: 50%;
   width: 80px;
   height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__avatar span {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 22px;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+@media only screen and (min-width: 48em) {
+  .modal .modal-dialog .modal-content .modal-body .reader__avatar:hover span {
+    opacity: 1;
+  }
 }
 .modal .modal-dialog .modal-content .modal-body .reader__info {
   padding-left: 15px;
@@ -4749,6 +4774,89 @@ input:focus {
 .profile__blogs .list li .manage--center button {
   width: 60%;
   height: 28px;
+}
+.profile .container {
+  max-width: 680px;
+  padding: 40px 0 80px;
+}
+.profile__info {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.profile__info .avatar {
+  background: rgba(214, 123, 53, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.profile__info .avatar__circle {
+  aspect-ratio: 1/1;
+  border-color: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  width: 100%;
+  max-width: 140px;
+}
+@supports not (aspect-ratio: 1/1) {
+  .profile__info .avatar__circle::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+  .profile__info .avatar__circle::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+.profile__info .info {
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.profile__info .info::before {
+  content: "";
+  position: absolute;
+  background: #d67b35;
+  width: calc(100% - 30px);
+  height: 1px;
+  bottom: 0;
+  left: 15px;
+}
+.profile__info .info .name {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 28px;
+}
+.profile__info .info .position {
+  color: #d67b35;
+  font-size: 15px;
+  text-align: center;
+  line-height: 22px;
+}
+.profile__info button {
+  background: #d67b35;
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 30px);
+  height: 38px;
+  margin: 20px auto;
+}
+.profile__info button svg {
+  width: 18px;
+}
+.profile__info button span {
+  margin-left: 8px;
 }
 
 .reader-detail .container {

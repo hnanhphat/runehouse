@@ -332,4 +332,89 @@
       }
     }
   }
+
+  .container {
+    max-width: 680px;
+    padding: 40px 0 80px;
+  }
+  &__info {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    overflow: hidden;
+    .avatar {
+      background: rgba($color: $orange, $alpha: 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      &__circle {
+        aspect-ratio: 1 / 1;
+        border-color: $white;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border: 4px solid $white;
+        border-radius: 50%;
+        width: 100%;
+        max-width: 140px;
+
+        @supports not (aspect-ratio: 1 / 1) {
+          &::before {
+            float: left;
+            padding-top: 100%;
+            content: "";
+          }
+          &::after {
+            display: block;
+            content: "";
+            clear: both;
+          }
+        }
+      }
+    }
+    .info {
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        background: $orange;
+        width: calc(100% - 30px);
+        height: 1px;
+        bottom: 0;
+        left: 15px;
+      }
+      .name {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 28px;
+      }
+      .position {
+        color: $orange;
+        font-size: 15px;
+        text-align: center;
+        line-height: 22px;
+      }
+    }
+    button {
+      background: $orange;
+      border-radius: 100px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 30px);
+      height: 38px;
+      margin: 20px auto;
+      svg {
+        width: 18px;
+      }
+      span {
+        margin-left: 8px;
+      }
+    }
+  }
 }

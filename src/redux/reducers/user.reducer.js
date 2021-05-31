@@ -33,8 +33,10 @@ const userReducer = (state = initialState, action) => {
       state.loading = false;
       break;
     case types.GET_USER_SUCCESS:
-    case types.UPDATE_USER_SUCCESS:
       state.currentUser = payload;
+      state.loading = false;
+      break;
+    case types.UPDATE_USER_SUCCESS:
       state.loading = false;
       break;
     case types.GET_SINGLE_SUCCESS:
