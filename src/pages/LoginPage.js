@@ -10,10 +10,10 @@ import GoogleLogin from "react-google-login";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 
-const LoginPage = () => {
-  const FB_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
-  const GG_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const FB_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+const GG_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const redirectTo = useSelector((state) => state.route.redirectTo);
