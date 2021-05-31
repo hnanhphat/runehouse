@@ -209,4 +209,9 @@
       margin-top: 10px;
     }
   }
+  .pagination {
+    width: calc(70% - 40px);
+    margin-left: 0;
+    margin-right: auto;
+  }
 }

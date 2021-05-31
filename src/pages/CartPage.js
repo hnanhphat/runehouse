@@ -11,13 +11,16 @@ import { Modal } from "react-bootstrap";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
+import PaginationBar from "../components/PaginationBar";
 
 const CartPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.carts.data);
+  const totalPage = useSelector((state) => state.cart.totalPages);
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const currentUser = useSelector((state) => state.user.currentUser.data);
+  const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [formInput, setFormInput] = useState({
     shipping: "",
@@ -26,11 +29,13 @@ const CartPage = () => {
   });
 
   const handleUpdate = (quantity, id) => {
-    dispatch(cartActions.updateCart({ quantity }, id));
+    dispatch(
+      cartActions.updateCart({ quantity }, id, currentPage, "&isOrdered=false")
+    );
   };
 
   const handleDelete = (id) => {
-    dispatch(cartActions.deleteCart(id));
+    dispatch(cartActions.deleteCart(id, currentPage, "&isOrdered=false"));
   };
 
   const handleChange = (e) => {
@@ -73,7 +78,7 @@ const CartPage = () => {
       history.push(redirectTo);
       dispatch(routeActions.removeRedirectTo());
     }
-  }, [dispatch, history, redirectTo]);
+  }, [dispatch, history, redirectTo, currentPage]);
 
   return (
     <div id="cart-page" className="cart-page bg-grey">
@@ -174,6 +179,16 @@ const CartPage = () => {
               Checkout
             </button>
           </div>
+
+          {totalPage > 1 ? (
+            <PaginationBar
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPage={totalPage}
+            />
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         <div className="container">

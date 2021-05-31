@@ -28,23 +28,23 @@ const getUserCart = (pageNumber, option) => async (dispatch) => {
   }
 };
 
-const updateCart = (data, id) => async (dispatch) => {
+const updateCart = (data, id, pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.UPDATE_CART_REQUEST, payload: null });
     const res = await api.put(`/cart/${id}`, data);
     dispatch({ type: types.UPDATE_CART_SUCCESS, payload: res });
-    dispatch(getUserCart());
+    dispatch(getUserCart(pageNumber, option));
   } catch (error) {
     dispatch({ type: types.UPDATE_CART_FAILURE, payload: error.message });
   }
 };
 
-const deleteCart = (id) => async (dispatch) => {
+const deleteCart = (id, pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.DELETE_CART_REQUEST, payload: null });
     const res = await api.delete(`/cart/${id}`);
     dispatch({ type: types.DELETE_CART_SUCCESS, payload: res });
-    dispatch(getUserCart(1, "&isOrdered=false"));
+    dispatch(getUserCart(pageNumber, option));
   } catch (error) {
     dispatch({ type: types.DELETE_CART_FAILURE, payload: error.message });
   }

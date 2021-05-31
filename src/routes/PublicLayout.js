@@ -39,7 +39,6 @@ const PublicLayout = () => {
         <Route exact path="/products" component={ProductPage} />
         <Route exact path="/collection" component={CollectionPage} />
         <Route exact path="/products/:id" component={ProductDetailPage} />
-        {/* <Route exact path="/products/:id" component={ProductDetailPage} /> */}
 
         {/* NEWS */}
         <Route exact path="/news" component={NewsPage} />
