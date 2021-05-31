@@ -119,7 +119,7 @@ const CartPage = () => {
                     <div className="group">
                       <button
                         onClick={() => handleUpdate(-1, cart._id)}
-                        className="down"
+                        className={`down ${cart.quantity <= 1 ? "hide" : ""}`}
                       ></button>
                       <button
                         onClick={() => handleUpdate(1, cart._id)}

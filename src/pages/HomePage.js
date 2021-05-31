@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { decksActions } from "../redux/actions/decks.actions";
+import { newsActions } from "../redux/actions/news.actions";
+import Moment from "react-moment";
 import Breadcrumb from "../components/Breadcrumb";
 
 // Image
@@ -16,10 +18,17 @@ const HomePage = () => {
   const sale = useSelector((state) => state.decks.sale.data);
   const decks = useSelector((state) => state.decks.decks.data);
   const search = useSelector((state) => state.decks.search.data);
+  const news = useSelector((state) => state.news.news.data);
+
+  console.log(sale);
 
   useEffect(() => {
     dispatch(decksActions.getListOfDecks(1, "&limit=2&sale=true", "sale"));
     dispatch(decksActions.getListOfDecks(1, "&limit=4", "decks"));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(newsActions.getListOfNews(1, "&limit=3"));
   }, [dispatch]);
 
   return (
@@ -115,51 +124,55 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div id="deal" className="deal">
-            <div className="deal__container">
-              <h3 className="tit">Flash Deal</h3>
-              <p className="txt">
-                Sale up to <strong>50%</strong> for several items.
-              </p>
-              <button
-                className="btn-view btn-view--white"
-                onClick={() => {
-                  history.push("/products");
-                  dispatch(decksActions.searchDecks(`&sale=true`));
-                  dispatch(decksActions.cateDecks("Sale"));
-                }}
-              >
-                <span>View All</span>
-              </button>
-              <ul className="list">
-                {sale &&
-                  sale.data.decks.map((deck) => (
-                    <li key={deck._id}>
-                      <Link to={`products/${deck._id}`}>
-                        <div
-                          className="img"
-                          style={{
-                            backgroundImage: `url('${
-                              deck.image ? deck.image : noimg
-                            }')`,
-                          }}
-                        ></div>
-                        <p className="sale">SALE</p>
-                        <p className="name">{deck.name}</p>
-                        <p className="price">
-                          <span className="price__before">
-                            ${deck.defaultPrice}
-                          </span>
-                          <span className="price__after">
-                            ${deck.oficialPrice}
-                          </span>
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
+          {sale && sale.data.decks.length ? (
+            <div id="deal" className="deal">
+              <div className="deal__container">
+                <h3 className="tit">Flash Deal</h3>
+                <p className="txt">
+                  Sale up to <strong>50%</strong> for several items.
+                </p>
+                <button
+                  className="btn-view btn-view--white"
+                  onClick={() => {
+                    history.push("/products");
+                    dispatch(decksActions.searchDecks(`&sale=true`));
+                    dispatch(decksActions.cateDecks("Sale"));
+                  }}
+                >
+                  <span>View All</span>
+                </button>
+                <ul className="list">
+                  {sale &&
+                    sale.data.decks.map((deck) => (
+                      <li key={deck._id}>
+                        <Link to={`products/${deck._id}`}>
+                          <div
+                            className="img"
+                            style={{
+                              backgroundImage: `url('${
+                                deck.image ? deck.image : noimg
+                              }')`,
+                            }}
+                          ></div>
+                          <p className="sale">SALE</p>
+                          <p className="name">{deck.name}</p>
+                          <p className="price">
+                            <span className="price__before">
+                              ${deck.defaultPrice}
+                            </span>
+                            <span className="price__after">
+                              ${deck.oficialPrice}
+                            </span>
+                          </p>
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
           <div id="product" className="product">
             <div className="container">
               <div className="primary-heading">
@@ -205,40 +218,34 @@ const HomePage = () => {
           <div id="news" className="news">
             <div className="container">
               <div className="primary-heading">
-                <h2>News & Blog</h2>
+                <h2>News</h2>
                 <p>Text of the printing and typesetting industry.</p>
               </div>
               <ul className="news__list">
-                <li>
-                  <Link to="/">
-                    <div className="img"></div>
-                    <p className="tit">Tarot for newbie</p>
-                    <p className="group">
-                      <span className="time">January 29, 2016</span>
-                      <span className="comments">0 Comment(s)</span>
-                    </p>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/">
-                    <div className="img"></div>
-                    <p className="tit">Tarot for newbie</p>
-                    <p className="group">
-                      <span className="time">January 29, 2016</span>
-                      <span className="comments">0 Comment(s)</span>
-                    </p>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/">
-                    <div className="img"></div>
-                    <p className="tit">Tarot for newbie</p>
-                    <p className="group">
-                      <span className="time">January 29, 2016</span>
-                      <span className="comments">0 Comment(s)</span>
-                    </p>
-                  </Link>
-                </li>
+                {news &&
+                  news.data.news.map((item) => (
+                    <li key={item._id}>
+                      <Link to={`/news/${item._id}`}>
+                        <div
+                          className="img"
+                          style={{ backgroundImage: `url('${item.image}')` }}
+                        ></div>
+                        <p className="tit">{item.title}</p>
+                        <p className="group">
+                          <span className="time">
+                            <Moment
+                              format="MMM D, YYYY"
+                              withTitle={item.createdAt}
+                            />
+                          </span>
+                          <span className="comments">
+                            {item.reviews.length ? item.reviews.length : 0}{" "}
+                            Comment(s)
+                          </span>
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
               </ul>
               <Link to="/news" className="btn-view btn-view--center">
                 <span>View All</span>

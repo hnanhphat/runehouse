@@ -1768,6 +1768,10 @@ input:focus {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.cart-page__details li .col--03 .group button.down.hide {
+  pointer-events: none;
+  opacity: 0.5;
+}
 .cart-page__details li .col--03 .group button.up {
   right: 0;
 }
@@ -2306,7 +2310,6 @@ input:focus {
 }
 #home .news__list li a .img {
   aspect-ratio: 5/3;
-  background-image: url("./img/news_01.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -4099,9 +4102,11 @@ input:focus {
   min-height: calc(100vh - 381px);
 }
 .product-detail__container {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   display: flex;
+  align-items: flex-start;
   width: 100%;
   max-width: 580px;
   padding: 2vw;
@@ -4114,10 +4119,21 @@ input:focus {
   border-radius: 5px;
   width: 40%;
 }
+@supports not (aspect-ratio: 1/1) {
+  .product-detail__container .img::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+  .product-detail__container .img::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
 .product-detail__container .content {
-  color: #fff;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   width: 60%;
   padding-left: 25px;
@@ -4230,7 +4246,6 @@ input:focus {
   text-decoration: line-through;
 }
 .product-detail__container .content .price__after {
-  color: #fff;
   font-size: 18px;
   font-weight: bold;
 }
@@ -4241,13 +4256,94 @@ input:focus {
   margin-bottom: 20px;
 }
 .product-detail__container .content .quantity {
-  background: #fff;
-  border: none;
-  border-radius: 5px;
-  width: 40px;
-  height: 38px;
-  padding: 10px 0 10px 10px;
+  padding: 0 15px;
   margin-right: 15px;
+  position: relative;
+}
+.product-detail__container .content .quantity__number {
+  background: #fff;
+  border: 1px solid #d67b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 5;
+}
+.product-detail__container .content .quantity__group {
+  border-radius: 100px;
+  width: 60px;
+  height: 15px;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.product-detail__container .content .quantity__group button {
+  background: #d67b35;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+}
+.product-detail__container .content .quantity__group button.down {
+  left: 0;
+}
+.product-detail__container .content .quantity__group button.down::before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  left: 4px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.product-detail__container .content .quantity__group button.down.hide {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.product-detail__container .content .quantity__group button.up {
+  right: 0;
+}
+.product-detail__container .content .quantity__group button.up::before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  right: 4px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.product-detail__container .content .quantity__group button.up::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  right: 4px;
+  -webkit-transform: translateY(-50%) rotate(90deg);
+  -moz-transform: translateY(-50%) rotate(90deg);
+  -ms-transform: translateY(-50%) rotate(90deg);
+  -o-transform: translateY(-50%) rotate(90deg);
+  transform: translateY(-50%) rotate(90deg);
 }
 
 .products .container {

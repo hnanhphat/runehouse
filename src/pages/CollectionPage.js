@@ -24,7 +24,9 @@ const CollectionPage = () => {
 
   const handleClick = (cate) => {
     history.push("/products");
-    dispatch(decksActions.searchDecks(`&category=${cate}`));
+    dispatch(
+      decksActions.searchDecks(cate === "All" ? "" : `&category=${cate}`)
+    );
     dispatch(decksActions.cateDecks(cate));
   };
 

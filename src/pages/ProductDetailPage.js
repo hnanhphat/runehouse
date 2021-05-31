@@ -1,11 +1,11 @@
 import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import { decksActions } from "../redux/actions/decks.actions";
 import { routeActions } from "../redux/actions/route.actions";
 import { cartActions } from "../redux/actions/cart.actions";
+import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 
 const ProductDetailPage = () => {
@@ -14,12 +14,7 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const decks = useSelector((state) => state.decks.singleDecks.data);
-  const isAmin = useSelector((state) => state.auth.isAdmin);
   const [quantity, setQuantity] = useState(1);
-
-  const handleDelete = (val) => {
-    dispatch(decksActions.deleteDecks(val));
-  };
 
   const handleAddCart = (val) => {
     dispatch(cartActions.createCart({ decks: val, quantity: quantity }));
@@ -37,7 +32,8 @@ const ProductDetailPage = () => {
   }, [dispatch, history, redirectTo]);
 
   return (
-    <div id="proudct-detail" className="proudct-detail">
+    <div id="proudct-detail" className="proudct-detail bg-grey">
+      <MainVisual heading={decks && decks.data.name} />
       <Breadcrumb branch="products" leaf={decks && decks.data.name} />
       <div className="product-detail__area">
         <div className="product-detail__container">
@@ -45,43 +41,12 @@ const ProductDetailPage = () => {
             className="img"
             style={{
               backgroundImage: `url('${
-                decks && decks.data.images ? decks.data.images : noimg
+                decks && decks.data.image ? decks.data.image : noimg
               }')`,
             }}
           ></div>
           <div className="content">
             <h3 className="name">{decks && decks.data.name}</h3>
-            {isAmin ? (
-              <div className="manage">
-                <div className="manage__icon">
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="ellipsis-v"
-                    className="svg-inline--fa fa-ellipsis-v fa-w-6"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 192 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="manage__dropdown">
-                  <Link to={`/admin/product-edit/${id}`} className="edit">
-                    Edit
-                  </Link>
-                  <button onClick={() => handleDelete(id)} className="delete">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
             <p className="price">
               <span className="price__before">
                 ${decks && decks.data.defaultPrice}
@@ -91,14 +56,23 @@ const ProductDetailPage = () => {
               </span>
             </p>
             <p className="description">{decks && decks.data.description}</p>
-            <input
-              type="number"
-              name="quantity"
-              min="1"
-              placeholder="1"
-              className="quantity"
-              onChange={(e) => setQuantity(e.target.value)}
-            />
+            <div className="quantity">
+              <span className="quantity__number">{quantity}</span>
+              <div className="quantity__group">
+                <button
+                  className={`down ${quantity <= 1 ? "hide" : ""}`}
+                  onClick={() => {
+                    setQuantity((state) => --state);
+                  }}
+                ></button>
+                <button
+                  className="up"
+                  onClick={() => {
+                    setQuantity((state) => ++state);
+                  }}
+                ></button>
+              </div>
+            </div>
             <button onClick={() => handleAddCart(id)} className="btn-cart">
               <svg
                 aria-hidden="true"

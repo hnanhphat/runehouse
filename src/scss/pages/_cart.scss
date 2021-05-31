@@ -93,6 +93,11 @@
                   left: 4px;
                   @include tranform_c(translateY(-50%));
                 }
+
+                &.hide {
+                  pointer-events: none;
+                  opacity: 0.5;
+                }
               }
               &.up {
                 right: 0;

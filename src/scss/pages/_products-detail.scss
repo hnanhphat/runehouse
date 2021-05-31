@@ -6,9 +6,11 @@
     min-height: calc(100vh - 381px);
   }
   &__container {
-    background: rgba($color: $black, $alpha: 0.8);
-    border-radius: 5px;
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
     display: flex;
+    align-items: flex-start;
     width: 100%;
     max-width: 580px;
     padding: 2vw;
@@ -19,11 +21,23 @@
       background-repeat: no-repeat;
       border-radius: 5px;
       width: 40%;
+
+      @supports not (aspect-ratio: 1 / 1) {
+        &::before {
+          float: left;
+          padding-top: 100%;
+          content: "";
+        }
+        &::after {
+          display: block;
+          content: "";
+          clear: both;
+        }
+      }
     }
     .content {
-      color: $white;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       flex-wrap: wrap;
       width: 60%;
       padding-left: 25px;
@@ -124,7 +138,6 @@
           text-decoration: line-through;
         }
         &__after {
-          color: $white;
           font-size: 18px;
           font-weight: bold;
         }
@@ -136,13 +149,79 @@
         margin-bottom: 20px;
       }
       .quantity {
-        background: $white;
-        border: none;
-        border-radius: 5px;
-        width: 40px;
-        height: 38px;
-        padding: 10px 0 10px 10px;
+        padding: 0 15px;
         margin-right: 15px;
+        position: relative;
+        &__number {
+          background: $white;
+          border: 1px solid $orange;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          position: relative;
+          z-index: 5;
+        }
+        &__group {
+          border-radius: 100px;
+          width: 60px;
+          height: 15px;
+          overflow: hidden;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include tranform_c(translate(-50%, -50%));
+          button {
+            background: $orange;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            position: absolute;
+            &.down {
+              left: 0;
+              &::before {
+                content: "";
+                position: absolute;
+                background: $white;
+                width: 8px;
+                height: 2px;
+                top: 50%;
+                left: 4px;
+                @include tranform_c(translateY(-50%));
+              }
+
+              &.hide {
+                pointer-events: none;
+                opacity: 0.5;
+              }
+            }
+            &.up {
+              right: 0;
+              &::before {
+                content: "";
+                position: absolute;
+                background: $white;
+                width: 8px;
+                height: 2px;
+                top: 50%;
+                right: 4px;
+                @include tranform_c(translateY(-50%));
+              }
+              &::after {
+                content: "";
+                position: absolute;
+                background: $white;
+                width: 8px;
+                height: 2px;
+                top: 50%;
+                right: 4px;
+                @include tranform_c(translateY(-50%) rotate(90deg));
+              }
+            }
+          }
+        }
       }
     }
   }

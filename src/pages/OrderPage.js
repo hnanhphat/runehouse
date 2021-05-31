@@ -317,7 +317,7 @@ const OrderPage = () => {
                   <div className="col col--01">
                     {/* <span>{singleOrders.data.createdAt}</span> */}
                     <Moment
-                      format="D MMM, YYYY"
+                      format="MMM D, YYYY"
                       withTitle={singleOrders.data.createdAt}
                     />
                   </div>
