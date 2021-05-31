@@ -35,7 +35,7 @@ const HomePage = () => {
                         className="img"
                         style={{
                           backgroundImage: `url('${
-                            deck.images ? deck.images : noimg
+                            deck.image ? deck.image : noimg
                           }')`,
                         }}
                       ></div>
@@ -117,7 +117,7 @@ const HomePage = () => {
                           className="img"
                           style={{
                             backgroundImage: `url('${
-                              deck.images ? deck.images : noimg
+                              deck.image ? deck.image : noimg
                             }')`,
                           }}
                         ></div>
@@ -152,7 +152,7 @@ const HomePage = () => {
                           className="img"
                           style={{
                             backgroundImage: `url('${
-                              deck.images ? deck.images : noimg
+                              deck.image ? deck.image : noimg
                             }')`,
                           }}
                         ></div>

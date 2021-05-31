@@ -19,7 +19,7 @@ import ReaderDetailPage from "../pages/ReaderDetailPage";
 
 import CartPage from "../pages/CartPage";
 
-// import OrderPage from "../pages/OrderPage";
+import OrderPage from "../pages/OrderPage";
 
 import VerifyPage from "../pages/VerifyPage";
 
@@ -31,9 +31,11 @@ const PublicLayout = () => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />
+        {/* <Route exact path="/login" component={LoginPage} /> */}
 
         {/* PROFILE */}
         <Route exact path="/profile" component={ProfilePage} />
+        {/* <Route exact path="/profile" component={ProfilePage} /> */}
 
         {/* PRODUCTS */}
         <Route exact path="/products" component={ProductPage} />
@@ -52,7 +54,7 @@ const PublicLayout = () => {
         <Route exact path="/cart" component={CartPage} />
 
         {/* ORDER */}
-        {/* <Route exact path="/order" component={OrderPage} /> */}
+        <Route exact path="/orders" component={OrderPage} />
 
         {/* VERIFY */}
         <Route exact path="/verify/:code" component={VerifyPage} />

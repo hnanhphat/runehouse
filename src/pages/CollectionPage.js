@@ -30,7 +30,7 @@ const CollectionPage = () => {
       <div className="container">
         <ul className="collection__list">
           {collections.map((collection, i) => (
-            <li>
+            <li key={collection}>
               <button onClick={handleClick}>
                 <div className={`img img--${i + 1}`}></div>
                 <p className="txt">{collection}</p>

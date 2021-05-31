@@ -22,6 +22,7 @@ const CartPage = () => {
   const [formInput, setFormInput] = useState({
     shipping: "",
     phone: "",
+    payment: "COD",
   });
 
   const handleUpdate = (quantity, id) => {
@@ -33,6 +34,7 @@ const CartPage = () => {
   };
 
   const handleChange = (e) => {
+    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
@@ -49,7 +51,9 @@ const CartPage = () => {
         (a, b) => a + b.decks.oficialPrice * b.quantity,
         0
       );
-    const { shipping, phone } = formInput;
+    const quantity =
+      carts && carts.data.carts.reduce((a, b) => a + b.quantity, 0);
+    const { shipping, phone, payment } = formInput;
     dispatch(
       orderActions.createOrder({
         customer,
@@ -57,6 +61,8 @@ const CartPage = () => {
         total,
         shipping,
         phone,
+        payment,
+        quantity,
       })
     );
     setShowModal(false);
@@ -217,9 +223,11 @@ const CartPage = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="item">
-                <select name="">
-                  <option value="Cash on Delivery">Cash on Delivery</option>
+              <div className="item" onChange={handleChange}>
+                <select name="payment">
+                  <option value="COD">COD</option>
+                  <option value="Visa">Visa</option>
+                  <option value="Installment">Installment</option>
                 </select>
               </div>
             </div>

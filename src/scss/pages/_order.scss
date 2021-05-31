@@ -1,0 +1,183 @@
+.order-page {
+  .container {
+    padding: 40px 0 80px;
+  }
+  &__controller {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    padding: 20px 15px;
+    .search {
+      position: relative;
+      input {
+        border: 1px solid $grey-light;
+        border-radius: 2px;
+        width: 100%;
+        height: 38px;
+        padding: 8px 15px 8px 44px;
+      }
+      button {
+        position: absolute;
+        background: $black;
+        border-radius: 3px;
+        color: $white;
+        width: 30px;
+        height: 30px;
+        top: 50%;
+        left: 5px;
+        @include tranform_c(translateY(-50%));
+        svg {
+          width: 22px;
+        }
+      }
+    }
+    .filter {
+      display: flex;
+      align-items: center;
+      padding-top: 15px;
+      margin: 15px -10px 0;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        background: $grey-light;
+        width: calc(100% - 20px);
+        height: 1px;
+        top: 0;
+        left: 10px;
+      }
+      li {
+        width: calc(100% / 6);
+        padding: 0 10px;
+        button {
+          border: 1px solid $grey-light;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 112px;
+          img {
+            height: 48px;
+          }
+          span {
+            font-size: 16px;
+            margin-top: 10px;
+          }
+          &.active {
+            background: rgba($color: $orange, $alpha: 0.02);
+            border: 2px solid $orange;
+            span {
+              color: $orange;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__list {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    overflow: hidden;
+    margin-top: 20px;
+    li {
+      display: flex;
+      padding: 0 10px;
+      &:first-child {
+        background: rgba($color: $orange, $alpha: 0.2);
+      }
+      .col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        &--01 {
+          width: 40px;
+        }
+        &--02 {
+          flex: 1;
+        }
+        &--03 {
+          width: 180px;
+        }
+        &--04 {
+          width: 140px;
+        }
+        &--05 {
+          width: 140px;
+        }
+        &--06 {
+          width: 50px;
+          svg {
+            color: $orange;
+            width: 14px;
+          }
+        }
+      }
+      span {
+        font-size: 16px;
+        &.status {
+          border: 1px solid currentColor;
+          border-radius: 4px;
+          font-weight: bold;
+          padding: 2px 10px;
+        }
+        &.topay {
+          background: rgba($color: $blue, $alpha: 0.1);
+          color: $blue;
+        }
+        &.toship {
+          background: rgba($color: $yellow, $alpha: 0.1);
+          color: $yellow;
+        }
+        &.toreceive {
+          background: rgba($color: $orange, $alpha: 0.1);
+          color: $orange;
+        }
+        &.completed {
+          background: rgba($color: $green, $alpha: 0.1);
+          color: $green;
+        }
+        &.cancelled {
+          background: rgba($color: $red, $alpha: 0.1);
+          color: $red;
+        }
+      }
+
+      &.no-item {
+        background: $white;
+        border-radius: 10px;
+        box-shadow: $bs;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        a,
+        button {
+          background: $orange;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 120px;
+          height: 38px;
+          font-size: 16px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  .pagination {
+    padding-bottom: 40px;
+    margin: 0 auto;
+  }
+}

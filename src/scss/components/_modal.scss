@@ -318,6 +318,164 @@
             }
           }
         }
+        .group-btn {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 20px;
+          button {
+            border-radius: 100px;
+            color: $white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 120px;
+            height: 38px;
+            margin: 0 5px;
+            &:nth-child(1) {
+              background: $orange;
+            }
+            &:nth-child(2) {
+              background: $black;
+            }
+          }
+        }
+        .order {
+          &__heading {
+            border-bottom: 1px solid $orange;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px 10px;
+            margin-bottom: 15px;
+            strong {
+              color: $orange;
+              &.status {
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                font-weight: bold;
+                padding: 2px 10px;
+                margin-left: 5px;
+                &.topay {
+                  background: rgba($color: $blue, $alpha: 0.1);
+                  color: $blue;
+                }
+                &.toship {
+                  background: rgba($color: $yellow, $alpha: 0.1);
+                  color: $yellow;
+                }
+                &.toreceive {
+                  background: rgba($color: $orange, $alpha: 0.1);
+                  color: $orange;
+                }
+                &.completed {
+                  background: rgba($color: $green, $alpha: 0.1);
+                  color: $green;
+                }
+                &.cancelled {
+                  background: rgba($color: $red, $alpha: 0.1);
+                  color: $red;
+                }
+              }
+            }
+          }
+          &__info {
+            border: 1px solid $orange;
+            border-radius: 5px;
+            overflow: hidden;
+            li {
+              display: flex;
+              &:first-child {
+                background: $orange;
+                color: $white;
+              }
+              .col {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4px;
+                &:not(:last-child) {
+                  border-right: 1px solid $orange;
+                }
+                &--01 {
+                  width: 160px;
+                }
+                &--02 {
+                  width: 160px;
+                }
+                &--03 {
+                  flex: 1;
+                }
+              }
+            }
+          }
+          &__list {
+            border-top: 1px solid $orange;
+            max-height: 276px;
+            padding-top: 15px;
+            margin-top: 15px;
+            overflow: auto;
+            li {
+              display: flex;
+              align-items: center;
+              &:not(:last-child) {
+                padding-bottom: 10px;
+              }
+              .img {
+                border-radius: 5px;
+                width: 80px;
+                overflow: hidden;
+                img {
+                  width: 100%;
+                }
+              }
+              .info {
+                flex: 1;
+                padding: 0 15px;
+                p {
+                  font-weight: bold;
+                  line-height: 22px;
+                }
+                span {
+                  color: $grey;
+                  font-size: 13px;
+                  &:last-child {
+                    margin-left: 10px;
+                  }
+                }
+              }
+              .price {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                font-weight: bold;
+              }
+            }
+          }
+          &__total {
+            border-top: 1px solid $orange;
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 15px;
+            margin-top: 15px;
+            .box {
+              border-bottom: 1px solid $orange;
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+              max-width: 200px;
+              font-size: 18px;
+              padding: 0 5px 15px;
+              span {
+                font-weight: bold;
+              }
+              strong {
+                color: $orange;
+              }
+            }
+          }
+        }
       }
       .modal-footer {
         display: flex;
