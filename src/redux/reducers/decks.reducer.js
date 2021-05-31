@@ -7,6 +7,8 @@ const initialState = {
   totalPages: 1,
   loading: false,
   error: "",
+  searchField: "",
+  cateField: "All",
   selectedDecks: null,
   singleDecks: [],
   comment: [],
@@ -50,6 +52,14 @@ const decksReducer = (state = initialState, action) => {
       break;
     case types.DELETE_SINGLE_SUCCESS:
       state.singleDecks = {};
+      state.loading = false;
+      break;
+    case types.SEARCH_DECKS:
+      state.searchField = payload;
+      state.loading = false;
+      break;
+    case types.CATE_DECKS:
+      state.cateField = payload;
       state.loading = false;
       break;
     default:

@@ -1,6 +1,7 @@
 import noimg from "../noimg.jpeg";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { decksActions } from "../redux/actions/decks.actions";
 import Breadcrumb from "../components/Breadcrumb";
@@ -10,6 +11,7 @@ import tarot from "../img/collections/tarot.jpeg";
 import oracle from "../img/collections/oracle.jpeg";
 
 const HomePage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sale = useSelector((state) => state.decks.sale.data);
   const decks = useSelector((state) => state.decks.decks.data);
@@ -86,16 +88,30 @@ const HomePage = () => {
                 </Link>
               </div>
               <div className="collection__item">
-                <Link to="/collection/tarot" className="item item--01">
+                <button
+                  className="item item--01"
+                  onClick={() => {
+                    history.push("/products");
+                    dispatch(decksActions.searchDecks(`&category=Tarot`));
+                    dispatch(decksActions.cateDecks("Tarot"));
+                  }}
+                >
                   <img src={tarot} alt="Tarot" />
                   <span>Tarot</span>
-                </Link>
+                </button>
               </div>
               <div className="collection__item">
-                <Link to="/collection/oracle" className="item item--02">
+                <button
+                  className="item item--02"
+                  onClick={() => {
+                    history.push("/products");
+                    dispatch(decksActions.searchDecks(`&category=Oracle`));
+                    dispatch(decksActions.cateDecks("Oracle"));
+                  }}
+                >
                   <img src={oracle} alt="Oracle" />
                   <span>Oracle</span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -105,9 +121,16 @@ const HomePage = () => {
               <p className="txt">
                 Sale up to <strong>50%</strong> for several items.
               </p>
-              <Link to="/sale" className="btn-view btn-view--white">
+              <button
+                className="btn-view btn-view--white"
+                onClick={() => {
+                  history.push("/products");
+                  dispatch(decksActions.searchDecks(`&sale=true`));
+                  dispatch(decksActions.cateDecks("Sale"));
+                }}
+              >
                 <span>View All</span>
-              </Link>
+              </button>
               <ul className="list">
                 {sale &&
                   sale.data.decks.map((deck) => (

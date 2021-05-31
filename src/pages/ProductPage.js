@@ -12,27 +12,29 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
-  const [searchInput, setSearchInput] = useState("");
-  const [cateStt, setCateStt] = useState("All");
+  const searchField = useSelector((state) => state.decks.searchField);
+  const cateField = useSelector((state) => state.decks.cateField);
+
   const [showFilter, setShowFilter] = useState(Array(2).fill(false));
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(decks);
+  // console.log(decks);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchInput(`&name=${e.target.searchInput.value}`);
+    dispatch(decksActions.searchDecks(`&name=${e.target.searchInput.value}`));
     if (e.target.searchInput.value) {
-      setCateStt("");
+      dispatch(decksActions.cateDecks(""));
     } else {
-      setCateStt("All");
+      dispatch(decksActions.cateDecks("All"));
     }
     e.target.reset();
   };
 
   useEffect(() => {
-    dispatch(decksActions.getListOfDecks(currentPage, searchInput, "decks"));
-  }, [dispatch, currentPage, searchInput]);
+    dispatch(decksActions.getListOfDecks(currentPage, searchField, "decks"));
+    // dispatch(decksActions.searchDecks(''));
+  }, [dispatch, currentPage, searchField]);
 
   return (
     <div id="products" className="products bg-grey">
@@ -64,13 +66,22 @@ const ProductPage = () => {
           </li>
           <li className="filter">
             <button
-              className={`${cateStt === "All" ? "active" : ""}`}
+              className={`${cateField === "All" ? "active" : ""}`}
               onClick={() => {
-                setCateStt("All");
-                setSearchInput(``);
+                dispatch(decksActions.cateDecks("All"));
+                dispatch(decksActions.searchDecks(""));
               }}
             >
               All
+            </button>
+            <button
+              className={`${cateField === "Sale" ? "active" : ""}`}
+              onClick={() => {
+                dispatch(decksActions.cateDecks("Sale"));
+                dispatch(decksActions.searchDecks("&sale=true"));
+              }}
+            >
+              Sale
             </button>
           </li>
           <li
@@ -104,10 +115,10 @@ const ProductPage = () => {
               decks.data.categories.map((cate) => (
                 <button
                   key={cate._id}
-                  className={`${cateStt === cate._id ? "active" : ""}`}
+                  className={`${cateField === cate._id ? "active" : ""}`}
                   onClick={() => {
-                    setCateStt(cate._id);
-                    setSearchInput(`&category=${cate._id}`);
+                    dispatch(decksActions.cateDecks(cate._id));
+                    dispatch(decksActions.searchDecks(`&category=${cate._id}`));
                   }}
                 >
                   {cate._id}
@@ -145,10 +156,10 @@ const ProductPage = () => {
               decks.data.genres.map((genre) => (
                 <button
                   key={genre._id}
-                  className={`${cateStt === genre._id ? "active" : ""}`}
+                  className={`${cateField === genre._id ? "active" : ""}`}
                   onClick={() => {
-                    setCateStt(genre._id);
-                    setSearchInput(`&genres=${genre._id}`);
+                    dispatch(decksActions.cateDecks(genre._id));
+                    dispatch(decksActions.searchDecks(`&genres=${genre._id}`));
                   }}
                 >
                   {genre._id}
@@ -188,18 +199,14 @@ const ProductPage = () => {
         ) : (
           <p className="products__no-item">
             Don't have any products.
-            {searchInput ? (
-              <button
-                onClick={() => {
-                  setCateStt("All");
-                  setSearchInput(``);
-                }}
-              >
-                Go back
-              </button>
-            ) : (
-              <Link to="/">Go home</Link>
-            )}
+            <button
+              onClick={() => {
+                dispatch(decksActions.cateDecks("All"));
+                dispatch(decksActions.searchDecks(""));
+              }}
+            >
+              Go back
+            </button>
           </p>
         )}
         {totalPage > 1 && decks && decks.data.decks.length ? (

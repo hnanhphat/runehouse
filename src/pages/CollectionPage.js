@@ -1,10 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { decksActions } from "../redux/actions/decks.actions";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 
 const CollectionPage = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const collections = [
     "All",
@@ -19,8 +22,10 @@ const CollectionPage = () => {
     "Accessories",
   ];
 
-  const handleClick = () => {
+  const handleClick = (cate) => {
     history.push("/products");
+    dispatch(decksActions.searchDecks(`&category=${cate}`));
+    dispatch(decksActions.cateDecks(cate));
   };
 
   return (
@@ -31,7 +36,7 @@ const CollectionPage = () => {
         <ul className="collection__list">
           {collections.map((collection, i) => (
             <li key={collection}>
-              <button onClick={handleClick}>
+              <button onClick={() => handleClick(collection)}>
                 <div className={`img img--${i + 1}`}></div>
                 <p className="txt">{collection}</p>
               </button>

@@ -70,6 +70,14 @@ const deleteDecks = (id) => async (dispatch) => {
   }
 };
 
+const searchDecks = (data) => (dispatch) => {
+  dispatch({ type: types.SEARCH_DECKS, payload: data });
+};
+
+const cateDecks = (data) => (dispatch) => {
+  dispatch({ type: types.CATE_DECKS, payload: data });
+};
+
 export const decksActions = {
   createDecks,
   getListOfDecks,
@@ -77,4 +85,6 @@ export const decksActions = {
   removeSearch,
   editDecks,
   deleteDecks,
+  searchDecks,
+  cateDecks,
 };
