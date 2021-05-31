@@ -61,10 +61,10 @@ const loginWithFb = (access_token) => async (dispatch) => {
   }
 };
 
-const loginWithGg = (data) => async (dispatch) => {
+const loginWithGg = (access_token) => async (dispatch) => {
   try {
     dispatch({ type: types.GOOGLE_REQUEST, payload: null });
-    const res = await api.post("/auth/login/google", data);
+    const res = await api.post("/auth/login/google", { access_token });
     console.log(res);
     localStorage.setItem("accessToken", res.data.data.accessToken);
     localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
