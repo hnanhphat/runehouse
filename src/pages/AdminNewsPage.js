@@ -2,6 +2,9 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../redux/actions/news.actions";
+
+import { Modal } from "react-bootstrap";
+
 import Moment from "react-moment";
 import PaginationBar from "../components/PaginationBar";
 
@@ -15,12 +18,32 @@ import review from "../img/categoris/review.svg";
 const AdminNewsPage = () => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
+  const singleNews = useSelector((state) => state.news.singleNews.data);
   const totalPage = useSelector((state) => state.news.totalPages);
+  const currentUser = useSelector((state) => state.user.currentUser.data);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(news);
+  console.log(singleNews);
+
+  const [showCreate, setShowCreate] = useState(false);
+  const [formCreate, setFormCreate] = useState({
+    title: "",
+    category: "Sharing",
+    content: "",
+  });
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [editTarget, setEditTarget] = useState("");
+  const [formEdit, setFormEdit] = useState({
+    title: "",
+    category: "Sharing",
+    content: "",
+  });
+
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState("");
 
   const filter = [
     { title: "All", image: all, search: "" },
@@ -45,9 +68,59 @@ const AdminNewsPage = () => {
     e.target.reset();
   };
 
+  // CREATE
+  const handleCreateChange = (e) => {
+    console.log({ ...formCreate, [e.target.name]: e.target.value });
+    setFormCreate({ ...formCreate, [e.target.name]: e.target.value });
+  };
+
+  const handleCreateNews = () => {
+    const { title, category, content } = formCreate;
+    dispatch(
+      newsActions.createNews(
+        { title, category, content },
+        currentPage,
+        searchInput
+      )
+    );
+    setShowCreate(false);
+  };
+
+  // EDIT
+  const handleEditChange = (e) => {
+    console.log({ ...formEdit, [e.target.name]: e.target.value });
+    setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
+  };
+
+  const handleEditNews = (val) => {
+    const { title, category, content } = formEdit;
+    dispatch(
+      newsActions.editNews(
+        { title, category, content },
+        val,
+        currentPage,
+        searchInput
+      )
+    );
+    setShowEdit(false);
+  };
+
+  // DELETE
+  const handleDeleteNews = (val) => {
+    dispatch(newsActions.deleteNews(val, currentPage, searchInput));
+  };
+
   useEffect(() => {
     dispatch(newsActions.getListOfNews(currentPage, searchInput));
   }, [dispatch, currentPage, searchInput]);
+
+  useEffect(() => {
+    setFormEdit({
+      title: singleNews && singleNews.data.title,
+      category: singleNews && singleNews.data.category,
+      content: singleNews && singleNews.data.content,
+    });
+  }, [singleNews]);
 
   return (
     <div id="admin-users" className="admin__content">
@@ -72,6 +145,23 @@ const AdminNewsPage = () => {
             </svg>
           </button>
         </form>
+        <button className="create" onClick={() => setShowCreate(true)}>
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="plus"
+            className="svg-inline--fa fa-plus fa-w-14"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <path
+              fill="currentColor"
+              d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+            ></path>
+          </svg>
+        </button>
         <ul className="filter filter--four">
           {filter.map((item) => (
             <li key={item.title}>
@@ -97,12 +187,108 @@ const AdminNewsPage = () => {
                 <div
                   className="img"
                   style={{ backgroundImage: `url('${item.image}')` }}
-                ></div>
+                >
+                  <div className="btns">
+                    <button
+                      onClick={() => {
+                        dispatch(newsActions.getSingleNews(item._id));
+                        setEditTarget(item._id);
+                        setShowEdit(true);
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="pencil-alt"
+                        className="svg-inline--fa fa-pencil-alt fa-w-16"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        ></path>
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDeleteTarget(item._id);
+                        setShowDelete(true);
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="trash-alt"
+                        className="svg-inline--fa fa-trash-alt fa-w-14"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <div
                   className="img img--noimg"
                   style={{ backgroundImage: `url('${noimg}')` }}
-                ></div>
+                >
+                  <div className="btns">
+                    <button
+                      onClick={() => {
+                        dispatch(newsActions.getSingleNews(item._id));
+                        setEditTarget(item._id);
+                        setShowEdit(true);
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="pencil-alt"
+                        className="svg-inline--fa fa-pencil-alt fa-w-16"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        ></path>
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDeleteTarget(item._id);
+                        setShowDelete(true);
+                      }}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="trash-alt"
+                        className="svg-inline--fa fa-trash-alt fa-w-14"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               )}
               <p className="tit">{item.title}</p>
               <div className="group">
@@ -129,6 +315,167 @@ const AdminNewsPage = () => {
       ) : (
         ""
       )}
+
+      {/* CREATE */}
+      <Modal show={showCreate} onHide={() => setShowCreate(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create News</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {currentUser ? (
+            <div className="reader">
+              <div
+                className="reader__avatar"
+                style={{
+                  backgroundImage: `url('${
+                    currentUser.data.avatar ? currentUser.data.avatar : noimg
+                  }')`,
+                }}
+              ></div>
+              <div className="reader__info">
+                <p className="name">{currentUser.data.fullname}</p>
+                <p className="position">{currentUser.data.position}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <form className="form">
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="News Title"
+                  onChange={handleCreateChange}
+                />
+              </div>
+              <div className="item">
+                <select name="category" onChange={handleCreateChange}>
+                  <option value="Sharing">Sharing</option>
+                  <option value="Researching">Researching</option>
+                  <option value="Rating">Rating</option>
+                  <option value="Review">Review</option>
+                </select>
+              </div>
+            </div>
+            <div className="form__group">
+              <div className="item item--full">
+                <textarea
+                  name="content"
+                  placeholder="Description"
+                  onChange={handleCreateChange}
+                ></textarea>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            className={formCreate.title && formCreate.content ? "active" : ""}
+            onClick={handleCreateNews}
+          >
+            Create
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* EDIT  */}
+      <Modal show={showEdit} onHide={() => setShowEdit(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit News</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {singleNews ? (
+            <div className="reader">
+              <div
+                className="reader__avatar"
+                style={{
+                  backgroundImage: `url('${
+                    singleNews.data.author.avatar
+                      ? singleNews.data.author.avatar
+                      : noimg
+                  }')`,
+                }}
+              ></div>
+              <div className="reader__info">
+                <p className="name">{singleNews.data.author.fullname}</p>
+                <p className="position">{singleNews.data.author.position}</p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <form className="form">
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="text"
+                  name="title"
+                  value={formEdit.title}
+                  placeholder="News Title"
+                  onChange={handleEditChange}
+                />
+              </div>
+              <div className="item">
+                <select
+                  name="category"
+                  value={formEdit.category}
+                  onChange={handleEditChange}
+                >
+                  <option value="Sharing">Sharing</option>
+                  <option value="Researching">Researching</option>
+                  <option value="Rating">Rating</option>
+                  <option value="Review">Review</option>
+                </select>
+              </div>
+            </div>
+            <div className="form__group">
+              <div className="item item--full">
+                <textarea
+                  name="content"
+                  value={formEdit.content}
+                  placeholder="Description"
+                  onChange={handleEditChange}
+                ></textarea>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            className={formEdit.title && formEdit.content ? "active" : ""}
+            onClick={() => handleEditNews(editTarget)}
+          >
+            Edit
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* DELETE  */}
+      <Modal show={showDelete} onHide={() => setShowDelete(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete News</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div class="group-btn">
+            <button
+              onClick={() => {
+                handleDeleteNews(deleteTarget);
+                setShowDelete(false);
+              }}
+            >
+              Delete
+            </button>
+            <button onClick={() => setShowDelete(false)}>Cancel</button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

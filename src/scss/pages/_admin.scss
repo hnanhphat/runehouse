@@ -406,8 +406,51 @@
         background-size: cover;
         background-repeat: no-repeat;
         border-radius: 5px;
+        overflow: hidden;
+        position: relative;
         &--noimg {
           background-size: contain;
+        }
+
+        .btns {
+          position: absolute;
+          background: rgba($color: $black, $alpha: 0.5);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          padding: 10px;
+          @include transition_c(all 0.3s ease-out);
+          button {
+            background: $white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+            svg {
+              color: $orange;
+              &.fa-pencil-alt {
+                width: 20px;
+              }
+              &.fa-trash-alt {
+                width: 16px;
+              }
+            }
+          }
+        }
+
+        @include respond(hover) {
+          &:hover {
+            .btns {
+              opacity: 1;
+            }
+          }
         }
       }
       .tit {
