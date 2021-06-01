@@ -110,7 +110,7 @@ const CartPage = () => {
                       className="img"
                       style={{
                         backgroundImage: `url('${
-                          cart.decks.images ? cart.decks.images : noimg
+                          cart.decks.image ? cart.decks.image : noimg
                         }')`,
                       }}
                     ></div>

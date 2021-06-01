@@ -1542,38 +1542,121 @@ input:focus {
   right: 52px;
 }
 
-#admin {
+.admin__container {
   display: flex;
-  min-height: calc(100vh - 80px);
-}
-#admin #admin-sidebar {
-  background: rgba(214, 123, 53, 0.2);
-  width: 25%;
-}
-#admin #admin-content {
-  width: 75%;
-}
-
-.card-page {
+  justify-content: space-between;
   padding: 30px;
 }
-.card-page__controller {
+.admin__sidebar {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  width: 280px;
+  overflow: hidden;
+}
+.admin__sidebar .user__avatar {
+  background: rgba(214, 123, 53, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.admin__sidebar .user__avatar .circle {
+  aspect-ratio: 1/1;
+  border-color: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  width: 100%;
+  max-width: 140px;
+}
+@supports not (aspect-ratio: 1/1) {
+  .admin__sidebar .user__avatar .circle::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+  .admin__sidebar .user__avatar .circle::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+.admin__sidebar .user__info {
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.admin__sidebar .user__info::before {
+  content: "";
+  position: absolute;
+  background: #d67b35;
+  width: calc(100% - 30px);
+  height: 1px;
+  bottom: 0;
+  left: 15px;
+}
+.admin__sidebar .user__info .name {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 28px;
+}
+.admin__sidebar .user__info .position {
+  color: #d67b35;
+  font-size: 15px;
+  text-align: center;
+  line-height: 22px;
+}
+.admin__sidebar .user__info .quote {
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+  line-height: 22px;
+}
+.admin__sidebar .directory li a {
+  background: rgba(214, 123, 53, 0.2);
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 30px);
+  height: 38px;
+  padding: 0 20px;
+  margin: 20px auto;
+}
+.admin__sidebar .directory li a img {
+  width: 18px;
+}
+.admin__sidebar .directory li a span {
+  margin-left: 8px;
+}
+.admin__sidebar .directory li a.active {
+  background: #d67b35;
+}
+.admin__content {
+  width: calc(100% - 320px);
+  overflow: hidden;
+}
+.admin__controller {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 20px 15px;
 }
-.card-page__controller .search {
+.admin__controller .search {
   position: relative;
 }
-.card-page__controller .search input {
+.admin__controller .search input {
   border: 1px solid #dbdbdb;
   border-radius: 2px;
   width: 100%;
   height: 38px;
   padding: 8px 15px 8px 44px;
 }
-.card-page__controller .search button {
+.admin__controller .search button {
   position: absolute;
   background: #000;
   border-radius: 3px;
@@ -1588,17 +1671,17 @@ input:focus {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.card-page__controller .search button svg {
+.admin__controller .search button svg {
   width: 22px;
 }
-.card-page__controller .filter {
+.admin__controller .filter {
   display: flex;
   align-items: center;
   padding-top: 15px;
   margin: 15px -10px 0;
   position: relative;
 }
-.card-page__controller .filter::before {
+.admin__controller .filter::before {
   content: "";
   position: absolute;
   background: #dbdbdb;
@@ -1607,11 +1690,11 @@ input:focus {
   top: 0;
   left: 10px;
 }
-.card-page__controller .filter li {
+.admin__controller .filter li {
   width: calc(100% / 7);
   padding: 0 10px;
 }
-.card-page__controller .filter li button {
+.admin__controller .filter li button {
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   display: flex;
@@ -1621,21 +1704,21 @@ input:focus {
   width: 100%;
   height: 112px;
 }
-.card-page__controller .filter li button img {
+.admin__controller .filter li button img {
   height: 48px;
 }
-.card-page__controller .filter li button span {
+.admin__controller .filter li button span {
   font-size: 16px;
   margin-top: 10px;
 }
-.card-page__controller .filter li button.active {
+.admin__controller .filter li button.active {
   background: rgba(214, 123, 53, 0.02);
   border: 2px solid #d67b35;
 }
-.card-page__controller .filter li button.active span {
+.admin__controller .filter li button.active span {
   color: #d67b35;
 }
-.card-page__list {
+.admin__cards {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -1644,18 +1727,18 @@ input:focus {
   padding: 15px 5px;
   margin-top: 20px;
 }
-.card-page__list li {
+.admin__cards li {
   width: calc(100% / 6);
   padding: 0 10px 20px;
   overflow: hidden;
 }
-.card-page__list li a {
+.admin__cards li a {
   border-radius: 5px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   display: block;
   overflow: hidden;
 }
-.card-page__list li a img {
+.admin__cards li a img {
   width: 100%;
 }
 
