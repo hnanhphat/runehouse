@@ -19,7 +19,7 @@ import cancel from "../img/categoris/cancel.svg";
 
 const OrderPage = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.order.orders.data);
+  const orders = useSelector((state) => state.order.userOrders.data);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 

@@ -285,6 +285,9 @@
             background-size: cover;
             background-repeat: no-repeat;
             border-radius: 5px;
+            &--noimg {
+              background-size: contain;
+            }
           }
           .tit {
             font-size: 15px;

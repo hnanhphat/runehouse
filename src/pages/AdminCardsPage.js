@@ -18,7 +18,15 @@ const AdminCardsPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
 
-  console.log(cards);
+  const filter = [
+    { title: "All", image: all, search: "" },
+    { title: "Major Arcana", image: major, search: "?category=Major%20Arcana" },
+    { title: "Minor Arcana", image: minor, search: "?category=Minor%20Arcana" },
+    { title: "Fire", image: fire, search: "?genre=Wands" },
+    { title: "Water", image: water, search: "?genre=Cups" },
+    { title: "Air", image: air, search: "?genre=Swords" },
+    { title: "Earth", image: earth, search: "?genre=Pentacles" },
+  ];
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -58,103 +66,36 @@ const AdminCardsPage = () => {
             </svg>
           </button>
         </form>
-        <ul className="filter">
-          <li>
-            <button
-              className={`${filterStt === "All" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("All");
-                setSearchInput("");
-              }}
-            >
-              <img src={all} alt="All" />
-              <span>All</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Major Arcana" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Major Arcana");
-                setSearchInput("?category=Major%20Arcana");
-              }}
-            >
-              <img src={major} alt="Major Arcana" />
-              <span>Major Arcana</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Minor Arcana" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Minor Arcana");
-                setSearchInput("?category=Minor%20Arcana");
-              }}
-            >
-              <img src={minor} alt="Minor Arcana" />
-              <span>Minor Arcana</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Fire" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Fire");
-                setSearchInput("?genre=Wands");
-              }}
-            >
-              <img src={fire} alt="Fire" />
-              <span>Fire</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Water" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Water");
-                setSearchInput("?genre=Cups");
-              }}
-            >
-              <img src={water} alt="Water" />
-              <span>Water</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Air" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Air");
-                setSearchInput("?genre=Swords");
-              }}
-            >
-              <img src={air} alt="Air" />
-              <span>Air</span>
-            </button>
-          </li>
-          <li>
-            <button
-              className={`${filterStt === "Earth" ? "active" : ""}`}
-              onClick={() => {
-                setFilterStt("Earth");
-                setSearchInput("?genre=Pentacles");
-              }}
-            >
-              <img src={earth} alt="Earth" />
-              <span>Earth</span>
-            </button>
-          </li>
+        <ul className="filter filter--seven">
+          {filter.map((item) => (
+            <li key={item.title}>
+              <button
+                className={`${filterStt === item.title ? "active" : ""}`}
+                onClick={() => {
+                  setFilterStt(item.title);
+                  setSearchInput(item.search);
+                }}
+              >
+                <img src={item.image} alt={item.title} />
+                <span>{item.title}</span>
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
-      <ul className="admin__cards">
-        {cards &&
-          cards.data.cards.map((card) => (
+      {cards && cards.data.cards.length ? (
+        <ul className="admin__cards">
+          {cards.data.cards.map((card) => (
             <li key={card._id}>
               <Link to="/">
                 <img src={card.image} alt={card.title} />
               </Link>
             </li>
           ))}
-      </ul>
+        </ul>
+      ) : (
+        <p className="admin__no-item">Don't have any Cards.</p>
+      )}
     </div>
   );
 };

@@ -17,7 +17,7 @@ const createOrder = (data) => async (dispatch) => {
   }
 };
 
-const getUserOrders = (pageNumber, option) => async (dispatch) => {
+const getAllOrders = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
     const res = await api.get(`/order?page=${pageNumber + option}`);
@@ -30,6 +30,22 @@ const getUserOrders = (pageNumber, option) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: types.GET_LIST_FAILURE, payload: error.message });
+  }
+};
+
+const getUserOrders = (pageNumber, option) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_USER_REQUEST });
+    const res = await api.get(`/order/me?page=${pageNumber + option}`);
+    dispatch({
+      type: types.GET_USER_SUCCESS,
+      payload: {
+        data: res,
+        totalPages: res.data.data.totalPages,
+      },
+    });
+  } catch (error) {
+    dispatch({ type: types.GET_USER_FAILURE, payload: error.message });
   }
 };
 
@@ -67,6 +83,7 @@ const deleteOrder = (id, pageNumber, option) => async (dispatch) => {
 
 export const orderActions = {
   createOrder,
+  getAllOrders,
   getUserOrders,
   getSingleOrder,
   editOrder,

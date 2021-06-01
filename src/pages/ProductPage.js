@@ -33,7 +33,6 @@ const ProductPage = () => {
 
   useEffect(() => {
     dispatch(decksActions.getListOfDecks(currentPage, searchField, "decks"));
-    // dispatch(decksActions.searchDecks(''));
   }, [dispatch, currentPage, searchField]);
 
   return (

@@ -1,37 +1,42 @@
 import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../redux/actions/user.actions";
-
+import { newsActions } from "../redux/actions/news.actions";
+import Moment from "react-moment";
 import PaginationBar from "../components/PaginationBar";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
-import admin from "../img/categoris/admin.svg";
-import reader from "../img/categoris/reader.svg";
-import user from "../img/categoris/user.svg";
+import sharing from "../img/categoris/sharing.svg";
+import researching from "../img/categoris/researching.svg";
+import rating from "../img/categoris/rating.svg";
+import review from "../img/categoris/review.svg";
 
-const AdminUsersPage = () => {
+const AdminNewsPage = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.allUser.data);
-  const totalPage = useSelector((state) => state.user.totalPages);
-
-  console.log(users);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const news = useSelector((state) => state.news.news.data);
+  const totalPage = useSelector((state) => state.news.totalPages);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  console.log(news);
 
   const filter = [
     { title: "All", image: all, search: "" },
-    { title: "Admin", image: admin, search: "&role=Admin" },
-    { title: "Reader", image: reader, search: "&role=Reader" },
-    { title: "User", image: user, search: "&role=User" },
+    { title: "Sharing", image: sharing, search: "&category=Sharing" },
+    {
+      title: "Researching",
+      image: researching,
+      search: "&category=Researching",
+    },
+    { title: "Rating", image: rating, search: "&category=Rating" },
+    { title: "Review", image: review, search: "&category=Review" },
   ];
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchInput(`&fullname=${e.target.searchInput.value}`);
+    setSearchInput(`&title=${e.target.searchInput.value}`);
     if (e.target.searchInput.value) {
       setFilterStt("");
     } else {
@@ -41,8 +46,8 @@ const AdminUsersPage = () => {
   };
 
   useEffect(() => {
-    dispatch(userActions.getListOfUsers(currentPage, searchInput));
-  }, [dispatch, searchInput, currentPage]);
+    dispatch(newsActions.getListOfNews(currentPage, searchInput));
+  }, [dispatch, currentPage, searchInput]);
 
   return (
     <div id="admin-users" className="admin__content">
@@ -84,36 +89,35 @@ const AdminUsersPage = () => {
           ))}
         </ul>
       </div>
-      {users && users.data.users.length ? (
-        <ul className="admin__users">
-          {users.data.users.map((user) => (
-            <li key={user._id}>
-              <div className="user">
-                <div className="user__avatar">
-                  <div
-                    className="circle"
-                    style={{
-                      backgroundImage: `url('${
-                        user.avatar ? user.avatar : noimg
-                      }')`,
-                    }}
-                  ></div>
-                </div>
-                <div className="user__info">
-                  <div className="name">{user.fullname}</div>
-                  <div className="position">
-                    {user.position === "User" || user.position === "Admin"
-                      ? user.position
-                      : `${user.position} Reader`}
-                  </div>
-                </div>
-                <button>Manage</button>
+      {news && news.data.news.length ? (
+        <ul className="admin__news">
+          {news.data.news.map((item) => (
+            <li key={item._id}>
+              {item.image ? (
+                <div
+                  className="img"
+                  style={{ backgroundImage: `url('${item.image}')` }}
+                ></div>
+              ) : (
+                <div
+                  className="img img--noimg"
+                  style={{ backgroundImage: `url('${noimg}')` }}
+                ></div>
+              )}
+              <p className="tit">{item.title}</p>
+              <div className="group">
+                <span className="time">
+                  <Moment format="MMM D, YYYY" withTitle={item.createdAt} />
+                </span>
+                <span className="comments">
+                  {item.reviews.length ? item.reviews.length : 0} Comment(s)
+                </span>
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any Orders.</p>
+        <p className="admin__no-item">Don't have any News.</p>
       )}
 
       {totalPage > 1 ? (
@@ -129,4 +133,4 @@ const AdminUsersPage = () => {
   );
 };
 
-export default AdminUsersPage;
+export default AdminNewsPage;

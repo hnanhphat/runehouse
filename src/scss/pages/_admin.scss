@@ -1,6 +1,7 @@
 .admin {
   &__container {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
     padding: 30px;
   }
@@ -103,14 +104,16 @@
   }
   &__content {
     width: calc(100% - 320px);
-    overflow: hidden;
   }
   &__controller {
     background: $white;
     border-radius: 10px;
     box-shadow: $bs;
+    display: flex;
+    flex-wrap: wrap;
     padding: 20px 15px;
     .search {
+      flex: 1;
       position: relative;
       input {
         border: 1px solid $grey-light;
@@ -134,9 +137,21 @@
         }
       }
     }
+    .create {
+      background: $black;
+      border-radius: 6px;
+      width: 38px;
+      height: 38px;
+      margin-left: 10px;
+      svg {
+        color: $white;
+        width: 22px;
+      }
+    }
     .filter {
       display: flex;
       align-items: center;
+      width: calc(100% + 20px);
       padding-top: 15px;
       margin: 15px -10px 0;
       position: relative;
@@ -149,8 +164,16 @@
         top: 0;
         left: 10px;
       }
-      li {
+      &--four li {
+        width: calc(100% / 4);
+      }
+      &--six li {
+        width: calc(100% / 6);
+      }
+      &--seven li {
         width: calc(100% / 7);
+      }
+      li {
         padding: 0 10px;
         button {
           border: 1px solid $grey-light;
@@ -179,6 +202,104 @@
       }
     }
   }
+  &__users {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    padding: 30px 15px;
+    margin-top: 20px;
+    li {
+      display: flex;
+      width: calc(100% / 3);
+      padding: 0 15px 30px;
+      .user {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+        &__avatar {
+          background: rgba($color: $orange, $alpha: 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 10px;
+          .circle {
+            aspect-ratio: 1 / 1;
+            border-color: $white;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 4px solid $white;
+            border-radius: 50%;
+            width: 100%;
+            max-width: 140px;
+
+            @supports not (aspect-ratio: 1 / 1) {
+              &::before {
+                float: left;
+                padding-top: 100%;
+                content: "";
+              }
+              &::after {
+                display: block;
+                content: "";
+                clear: both;
+              }
+            }
+          }
+        }
+        &__info {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          padding: 15px;
+          margin-bottom: 15px;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            background: $orange;
+            width: calc(100% - 30px);
+            height: 1px;
+            bottom: 0;
+            left: 15px;
+          }
+          .name {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 28px;
+          }
+          .position {
+            color: $orange;
+            font-size: 15px;
+            text-align: center;
+            line-height: 22px;
+          }
+        }
+        button {
+          background: $orange;
+          border-radius: 100px;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: calc(100% - 20px);
+          height: 38px;
+          font-size: 16px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
   &__cards {
     background: $white;
     border-radius: 10px;
@@ -201,5 +322,293 @@
         }
       }
     }
+  }
+  &__products {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px 5px;
+    margin-top: 20px;
+    li {
+      width: calc(100% / 4);
+      padding: 0 10px 20px;
+      .img {
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        img {
+          width: 100%;
+        }
+        .btns {
+          position: absolute;
+          background: rgba($color: $black, $alpha: 0.5);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          padding: 10px;
+          @include transition_c(all 0.3s ease-out);
+          button {
+            background: $white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+            svg {
+              color: $orange;
+              &.fa-pencil-alt {
+                width: 20px;
+              }
+              &.fa-trash-alt {
+                width: 16px;
+              }
+            }
+          }
+        }
+
+        @include respond(hover) {
+          &:hover {
+            .btns {
+              opacity: 1;
+            }
+          }
+        }
+      }
+      .name {
+        font-weight: bold;
+        padding-top: 5px;
+        line-height: 22px;
+      }
+    }
+  }
+  &__news {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 15px;
+    margin-top: 20px;
+    li {
+      width: calc(100% / 2);
+      padding: 0 15px 30px;
+      .img {
+        aspect-ratio: 5 / 3;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 5px;
+        &--noimg {
+          background-size: contain;
+        }
+      }
+      .tit {
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+      .group {
+        line-height: 22px;
+        .time {
+          color: $grey;
+          font-size: 12px;
+          padding-right: 10px;
+          margin-right: 10px;
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            background: $black;
+            width: 1px;
+            height: 60%;
+            top: 50%;
+            right: 0;
+            @include tranform_c(translateY(-50%));
+          }
+        }
+        .comments {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  &__orders {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    overflow: hidden;
+    margin-top: 20px;
+    li {
+      display: flex;
+      padding: 0 10px;
+      &:first-child {
+        background: rgba($color: $orange, $alpha: 0.2);
+      }
+      .col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        &--01 {
+          width: 40px;
+        }
+        &--02 {
+          flex: 1;
+        }
+        &--03 {
+          width: 180px;
+        }
+        &--04 {
+          width: 140px;
+        }
+        &--05 {
+          width: 140px;
+        }
+        &--06 {
+          width: 50px;
+          svg {
+            color: $orange;
+            width: 14px;
+          }
+        }
+      }
+      span {
+        font-size: 16px;
+        &.status {
+          border: 1px solid currentColor;
+          border-radius: 4px;
+          font-weight: bold;
+          padding: 2px 10px;
+        }
+        &.topay {
+          background: rgba($color: $blue, $alpha: 0.1);
+          color: $blue;
+        }
+        &.toship {
+          background: rgba($color: $yellow, $alpha: 0.1);
+          color: $yellow;
+        }
+        &.toreceive {
+          background: rgba($color: $orange, $alpha: 0.1);
+          color: $orange;
+        }
+        &.completed {
+          background: rgba($color: $green, $alpha: 0.1);
+          color: $green;
+        }
+        &.cancelled {
+          background: rgba($color: $red, $alpha: 0.1);
+          color: $red;
+        }
+      }
+    }
+  }
+  &__appointments {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    overflow: hidden;
+    margin-top: 20px;
+    li {
+      display: flex;
+      padding: 0 10px;
+      &:first-child {
+        background: rgba($color: $orange, $alpha: 0.2);
+      }
+      .col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        &--01 {
+          width: 40px;
+        }
+        &--02 {
+          flex: 1;
+        }
+        &--03 {
+          width: 180px;
+        }
+        &--04 {
+          width: 140px;
+        }
+        &--05 {
+          width: 140px;
+        }
+        &--06 {
+          width: 50px;
+          svg {
+            color: $orange;
+            width: 14px;
+          }
+        }
+      }
+      span {
+        font-size: 16px;
+        &.status {
+          border: 1px solid currentColor;
+          border-radius: 4px;
+          font-weight: bold;
+          padding: 2px 10px;
+        }
+        &.requesting {
+          background: rgba($color: $blue, $alpha: 0.1);
+          color: $blue;
+        }
+        &.processing {
+          background: rgba($color: $orange, $alpha: 0.1);
+          color: $orange;
+        }
+        &.completed {
+          background: rgba($color: $green, $alpha: 0.1);
+          color: $green;
+        }
+        &.cancelled {
+          background: rgba($color: $red, $alpha: 0.1);
+          color: $red;
+        }
+      }
+    }
+  }
+  &__no-item {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $bs;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    margin: 20px 0;
+    a,
+    button {
+      background: $orange;
+      border-radius: 100px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 120px;
+      height: 38px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
+  .pagination {
+    width: 100%;
   }
 }

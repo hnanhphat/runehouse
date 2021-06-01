@@ -10,6 +10,10 @@ import AdminSidebar from "../components/AdminSidebar";
 // PAGES
 import AdminUsersPage from "../pages/AdminUsersPage";
 import AdminCardsPage from "../pages/AdminCardsPage";
+import AdminProductsPage from "../pages/AdminProductsPage";
+import AdminNewsPage from "../pages/AdminNewsPage";
+import AdminOrdersPage from "../pages/AdminOrdersPage";
+import AdminAppointmentsPage from "../pages/AdminAppointmentsPage";
 
 const AdminLayout = () => {
   const location = useLocation();
@@ -37,6 +41,14 @@ const AdminLayout = () => {
         <Switch>
           <Route exact path="/admin/users" component={AdminUsersPage} />
           <Route exact path="/admin/cards" component={AdminCardsPage} />
+          <Route exact path="/admin/products" component={AdminProductsPage} />
+          <Route exact path="/admin/news" component={AdminNewsPage} />
+          <Route exact path="/admin/orders" component={AdminOrdersPage} />
+          <Route
+            exact
+            path="/admin/appointments"
+            component={AdminAppointmentsPage}
+          />
         </Switch>
       </div>
     </div>

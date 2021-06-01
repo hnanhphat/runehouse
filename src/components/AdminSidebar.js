@@ -11,7 +11,7 @@ import products from "../img/categoris/products.svg";
 import news from "../img/categoris/news.svg";
 import orders from "../img/categoris/orders.svg";
 import appointments from "../img/categoris/appointments.svg";
-import interviews from "../img/categoris/interviews.svg";
+// import interviews from "../img/categoris/interviews.svg";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -25,7 +25,7 @@ const AdminSidebar = () => {
     { title: "news", image: news },
     { title: "orders", image: orders },
     { title: "appointments", image: appointments },
-    { title: "interviews", image: interviews },
+    // { title: "interviews", image: interviews },
   ];
 
   useEffect(() => {
@@ -56,18 +56,18 @@ const AdminSidebar = () => {
         ""
       )}
       <ul className="directory">
-        {directory.map((link) => (
-          <li>
+        {directory.map((item) => (
+          <li key={item.title}>
             <Link
-              to={`/admin/${link.title}`}
+              to={`/admin/${item.title}`}
               className={
-                location.pathname.replace("/admin/", "") === link.title
+                location.pathname.replace("/admin/", "") === item.title
                   ? "active"
                   : ""
               }
             >
-              <img src={link.image} alt={link.title} />
-              <span>{link.title[0].toUpperCase() + link.title.slice(1)}</span>
+              <img src={item.image} alt={item.title} />
+              <span>{item.title[0].toUpperCase() + item.title.slice(1)}</span>
             </Link>
           </li>
         ))}

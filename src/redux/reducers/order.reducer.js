@@ -2,6 +2,7 @@ import * as types from "../constants/order.constants";
 
 const initialState = {
   orders: [],
+  userOrders: [],
   singleOrders: [],
   totalPages: 1,
   loading: false,
@@ -13,6 +14,7 @@ const cartReducer = (state = initialState, action) => {
   switch (type) {
     case types.CREATE_ORDER_REQUEST:
     case types.GET_LIST_REQUEST:
+    case types.GET_USER_REQUEST:
     case types.GET_SINGLE_REQUEST:
     case types.EDIT_SINGLE_REQUEST:
     case types.DELETE_SINGLE_REQUEST:
@@ -20,6 +22,7 @@ const cartReducer = (state = initialState, action) => {
       break;
     case types.CREATE_ORDER_FAILURE:
     case types.GET_LIST_FAILURE:
+    case types.GET_USER_FAILURE:
     case types.GET_SINGLE_FAILURE:
     case types.EDIT_SINGLE_FAILURE:
     case types.DELETE_SINGLE_FAILURE:
@@ -31,6 +34,11 @@ const cartReducer = (state = initialState, action) => {
       break;
     case types.GET_LIST_SUCCESS:
       state.orders = payload.data;
+      state.totalPages = payload.totalPages;
+      state.loading = false;
+      break;
+    case types.GET_USER_SUCCESS:
+      state.userOrders = payload.data;
       state.totalPages = payload.totalPages;
       state.loading = false;
       break;

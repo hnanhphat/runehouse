@@ -1,32 +1,35 @@
-import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../redux/actions/user.actions";
+import { appointmentActions } from "../redux/actions/appointment.actions";
 
 import PaginationBar from "../components/PaginationBar";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
-import admin from "../img/categoris/admin.svg";
-import reader from "../img/categoris/reader.svg";
-import user from "../img/categoris/user.svg";
+import requesting from "../img/categoris/requesting.svg";
+import processing from "../img/categoris/processing.svg";
+import completed from "../img/categoris/completed.svg";
+import cancelled from "../img/categoris/cancel.svg";
 
-const AdminUsersPage = () => {
+const AdminAppointmentsPage = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.allUser.data);
-  const totalPage = useSelector((state) => state.user.totalPages);
-
-  console.log(users);
+  const appointments = useSelector(
+    (state) => state.appointment.appointments.data
+  );
+  const totalPage = useSelector((state) => state.appointment.totalPages);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
 
+  console.log(appointments);
+
   const filter = [
     { title: "All", image: all, search: "" },
-    { title: "Admin", image: admin, search: "&role=Admin" },
-    { title: "Reader", image: reader, search: "&role=Reader" },
-    { title: "User", image: user, search: "&role=User" },
+    { title: "Requesting", image: requesting, search: "&role=Admin" },
+    { title: "Processing", image: processing, search: "&role=Reader" },
+    { title: "Completed", image: completed, search: "&role=User" },
+    { title: "Cancelled", image: cancelled, search: "&role=User" },
   ];
 
   const handleSearch = (e) => {
@@ -41,7 +44,9 @@ const AdminUsersPage = () => {
   };
 
   useEffect(() => {
-    dispatch(userActions.getListOfUsers(currentPage, searchInput));
+    dispatch(
+      appointmentActions.getListOfAppointments(currentPage, searchInput)
+    );
   }, [dispatch, searchInput, currentPage]);
 
   return (
@@ -84,36 +89,53 @@ const AdminUsersPage = () => {
           ))}
         </ul>
       </div>
-      {users && users.data.users.length ? (
-        <ul className="admin__users">
-          {users.data.users.map((user) => (
-            <li key={user._id}>
-              <div className="user">
-                <div className="user__avatar">
-                  <div
-                    className="circle"
-                    style={{
-                      backgroundImage: `url('${
-                        user.avatar ? user.avatar : noimg
-                      }')`,
-                    }}
-                  ></div>
-                </div>
-                <div className="user__info">
-                  <div className="name">{user.fullname}</div>
-                  <div className="position">
-                    {user.position === "User" || user.position === "Admin"
-                      ? user.position
-                      : `${user.position} Reader`}
-                  </div>
-                </div>
-                <button>Manage</button>
+      {appointments && appointments.data.appointments.length ? (
+        <ul className="admin__appointments">
+          <li>
+            <div className="col col--01">
+              <strong>#</strong>
+            </div>
+            <div className="col col--02">
+              <strong>Order</strong>
+            </div>
+            <div className="col col--03">
+              <strong>Date</strong>
+            </div>
+            <div className="col col--04">
+              <strong>Type</strong>
+            </div>
+            <div className="col col--05">
+              <strong>Status</strong>
+            </div>
+            <div className="col col--06"></div>
+          </li>
+          {appointments.data.appointments.map((appointment, i) => (
+            <li key={appointment._id}>
+              <div className="col col--01">
+                <span>{i + 1}</span>
               </div>
+              <div className="col col--02">
+                <button>
+                  <span>#{appointment._id}</span>
+                </button>
+              </div>
+              <div className="col col--03">
+                <span>{appointment.appointmentDate}</span>
+              </div>
+              <div className="col col--04">
+                <span>{appointment.serviceType}</span>
+              </div>
+              <div className="col col--05">
+                <span className={`status ${appointment.status.toLowerCase()}`}>
+                  {appointment.status}
+                </span>
+              </div>
+              <div className="col col--06"></div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any Orders.</p>
+        <p className="admin__no-item">Don't have any Appointments.</p>
       )}
 
       {totalPage > 1 ? (
@@ -129,4 +151,4 @@ const AdminUsersPage = () => {
   );
 };
 
-export default AdminUsersPage;
+export default AdminAppointmentsPage;
