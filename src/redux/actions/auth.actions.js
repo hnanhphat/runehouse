@@ -44,6 +44,7 @@ const loginWithFb = (access_token) => async (dispatch) => {
     const res = await api.post("/auth/login/facebook", { access_token });
     localStorage.setItem("accessToken", res.data.data.accessToken);
     localStorage.setItem("isAdmin", res.data.data.user.position);
+    localStorage.setItem("language", "en");
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));
@@ -65,6 +66,7 @@ const loginWithGg = (access_token) => async (dispatch) => {
     const res = await api.post("/auth/login/google", { access_token });
     localStorage.setItem("accessToken", res.data.data.accessToken);
     localStorage.setItem("isAdmin", res.data.data.user.position);
+    localStorage.setItem("language", "en");
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));
