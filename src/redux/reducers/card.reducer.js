@@ -2,6 +2,7 @@ import * as types from "../constants/card.constants";
 
 const initialState = {
   cards: [],
+  single: [],
   random: [],
   loading: false,
   error: "",
@@ -12,11 +13,13 @@ const cardReducer = (state = initialState, action) => {
   switch (type) {
     case types.CREATE_CARD_REQUEST:
     case types.GET_LIST_REQUEST:
+    case types.GET_SINGLE_REQUEST:
     case types.GET_RANDOM_REQUEST:
       state.loading = true;
       break;
     case types.CREATE_CARD_FAILURE:
     case types.GET_LIST_FAILURE:
+    case types.GET_SINGLE_FAILURE:
     case types.GET_RANDOM_FAILURE:
       state.error = payload;
       state.loading = false;
@@ -26,6 +29,10 @@ const cardReducer = (state = initialState, action) => {
       break;
     case types.GET_LIST_SUCCESS:
       state.cards = payload;
+      state.loading = false;
+      break;
+    case types.GET_SINGLE_SUCCESS:
+      state.single = payload;
       state.loading = false;
       break;
     case types.GET_RANDOM_SUCCESS:

@@ -52,7 +52,6 @@ const editDecks =
     try {
       dispatch({ type: types.EDIT_SINGLE_REQUEST, payload: null });
       const res = await api.put(`/decks/${id}`, data);
-      dispatch(routeActions.redirect("/products"));
       dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
       toast.success(res.data.message);
       dispatch(getListOfDecks(pageNumber, option, storage));
@@ -66,7 +65,6 @@ const deleteDecks = (id, pageNumber, option, storage) => async (dispatch) => {
     dispatch({ type: types.DELETE_SINGLE_REQUEST, payload: null });
     const res = await api.delete(`/decks/${id}`);
     dispatch({ type: types.DELETE_SINGLE_SUCCESS, payload: res });
-    dispatch(routeActions.redirect("/products"));
     toast.success(res.data.message);
     dispatch(getListOfDecks(pageNumber, option, storage));
   } catch (error) {

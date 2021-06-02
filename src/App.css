@@ -1764,11 +1764,13 @@ input:focus {
   padding: 0 15px 30px;
 }
 .admin__users li .user {
+  border: 1px solid rgba(214, 123, 53, 0.2);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  padding-bottom: 15px;
 }
 .admin__users li .user__avatar {
   background: rgba(214, 123, 53, 0.2);
@@ -1859,14 +1861,52 @@ input:focus {
   padding: 0 10px 20px;
   overflow: hidden;
 }
-.admin__cards li a {
-  border-radius: 5px;
+.admin__cards li .img {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   display: block;
   overflow: hidden;
+  position: relative;
 }
-.admin__cards li a img {
+.admin__cards li .img img {
   width: 100%;
+}
+.admin__cards li .img .btns {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  padding: 10px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.admin__cards li .img .btns button {
+  background: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+.admin__cards li .img .btns button:not(:last-child) {
+  margin-bottom: 10px;
+}
+.admin__cards li .img .btns button svg {
+  color: #d67b35;
+  width: 28px;
+}
+@media only screen and (min-width: 48em) {
+  .admin__cards li .img:hover .btns {
+    opacity: 1;
+  }
 }
 .admin__products {
   background: #fff;
@@ -2070,11 +2110,19 @@ input:focus {
   width: 140px;
 }
 .admin__orders li .col--06 {
-  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80px;
 }
 .admin__orders li .col--06 svg {
   color: #d67b35;
-  width: 14px;
+}
+.admin__orders li .col--06 svg.fa-sliders-h {
+  width: 18px;
+}
+.admin__orders li .col--06 svg.fa-trash-alt {
+  width: 16px;
 }
 .admin__orders li span {
   font-size: 16px;
@@ -2141,11 +2189,19 @@ input:focus {
   width: 140px;
 }
 .admin__appointments li .col--06 {
-  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80px;
 }
 .admin__appointments li .col--06 svg {
   color: #d67b35;
-  width: 14px;
+}
+.admin__appointments li .col--06 svg.fa-sliders-h {
+  width: 18px;
+}
+.admin__appointments li .col--06 svg.fa-trash-alt {
+  width: 16px;
 }
 .admin__appointments li span {
   font-size: 16px;

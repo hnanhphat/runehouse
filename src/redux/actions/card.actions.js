@@ -25,6 +25,16 @@ const getListOfCards = (option) => async (dispatch) => {
   }
 };
 
+const getSingleCard = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_SINGLE_REQUEST });
+    const res = await api.get(`/card/me/${id}`);
+    dispatch({ type: types.GET_SINGLE_SUCCESS, payload: res });
+  } catch (error) {
+    dispatch({ type: types.GET_SINGLE_FAILURE, payload: error.message });
+  }
+};
+
 const getRandomCard = (count) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_RANDOM_REQUEST });
@@ -42,6 +52,7 @@ const removeCard = () => async (dispatch) => {
 export const cardActions = {
   createCard,
   getListOfCards,
+  getSingleCard,
   getRandomCard,
   removeCard,
 };

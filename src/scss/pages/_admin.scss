@@ -216,11 +216,13 @@
       width: calc(100% / 3);
       padding: 0 15px 30px;
       .user {
+        border: 1px solid rgba($color: $orange, $alpha: 0.2);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         width: 100%;
         overflow: hidden;
+        padding-bottom: 15px;
         &__avatar {
           background: rgba($color: $orange, $alpha: 0.2);
           display: flex;
@@ -312,13 +314,51 @@
       width: calc(100% / 6);
       padding: 0 10px 20px;
       overflow: hidden;
-      a {
-        border-radius: 5px;
+      .img {
         box-shadow: $bs;
         display: block;
         overflow: hidden;
+        position: relative;
         img {
           width: 100%;
+        }
+
+        .btns {
+          position: absolute;
+          background: rgba($color: $black, $alpha: 0.5);
+          border-radius: 15px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          padding: 10px;
+          @include transition_c(all 0.3s ease-out);
+          button {
+            background: $white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+            svg {
+              color: $orange;
+              width: 28px;
+            }
+          }
+        }
+
+        @include respond(hover) {
+          &:hover {
+            .btns {
+              opacity: 1;
+            }
+          }
         }
       }
     }
@@ -517,10 +557,18 @@
           width: 140px;
         }
         &--06 {
-          width: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 80px;
           svg {
             color: $orange;
-            width: 14px;
+            &.fa-sliders-h {
+              width: 18px;
+            }
+            &.fa-trash-alt {
+              width: 16px;
+            }
           }
         }
       }
@@ -588,10 +636,18 @@
           width: 140px;
         }
         &--06 {
-          width: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 80px;
           svg {
             color: $orange;
-            width: 14px;
+            &.fa-sliders-h {
+              width: 18px;
+            }
+            &.fa-trash-alt {
+              width: 16px;
+            }
           }
         }
       }
