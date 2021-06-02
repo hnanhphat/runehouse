@@ -1,3 +1,4 @@
+import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../redux/actions/order.actions";
@@ -21,13 +22,21 @@ const AdminOrdersPage = () => {
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
-  console.log(orders);
+  console.log(singleOrders);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [orderStatus, setOrderStatus] = useState("All");
   const [searchInput, setSearchInput] = useState("");
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [formEdit, setFormEdit] = useState({
+    status: "",
+  });
+
   const [showDelete, setShowDelete] = useState(false);
   const [target, setTarget] = useState("");
+  const [editStatus, setEditStatus] = useState("");
+
   const [showDetail, setShowDetail] = useState(false);
 
   const filter = [
@@ -51,19 +60,28 @@ const AdminOrdersPage = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(
-      orderActions.editOrder(
-        { status: "Cancelled" },
-        id,
-        currentPage,
-        searchInput
-      )
-    );
+    dispatch(orderActions.deleteOrder(id, currentPage, searchInput));
+  };
+
+  const handleChange = (e) => {
+    setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
+  };
+
+  const handleEdit = (id) => {
+    const { status } = formEdit;
+    dispatch(orderActions.editOrder({ status }, id, currentPage, searchInput));
+    setShowEdit(false);
   };
 
   useEffect(() => {
     dispatch(orderActions.getAllOrders(currentPage, searchInput));
   }, [dispatch, currentPage, searchInput]);
+
+  useEffect(() => {
+    setFormEdit({
+      status: singleOrders && singleOrders.data.status,
+    });
+  }, [singleOrders]);
 
   return (
     <div id="admin-cards" className="admin__content">
@@ -159,8 +177,10 @@ const AdminOrdersPage = () => {
                 <button
                   className="edit"
                   onClick={() => {
-                    setShowDelete(true);
+                    setShowEdit(true);
+                    setEditStatus(order.status);
                     setTarget(order._id);
+                    dispatch(orderActions.getSingleOrder(order._id));
                   }}
                 >
                   <svg
@@ -220,6 +240,65 @@ const AdminOrdersPage = () => {
         ""
       )}
 
+      {/* EDIT  */}
+      <Modal show={showEdit} onHide={() => setShowEdit(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Status</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {singleOrders ? (
+            <div className="reader">
+              <div
+                className="reader__avatar"
+                style={{
+                  backgroundImage: `url('${
+                    singleOrders.data.customer.avatar
+                      ? singleOrders.data.customer.avatar
+                      : noimg
+                  }')`,
+                }}
+              ></div>
+              <div className="reader__info">
+                <p className="name">{singleOrders.data.customer.fullname}</p>
+                <p className="position">
+                  {singleOrders.data.customer.position}
+                </p>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <form className="form">
+            <div className="form__group">
+              <div className="item item--full">
+                <select
+                  name="status"
+                  value={formEdit.status}
+                  onChange={handleChange}
+                >
+                  <option value="To Pay">To Pay</option>
+                  <option value="To Ship">To Ship</option>
+                  <option value="To Receive">To Receive</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            className={formEdit.status !== editStatus ? "active" : ""}
+            onClick={() => handleEdit(target)}
+          >
+            Change
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* DELETE  */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Do you wish to cancel this order?</Modal.Title>
@@ -240,14 +319,33 @@ const AdminOrdersPage = () => {
         </Modal.Body>
       </Modal>
 
+      {/* DETAIL  */}
       <Modal show={showDetail} onHide={() => setShowDetail(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Order Detail</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body className="modal-body--large">
-          {singleOrders ? (
-            <div className="order">
+        {singleOrders ? (
+          <Modal.Body className="modal-body--large">
+            <div className="reader">
+              <div
+                className="reader__avatar"
+                style={{
+                  backgroundImage: `url('${
+                    singleOrders.data.customer.avatar
+                      ? singleOrders.data.customer.avatar
+                      : noimg
+                  }')`,
+                }}
+              ></div>
+              <div className="reader__info">
+                <p className="name">{singleOrders.data.customer.fullname}</p>
+                <p className="position">
+                  {singleOrders.data.customer.position}
+                </p>
+              </div>
+            </div>
+            <div className="order order--admin">
               <div className="order__heading">
                 <p>
                   Phone: <strong>{singleOrders.data.phone}</strong>
@@ -314,10 +412,10 @@ const AdminOrdersPage = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            ""
-          )}
-        </Modal.Body>
+          </Modal.Body>
+        ) : (
+          ""
+        )}
       </Modal>
     </div>
   );

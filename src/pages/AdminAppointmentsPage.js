@@ -1,6 +1,9 @@
+import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appointmentActions } from "../redux/actions/appointment.actions";
+
+import { Modal } from "react-bootstrap";
 
 import PaginationBar from "../components/PaginationBar";
 
@@ -16,13 +19,27 @@ const AdminAppointmentsPage = () => {
   const appointments = useSelector(
     (state) => state.appointment.appointments.data
   );
+  const singleAppointment = useSelector(
+    (state) => state.appointment.singleAppointment.data
+  );
   const totalPage = useSelector((state) => state.appointment.totalPages);
+
+  console.log(singleAppointment);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
 
-  console.log(appointments);
+  const [showEdit, setShowEdit] = useState(false);
+  const [formEdit, setFormEdit] = useState({
+    status: "",
+  });
+
+  const [showDelete, setShowDelete] = useState(false);
+  const [target, setTarget] = useState("");
+  const [editStatus, setEditStatus] = useState("");
+
+  const [showDetail, setShowDetail] = useState(false);
 
   const filter = [
     { title: "All", image: all, search: "" },
@@ -43,11 +60,40 @@ const AdminAppointmentsPage = () => {
     e.target.reset();
   };
 
+  const handleDelete = (id) => {
+    dispatch(
+      appointmentActions.deleteAppointment(id, currentPage, searchInput)
+    );
+  };
+
+  const handleChange = (e) => {
+    setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
+  };
+
+  const handleEdit = (id) => {
+    const { status } = formEdit;
+    dispatch(
+      appointmentActions.editAppointment(
+        { status },
+        id,
+        currentPage,
+        searchInput
+      )
+    );
+    setShowEdit(false);
+  };
+
   useEffect(() => {
     dispatch(
       appointmentActions.getListOfAppointments(currentPage, searchInput)
     );
   }, [dispatch, searchInput, currentPage]);
+
+  useEffect(() => {
+    setFormEdit({
+      status: singleAppointment && singleAppointment.data.status,
+    });
+  }, [singleAppointment]);
 
   return (
     <div id="admin-users" className="admin__content">
@@ -115,7 +161,11 @@ const AdminAppointmentsPage = () => {
                 <span>{i + 1}</span>
               </div>
               <div className="col col--02">
-                <button>
+                <button
+                  onClick={() => {
+                    setShowDetail(true);
+                  }}
+                >
                   <span>#{appointment._id}</span>
                 </button>
               </div>
@@ -134,8 +184,12 @@ const AdminAppointmentsPage = () => {
                 <button
                   className="edit"
                   onClick={() => {
-                    // setShowDelete(true);
-                    // setTarget(order._id);
+                    setShowEdit(true);
+                    setEditStatus(appointment.status);
+                    setTarget(appointment._id);
+                    dispatch(
+                      appointmentActions.getSingleAppointment(appointment._id)
+                    );
                   }}
                 >
                   <svg
@@ -157,8 +211,8 @@ const AdminAppointmentsPage = () => {
                 <button
                   className="trash"
                   onClick={() => {
-                    // setShowDelete(true);
-                    // setTarget(order._id);
+                    setShowDelete(true);
+                    setTarget(appointment._id);
                   }}
                 >
                   <svg
@@ -194,6 +248,199 @@ const AdminAppointmentsPage = () => {
       ) : (
         ""
       )}
+
+      {/* EDIT  */}
+      <Modal show={showEdit} onHide={() => setShowEdit(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Status</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {singleAppointment ? (
+            <div className="reader">
+              <div className="reader__appointment">
+                <div className="img">
+                  <div
+                    className="img__item"
+                    style={{
+                      backgroundImage: `url('${
+                        singleAppointment.data.from.avatar
+                          ? singleAppointment.data.from.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                  <div
+                    className="img__item"
+                    style={{
+                      backgroundImage: `url('${
+                        singleAppointment.data.to.avatar
+                          ? singleAppointment.data.to.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                </div>
+                <div className="info">
+                  <div className="info__item">
+                    <p className="name">
+                      {singleAppointment.data.from.fullname}
+                    </p>
+                    <p className="position">
+                      {singleAppointment.data.from.position}
+                    </p>
+                  </div>
+                  <div className="info__item">
+                    <p className="name">{singleAppointment.data.to.fullname}</p>
+                    <p className="position">
+                      {singleAppointment.data.to.position} Reader
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <form className="form">
+            <div className="form__group">
+              <div className="item item--full">
+                <select
+                  name="status"
+                  value={formEdit.status}
+                  onChange={handleChange}
+                >
+                  <option value="Requesting">Requesting</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            className={formEdit.status !== editStatus ? "active" : ""}
+            onClick={() => handleEdit(target)}
+          >
+            Change
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* DELETE  */}
+      <Modal show={showDelete} onHide={() => setShowDelete(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Do you wish to cancel this order?</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="group-btn">
+            <button
+              onClick={() => {
+                handleDelete(target);
+                setShowDelete(false);
+              }}
+            >
+              Delete
+            </button>
+            <button onClick={() => setShowDelete(false)}>Cancel</button>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* DETAIL  */}
+      <Modal show={showDetail} onHide={() => setShowDetail(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Status</Modal.Title>
+        </Modal.Header>
+
+        {singleAppointment ? (
+          <Modal.Body>
+            <div className="reader">
+              <div className="reader__appointment">
+                <div className="img">
+                  <div
+                    className="img__item"
+                    style={{
+                      backgroundImage: `url('${
+                        singleAppointment.data.from.avatar
+                          ? singleAppointment.data.from.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                  <div
+                    className="img__item"
+                    style={{
+                      backgroundImage: `url('${
+                        singleAppointment.data.to.avatar
+                          ? singleAppointment.data.to.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                </div>
+                <div className="info">
+                  <div className="info__item">
+                    <p className="name">
+                      {singleAppointment.data.from.fullname}
+                    </p>
+                    <p className="position">
+                      {singleAppointment.data.from.position}
+                    </p>
+                  </div>
+                  <div className="info__item">
+                    <p className="name">{singleAppointment.data.to.fullname}</p>
+                    <p className="position">
+                      {singleAppointment.data.to.position} Reader
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="order order--admin order--appointment">
+              <div className="order__heading">
+                <p>
+                  Phone: <strong>{singleAppointment.data.clientPhone}</strong>
+                </p>
+                <p>
+                  Status:{" "}
+                  <strong
+                    className={`status ${singleAppointment.data.status
+                      .toLowerCase()
+                      .replace(" ", "")}`}
+                  >
+                    {singleAppointment.data.status}
+                  </strong>
+                </p>
+              </div>
+              <ul className="order__info">
+                <li>
+                  <div className="col col--half">
+                    <strong>Date</strong>
+                  </div>
+                  <div className="col col--half">
+                    <strong>Type</strong>
+                  </div>
+                </li>
+                <li>
+                  <div className="col col--half">
+                    <span>{singleAppointment.data.appointmentDate}</span>
+                  </div>
+                  <div className="col col--half">
+                    <span>{singleAppointment.data.serviceType}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
     </div>
   );
 };

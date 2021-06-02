@@ -99,7 +99,7 @@ const AdminUsersPage = () => {
                     }}
                   ></div>
                 </div>
-                <div className="user__info">
+                <div className="user__info user__info--un-bd">
                   <div className="name">{user.fullname}</div>
                   <div className="position">
                     {user.position === "User" || user.position === "Admin"
@@ -107,7 +107,7 @@ const AdminUsersPage = () => {
                       : `${user.position} Reader`}
                   </div>
                 </div>
-                <button>Manage</button>
+                {/* <button>Manage</button> */}
               </div>
             </li>
           ))}

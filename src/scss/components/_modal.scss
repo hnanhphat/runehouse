@@ -143,6 +143,59 @@
               line-height: 18px;
             }
           }
+          &__appointment {
+            width: 100%;
+            .img {
+              display: flex;
+              justify-content: space-between;
+              width: 70%;
+              margin: 0 auto;
+              position: relative;
+              &::before {
+                content: "";
+                position: absolute;
+                border-top: 1px dashed $orange;
+                width: calc(100% - 200px);
+                height: 1px;
+                top: 50%;
+                left: 50%;
+                @include tranform_c(translate(-50%, -50%));
+              }
+              &__item {
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border: 2px solid $orange;
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                overflow: hidden;
+                position: relative;
+              }
+            }
+            .info {
+              display: flex;
+              padding-top: 15px;
+              &__item {
+                width: 50%;
+                padding: 0 10px;
+                text-align: center;
+                &:first-child {
+                  border-right: 1px solid $orange;
+                }
+                .name {
+                  font-size: 15px;
+                  font-weight: bold;
+                  line-height: 22px;
+                }
+                .position {
+                  color: $orange;
+                  font-size: 12px;
+                  line-height: 18px;
+                }
+              }
+            }
+          }
         }
         .details {
           &__tit {
@@ -372,6 +425,14 @@
           }
         }
         .order {
+          &--admin {
+            border-top: 1px solid $orange;
+            padding-top: 10px;
+            margin-top: 30px;
+          }
+          &--appointment {
+            margin-bottom: 30px;
+          }
           &__heading {
             border-bottom: 1px solid $orange;
             display: flex;
@@ -436,6 +497,9 @@
                 }
                 &--03 {
                   flex: 1;
+                }
+                &--half {
+                  width: 50%;
                 }
               }
             }

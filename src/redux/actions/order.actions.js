@@ -64,6 +64,7 @@ const editOrder = (data, id, pageNumber, option) => async (dispatch) => {
     dispatch({ type: types.EDIT_SINGLE_REQUEST, payload: null });
     const res = await api.put(`/order/${id}`, data);
     dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
+    dispatch(getAllOrders(pageNumber, option));
     dispatch(getUserOrders(pageNumber, option));
   } catch (error) {
     dispatch({ type: types.EDIT_SINGLE_FAILURE, payload: error.message });
@@ -75,6 +76,7 @@ const deleteOrder = (id, pageNumber, option) => async (dispatch) => {
     dispatch({ type: types.DELETE_SINGLE_REQUEST, payload: null });
     const res = await api.delete(`/order/${id}`);
     dispatch({ type: types.DELETE_SINGLE_SUCCESS, payload: res });
+    dispatch(getAllOrders(pageNumber, option));
     dispatch(getUserOrders(pageNumber, option));
   } catch (error) {
     dispatch({ type: types.DELETE_SINGLE_FAILURE, payload: error.message });

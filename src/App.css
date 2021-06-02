@@ -467,6 +467,63 @@ input:focus {
   font-size: 12px;
   line-height: 18px;
 }
+.modal .modal-dialog .modal-content .modal-body .reader__appointment {
+  width: 100%;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .img {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;
+  position: relative;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .img::before {
+  content: "";
+  position: absolute;
+  border-top: 1px dashed #d67b35;
+  width: calc(100% - 200px);
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .img__item {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 2px solid #d67b35;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .info {
+  display: flex;
+  padding-top: 15px;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .info__item {
+  width: 50%;
+  padding: 0 10px;
+  text-align: center;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .info__item:first-child {
+  border-right: 1px solid #d67b35;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .info__item .name {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 22px;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__appointment .info__item .position {
+  color: #d67b35;
+  font-size: 12px;
+  line-height: 18px;
+}
 .modal .modal-dialog .modal-content .modal-body .details__tit {
   text-align: center;
   padding-bottom: 10px;
@@ -710,6 +767,14 @@ input:focus {
 .modal .modal-dialog .modal-content .modal-body .group-btn button:nth-child(2) {
   background: #000;
 }
+.modal .modal-dialog .modal-content .modal-body .order--admin {
+  border-top: 1px solid #d67b35;
+  padding-top: 10px;
+  margin-top: 30px;
+}
+.modal .modal-dialog .modal-content .modal-body .order--appointment {
+  margin-bottom: 30px;
+}
 .modal .modal-dialog .modal-content .modal-body .order__heading {
   border-bottom: 1px solid #d67b35;
   display: flex;
@@ -777,6 +842,9 @@ input:focus {
 }
 .modal .modal-dialog .modal-content .modal-body .order__info li .col--03 {
   flex: 1;
+}
+.modal .modal-dialog .modal-content .modal-body .order__info li .col--half {
+  width: 50%;
 }
 .modal .modal-dialog .modal-content .modal-body .order__list {
   border-top: 1px solid #d67b35;
@@ -1818,6 +1886,13 @@ input:focus {
   height: 1px;
   bottom: 0;
   left: 15px;
+}
+.admin__users li .user__info--un-bd {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.admin__users li .user__info--un-bd::before {
+  display: none;
 }
 .admin__users li .user__info .name {
   display: flex;
