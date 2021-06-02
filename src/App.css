@@ -379,7 +379,7 @@ input:focus {
 }
 .modal .modal-dialog {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 30px);
   max-width: 740px;
   top: 50%;
   left: 50%;
@@ -1792,6 +1792,9 @@ input:focus {
   .header .hamberger button span::after {
     top: 8px;
   }
+  .header .hamberger button svg {
+    width: 30px;
+  }
   .header .hamberger button.active span {
     background: #fff;
   }
@@ -2743,12 +2746,32 @@ input:focus {
   min-height: calc(100vh - 572px);
   padding: 40px 0 80px;
 }
+@media only screen and (max-width: 48em) {
+  .cart-page .container {
+    flex-direction: column-reverse;
+    padding: 20px 0 40px;
+  }
+}
 .cart-page__details {
+  width: calc(70% - 40px);
+}
+@media only screen and (max-width: 48em) {
+  .cart-page__details {
+    width: 100%;
+    overflow: auto;
+  }
+}
+.cart-page__details ul {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  width: calc(70% - 40px);
+  width: 100%;
   overflow: hidden;
+}
+@media only screen and (max-width: 48em) {
+  .cart-page__details ul {
+    width: 680px;
+  }
 }
 .cart-page__details li {
   background: #fff;
@@ -2895,6 +2918,12 @@ input:focus {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   width: 30%;
   padding: 25px 30px;
+}
+@media only screen and (max-width: 48em) {
+  .cart-page__total {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 .cart-page__total .tit {
   border-bottom: 1px solid #dbdbdb;
@@ -4593,6 +4622,11 @@ input:focus {
   height: 38px;
   padding: 8px 15px 8px 44px;
 }
+@media only screen and (max-width: 48em) {
+  .news-page__sidebar li.search form input {
+    padding: 8px 44px 8px 15px;
+  }
+}
 .news-page__sidebar li.search form button {
   position: absolute;
   background: #000;
@@ -4607,6 +4641,12 @@ input:focus {
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+@media only screen and (max-width: 48em) {
+  .news-page__sidebar li.search form button {
+    left: auto;
+    right: 5px;
+  }
 }
 .news-page__sidebar li.search form button svg {
   width: 22px;
@@ -5247,11 +5287,22 @@ input:focus {
 .order-page .container {
   padding: 40px 0 80px;
 }
+@media only screen and (max-width: 48em) {
+  .order-page .container {
+    padding: 20px 0 40px;
+  }
+}
 .order-page__controller {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 20px 15px;
+}
+@media only screen and (max-width: 48em) {
+  .order-page__controller {
+    overflow: hidden;
+    padding-bottom: 0;
+  }
 }
 .order-page__controller .search {
   position: relative;
@@ -5288,6 +5339,19 @@ input:focus {
   margin: 15px -10px 0;
   position: relative;
 }
+@media only screen and (max-width: 48em) {
+  .order-page__controller .filter {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 15px 0 0;
+  }
+  .order-page__controller .filter li {
+    display: none;
+  }
+  .order-page__controller .filter--active li {
+    display: block;
+  }
+}
 .order-page__controller .filter::before {
   content: "";
   position: absolute;
@@ -5297,9 +5361,21 @@ input:focus {
   top: 0;
   left: 10px;
 }
+@media only screen and (max-width: 48em) {
+  .order-page__controller .filter::before {
+    width: 100%;
+    left: 0;
+  }
+}
 .order-page__controller .filter li {
   width: calc(100% / 6);
   padding: 0 10px;
+}
+@media only screen and (max-width: 48em) {
+  .order-page__controller .filter li {
+    width: calc(50% - 8px);
+    padding: 0 0 16px;
+  }
 }
 .order-page__controller .filter li button {
   border: 1px solid #dbdbdb;
@@ -5325,78 +5401,124 @@ input:focus {
 .order-page__controller .filter li button.active span {
   color: #d67b35;
 }
-.order-page__list {
+.order-page__controller .show {
+  display: none;
+}
+@media only screen and (max-width: 48em) {
+  .order-page__controller .show {
+    background: #d67b35;
+    display: block;
+    margin: 0 -15px;
+    text-align: center;
+  }
+  .order-page__controller .show button {
+    width: 100%;
+    height: 30px;
+    position: relative;
+  }
+  .order-page__controller .show button span {
+    position: absolute;
+    border-top: 10px solid #fff;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  .order-page__controller .show--active button span {
+    -webkit-transform: translate(-50%, -50%) rotate(180deg);
+    -moz-transform: translate(-50%, -50%) rotate(180deg);
+    -ms-transform: translate(-50%, -50%) rotate(180deg);
+    -o-transform: translate(-50%, -50%) rotate(180deg);
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+}
+@media only screen and (max-width: 48em) {
+  .order-page__list {
+    overflow: auto;
+  }
+}
+.order-page__list ul {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-top: 20px;
 }
-.order-page__list li {
+@media only screen and (max-width: 48em) {
+  .order-page__list ul {
+    width: 1024px;
+  }
+}
+.order-page__list ul li {
   display: flex;
   padding: 0 10px;
 }
-.order-page__list li:first-child {
+.order-page__list ul li:first-child {
   background: rgba(214, 123, 53, 0.2);
 }
-.order-page__list li .col {
+.order-page__list ul li .col {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 54px;
 }
-.order-page__list li .col--01 {
+.order-page__list ul li .col--01 {
   width: 40px;
 }
-.order-page__list li .col--02 {
+.order-page__list ul li .col--02 {
   flex: 1;
 }
-.order-page__list li .col--03 {
+.order-page__list ul li .col--03 {
   width: 180px;
 }
-.order-page__list li .col--04 {
+.order-page__list ul li .col--04 {
   width: 140px;
 }
-.order-page__list li .col--05 {
+.order-page__list ul li .col--05 {
   width: 140px;
 }
-.order-page__list li .col--06 {
+.order-page__list ul li .col--06 {
   width: 50px;
 }
-.order-page__list li .col--06 svg {
+.order-page__list ul li .col--06 svg {
   color: #d67b35;
   width: 14px;
 }
-.order-page__list li span {
+.order-page__list ul li span {
   font-size: 16px;
 }
-.order-page__list li span.status {
+.order-page__list ul li span.status {
   border: 1px solid currentColor;
   border-radius: 4px;
   font-weight: bold;
   padding: 2px 10px;
 }
-.order-page__list li span.topay {
+.order-page__list ul li span.topay {
   background: rgba(30, 144, 255, 0.1);
   color: #1e90ff;
 }
-.order-page__list li span.toship {
+.order-page__list ul li span.toship {
   background: rgba(251, 223, 112, 0.1);
   color: #fbdf70;
 }
-.order-page__list li span.toreceive {
+.order-page__list ul li span.toreceive {
   background: rgba(214, 123, 53, 0.1);
   color: #d67b35;
 }
-.order-page__list li span.completed {
+.order-page__list ul li span.completed {
   background: rgba(50, 205, 50, 0.1);
   color: #32cd32;
 }
-.order-page__list li span.cancelled {
+.order-page__list ul li span.cancelled {
   background: rgba(255, 0, 0, 0.1);
   color: #ff0000;
 }
-.order-page__list li.no-item {
+.order-page__list ul li.no-item {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -5410,8 +5532,8 @@ input:focus {
   text-align: center;
   padding: 20px;
 }
-.order-page__list li.no-item a,
-.order-page__list li.no-item button {
+.order-page__list ul li.no-item a,
+.order-page__list ul li.no-item button {
   background: #d67b35;
   border-radius: 100px;
   color: #fff;
@@ -6574,8 +6696,19 @@ input:focus {
   justify-content: space-between;
   padding: 40px 0 80px;
 }
+@media only screen and (max-width: 48em) {
+  .reader-detail .container {
+    padding: 20px 0 40px;
+  }
+}
 .reader-detail__info {
   width: 30%;
+}
+@media only screen and (max-width: 48em) {
+  .reader-detail__info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 .reader-detail__info .user {
   background: #fff;
@@ -6670,6 +6803,11 @@ input:focus {
 }
 .reader-detail__posts {
   width: calc(70% - 40px);
+}
+@media only screen and (max-width: 48em) {
+  .reader-detail__posts {
+    width: 100%;
+  }
 }
 .reader-detail__posts li {
   background: #fff;
@@ -6841,6 +6979,9 @@ input:focus {
   height: 30px;
   font-size: 16px;
 }
+.reader-detail__posts li .bot__lower .group .upper.active {
+  background: #dbdbdb;
+}
 .reader-detail__posts li .bot__lower .group .icons {
   position: absolute;
   background: #fff;
@@ -6864,6 +7005,13 @@ input:focus {
   height: 48px;
   margin: 0 5px;
 }
+@media only screen and (max-width: 48em) {
+  .reader-detail__posts li .bot__lower .group .icons .lower {
+    width: 30px;
+    height: 30px;
+    margin: 0 3px;
+  }
+}
 .reader-detail__posts li .bot__lower .group .icons .lower--like {
   background: url("./img/reactions/like.png") center/cover no-repeat;
 }
@@ -6885,14 +7033,9 @@ input:focus {
 .reader-detail__posts li .bot__lower .group .icons .lower--angry {
   background: url("./img/reactions/angry.png") center/cover no-repeat;
 }
-@media only screen and (min-width: 48em) {
-  .reader-detail__posts li .bot__lower .group:hover .upper {
-    background: #dbdbdb;
-  }
-  .reader-detail__posts li .bot__lower .group:hover .icons {
-    pointer-events: auto;
-    opacity: 1;
-  }
+.reader-detail__posts li .bot__lower .group .icons.active {
+  pointer-events: auto;
+  opacity: 1;
 }
 .reader-detail__posts li .bot__hidden {
   border-top: 1px solid #dbdbdb;
@@ -7076,6 +7219,13 @@ input:focus {
   height: 36px;
   margin: 0 3px;
 }
+@media only screen and (max-width: 48em) {
+  .reader-detail__posts li .bot__hidden .list__item .content .other .group .icons .lower {
+    width: 28px;
+    height: 28px;
+    margin: 0 2px;
+  }
+}
 .reader-detail__posts li .bot__hidden .list__item .content .other .group .icons .lower--like {
   background: url("./img/reactions/like.png") center/cover no-repeat;
 }
@@ -7097,11 +7247,9 @@ input:focus {
 .reader-detail__posts li .bot__hidden .list__item .content .other .group .icons .lower--angry {
   background: url("./img/reactions/angry.png") center/cover no-repeat;
 }
-@media only screen and (min-width: 48em) {
-  .reader-detail__posts li .bot__hidden .list__item .content .other .group:hover .icons {
-    pointer-events: auto;
-    opacity: 1;
-  }
+.reader-detail__posts li .bot__hidden .list__item .content .other .group .icons.active {
+  pointer-events: auto;
+  opacity: 1;
 }
 .reader-detail__posts li .bot__hidden .list__item .content .other .time {
   color: #888;
@@ -7116,6 +7264,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 .reader-detail__posts li .bot__hidden .form .group .avatar {
   background-position: center;
@@ -7135,20 +7284,57 @@ input:focus {
   padding: 8px 12px;
   line-height: 20px;
 }
+.reader-detail__posts li .bot__hidden .form .group button {
+  position: absolute;
+  background: #d67b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  right: 6px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.reader-detail__posts li .bot__hidden .form .group button svg {
+  color: #fff;
+  width: 12px;
+}
 .reader-detail__posts li .bot__hidden .form .note {
   font-size: 12px;
   padding-left: 42px;
   line-height: 20px;
 }
+@media only screen and (max-width: 48em) {
+  .reader-detail__posts li .bot__hidden .form .note {
+    display: none;
+  }
+}
 
 .readers .container {
   padding: 40px 0 80px;
+}
+@media only screen and (max-width: 48em) {
+  .readers .container {
+    padding: 20px 0 40px;
+  }
 }
 .readers__controller {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 20px 15px;
+}
+@media only screen and (max-width: 48em) {
+  .readers__controller {
+    overflow: hidden;
+    padding-bottom: 0;
+  }
 }
 .readers__controller .search {
   position: relative;
@@ -7159,6 +7345,11 @@ input:focus {
   width: 100%;
   height: 38px;
   padding: 8px 15px 8px 44px;
+}
+@media only screen and (max-width: 48em) {
+  .readers__controller .search input {
+    padding: 8px 44px 8px 15px;
+  }
 }
 .readers__controller .search button {
   position: absolute;
@@ -7175,6 +7366,12 @@ input:focus {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+@media only screen and (max-width: 48em) {
+  .readers__controller .search button {
+    left: auto;
+    right: 5px;
+  }
+}
 .readers__controller .search button svg {
   width: 22px;
 }
@@ -7185,6 +7382,19 @@ input:focus {
   margin: 15px -10px 0;
   position: relative;
 }
+@media only screen and (max-width: 48em) {
+  .readers__controller .filter {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 15px 0 0;
+  }
+  .readers__controller .filter li {
+    display: none;
+  }
+  .readers__controller .filter--active li {
+    display: block;
+  }
+}
 .readers__controller .filter::before {
   content: "";
   position: absolute;
@@ -7194,9 +7404,21 @@ input:focus {
   top: 0;
   left: 10px;
 }
+@media only screen and (max-width: 48em) {
+  .readers__controller .filter::before {
+    width: 100%;
+    left: 0;
+  }
+}
 .readers__controller .filter li {
   width: calc(100% / 6);
   padding: 0 10px;
+}
+@media only screen and (max-width: 48em) {
+  .readers__controller .filter li {
+    width: calc(100% / 2 - 8px);
+    padding: 0 0 16px;
+  }
 }
 .readers__controller .filter li button {
   border: 1px solid #dbdbdb;
@@ -7222,6 +7444,42 @@ input:focus {
 .readers__controller .filter li button.active span {
   color: #d67b35;
 }
+.readers__controller .show {
+  display: none;
+}
+@media only screen and (max-width: 48em) {
+  .readers__controller .show {
+    background: #d67b35;
+    display: block;
+    margin: 0 -15px;
+    text-align: center;
+  }
+  .readers__controller .show button {
+    width: 100%;
+    height: 30px;
+    position: relative;
+  }
+  .readers__controller .show button span {
+    position: absolute;
+    border-top: 10px solid #fff;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  .readers__controller .show--active button span {
+    -webkit-transform: translate(-50%, -50%) rotate(180deg);
+    -moz-transform: translate(-50%, -50%) rotate(180deg);
+    -ms-transform: translate(-50%, -50%) rotate(180deg);
+    -o-transform: translate(-50%, -50%) rotate(180deg);
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+}
 .readers__list {
   display: flex;
   flex-wrap: wrap;
@@ -7238,12 +7496,25 @@ input:focus {
   margin-bottom: 20px;
   overflow: hidden;
 }
+@media only screen and (max-width: 48em) {
+  .readers__list li {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
 .readers__list li .avatar {
   background: rgba(214, 123, 53, 0.2);
   width: 40%;
   height: 100%;
   min-height: 250px;
   position: relative;
+}
+@media only screen and (max-width: 48em) {
+  .readers__list li .avatar {
+    width: 100%;
+    height: auto;
+    min-height: 180px;
+  }
 }
 .readers__list li .avatar__circle {
   aspect-ratio: 1/1;
@@ -7264,6 +7535,11 @@ input:focus {
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+@media only screen and (max-width: 48em) {
+  .readers__list li .avatar__circle {
+    width: 44%;
+  }
+}
 @supports not (aspect-ratio: 1/1) {
   .readers__list li .avatar__circle::before {
     float: left;
@@ -7279,6 +7555,11 @@ input:focus {
 .readers__list li .info {
   width: 60%;
   padding: 30px;
+}
+@media only screen and (max-width: 48em) {
+  .readers__list li .info {
+    width: 100%;
+  }
 }
 .readers__list li .info .name {
   font-size: 18px;
@@ -7359,12 +7640,23 @@ input:focus {
   margin-bottom: 15px;
   text-transform: uppercase;
 }
+@media only screen and (max-width: 48em) {
+  .readers__hiring .heading {
+    font-size: 32px;
+  }
+}
 .readers__hiring button {
   background: #fff;
   border-radius: 100px;
   color: #d67b35;
   font-size: 18px;
   padding: 12px 20px;
+}
+@media only screen and (max-width: 48em) {
+  .readers__hiring button {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
 }
 
 .verify__area {

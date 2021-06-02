@@ -33,6 +33,11 @@ const ReaderDetailPage = () => {
     clientPhone: "",
   });
 
+  const [showReaction, setShowReaction] = useState(false);
+  const [showReviewReaction, setShowReviewReaction] = useState(
+    Array(100).fill(false)
+  );
+
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
       targetType: typeVal,
@@ -242,14 +247,16 @@ const ReaderDetailPage = () => {
                       <div className="bot__lower">
                         <div className="group">
                           <button
-                            className="upper"
+                            className={`upper ${showReaction ? "active" : ""}`}
                             onClick={() =>
-                              handleReaction("News", el._id, "like")
+                              setShowReaction((state) => (state ? false : true))
                             }
                           >
                             Like
                           </button>
-                          <div className="icons">
+                          <div
+                            className={`icons ${showReaction ? "active" : ""}`}
+                          >
                             <button
                               className="lower lower--like"
                               onClick={() =>
@@ -368,7 +375,7 @@ const ReaderDetailPage = () => {
                               showAllComments ? "list--all" : ""
                             }`}
                           >
-                            {el.reviews.map((review) => (
+                            {el.reviews.map((review, i) => (
                               <div className="list__item" key={review._id}>
                                 <div
                                   className="avatar"
@@ -423,18 +430,22 @@ const ReaderDetailPage = () => {
                                   <div className="other">
                                     <div className="group">
                                       <button
-                                        className="upper"
-                                        onClick={() =>
-                                          handleReaction(
-                                            "Review",
-                                            review._id,
-                                            "like"
-                                          )
-                                        }
+                                        className={`upper ${
+                                          showReviewReaction[i] ? "active" : ""
+                                        }`}
+                                        onClick={() => {
+                                          let arr = [...showReviewReaction];
+                                          arr[i] = arr[i] ? false : true;
+                                          setShowReviewReaction(arr);
+                                        }}
                                       >
                                         Like
                                       </button>
-                                      <div className="icons">
+                                      <div
+                                        className={`icons ${
+                                          showReviewReaction[i] ? "active" : ""
+                                        }`}
+                                      >
                                         <button
                                           className="lower lower--like"
                                           onClick={() =>
@@ -541,6 +552,23 @@ const ReaderDetailPage = () => {
                               name="comment"
                               placeholder="Write a comment ..."
                             />
+                            <button type="submit">
+                              <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                data-prefix="fas"
+                                data-icon="paper-plane"
+                                className="svg-inline--fa fa-paper-plane fa-w-16"
+                                role="img"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                              >
+                                <path
+                                  fill="currentColor"
+                                  d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"
+                                ></path>
+                              </svg>
+                            </button>
                           </div>
                           <p className="note">Press Enter to post.</p>
                         </form>

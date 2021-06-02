@@ -30,6 +30,8 @@ const OrderPage = () => {
   const [target, setTarget] = useState("");
   const [showDetail, setShowDetail] = useState(false);
 
+  const [showMore, setShowMore] = useState(false);
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(`&payment=${e.target.searchInput.value}`);
@@ -82,7 +84,7 @@ const OrderPage = () => {
               </svg>
             </button>
           </form>
-          <ul className="filter">
+          <ul className={`filter ${showMore ? "filter--active" : ""}`}>
             <li>
               <button
                 className={`${orderStatus === "All" ? "active" : ""}`}
@@ -156,89 +158,98 @@ const OrderPage = () => {
               </button>
             </li>
           </ul>
+          <div className={`show ${showMore ? "show--active" : ""}`}>
+            <button
+              onClick={() => setShowMore((state) => (state ? false : true))}
+            >
+              <span></span>
+            </button>
+          </div>
         </div>
         {orders && orders.data.orders.length ? (
-          <ul className="order-page__list">
-            <li>
-              <div className="col col--01">
-                <strong>#</strong>
-              </div>
-              <div className="col col--02">
-                <strong>Order</strong>
-              </div>
-              <div className="col col--03">
-                <strong>Payment</strong>
-              </div>
-              <div className="col col--04">
-                <strong>Total</strong>
-              </div>
-              <div className="col col--05">
-                <strong>Status</strong>
-              </div>
-              <div className="col col--06"></div>
-            </li>
-            {orders.data.orders.map((order, i) => (
-              <li key={order._id}>
+          <div className="order-page__list">
+            <ul>
+              <li>
                 <div className="col col--01">
-                  <span>{i + 1}</span>
+                  <strong>#</strong>
                 </div>
                 <div className="col col--02">
-                  <button
-                    onClick={() => {
-                      setShowDetail(true);
-                      dispatch(orderActions.getSingleOrder(order._id));
-                    }}
-                  >
-                    <span>#{order._id}</span>
-                  </button>
+                  <strong>Order</strong>
                 </div>
                 <div className="col col--03">
-                  <span>{order.payment}</span>
+                  <strong>Payment</strong>
                 </div>
                 <div className="col col--04">
-                  <span>${order.total}</span>
+                  <strong>Total</strong>
                 </div>
                 <div className="col col--05">
-                  <span
-                    className={`status ${order.status
-                      .toLowerCase()
-                      .replace(" ", "")}`}
-                  >
-                    {order.status}
-                  </span>
+                  <strong>Status</strong>
                 </div>
-                <div className="col col--06">
-                  {order.status !== "To Pay" && order.status !== "To Ship" ? (
-                    ""
-                  ) : (
+                <div className="col col--06"></div>
+              </li>
+              {orders.data.orders.map((order, i) => (
+                <li key={order._id}>
+                  <div className="col col--01">
+                    <span>{i + 1}</span>
+                  </div>
+                  <div className="col col--02">
                     <button
-                      className="trash"
                       onClick={() => {
-                        setShowDelete(true);
-                        setTarget(order._id);
+                        setShowDetail(true);
+                        dispatch(orderActions.getSingleOrder(order._id));
                       }}
                     >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="trash-alt"
-                        className="svg-inline--fa fa-trash-alt fa-w-14"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
-                        ></path>
-                      </svg>
+                      <span>#{order._id}</span>
                     </button>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+                  </div>
+                  <div className="col col--03">
+                    <span>{order.payment}</span>
+                  </div>
+                  <div className="col col--04">
+                    <span>${order.total}</span>
+                  </div>
+                  <div className="col col--05">
+                    <span
+                      className={`status ${order.status
+                        .toLowerCase()
+                        .replace(" ", "")}`}
+                    >
+                      {order.status}
+                    </span>
+                  </div>
+                  <div className="col col--06">
+                    {order.status !== "To Pay" && order.status !== "To Ship" ? (
+                      ""
+                    ) : (
+                      <button
+                        className="trash"
+                        onClick={() => {
+                          setShowDelete(true);
+                          setTarget(order._id);
+                        }}
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="trash-alt"
+                          className="svg-inline--fa fa-trash-alt fa-w-14"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                          ></path>
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : (
           <ul className="order-page__list">
             <li className="no-item">Don't have any Order.</li>

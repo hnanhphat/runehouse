@@ -6,13 +6,27 @@
     justify-content: space-between;
     min-height: calc(100vh - 572px);
     padding: 40px 0 80px;
+    @include respond(phone) {
+      flex-direction: column-reverse;
+      padding: 20px 0 40px;
+    }
   }
   &__details {
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $bs;
     width: calc(70% - 40px);
-    overflow: hidden;
+    @include respond(phone) {
+      width: 100%;
+      overflow: auto;
+    }
+    ul {
+      background: $white;
+      border-radius: 10px;
+      box-shadow: $bs;
+      width: 100%;
+      overflow: hidden;
+      @include respond(phone) {
+        width: 680px;
+      }
+    }
     li {
       background: $white;
       display: flex;
@@ -144,6 +158,10 @@
     box-shadow: $bs;
     width: 30%;
     padding: 25px 30px;
+    @include respond(phone) {
+      width: 100%;
+      margin-bottom: 20px;
+    }
     .tit {
       border-bottom: 1px solid $grey-light;
       width: 100%;

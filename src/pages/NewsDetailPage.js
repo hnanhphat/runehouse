@@ -18,7 +18,9 @@ const NewsDetailPage = () => {
   const [showComment, setShowComment] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
   const [showReaction, setShowReaction] = useState(false);
-  const [showReviewReaction, setShowReviewReaction] = useState(false);
+  const [showReviewReaction, setShowReviewReaction] = useState(
+    Array(100).fill(false)
+  );
 
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
@@ -238,7 +240,7 @@ const NewsDetailPage = () => {
                       <div
                         className={`list ${showAllComments ? "list--all" : ""}`}
                       >
-                        {singleNews.data.reviews.map((review) => (
+                        {singleNews.data.reviews.map((review, i) => (
                           <div className="list__item" key={review._id}>
                             <div
                               className="avatar"
@@ -292,19 +294,19 @@ const NewsDetailPage = () => {
                                 <div className="group">
                                   <button
                                     className={`upper ${
-                                      showReviewReaction ? "active" : ""
+                                      showReviewReaction[i] ? "active" : ""
                                     }`}
-                                    onClick={() =>
-                                      setShowReviewReaction((state) =>
-                                        state ? false : true
-                                      )
-                                    }
+                                    onClick={() => {
+                                      let arr = [...showReviewReaction];
+                                      arr[i] = arr[i] ? false : true;
+                                      setShowReviewReaction(arr);
+                                    }}
                                   >
                                     Like
                                   </button>
                                   <div
                                     className={`icons ${
-                                      showReviewReaction ? "active" : ""
+                                      showReviewReaction[i] ? "active" : ""
                                     }`}
                                   >
                                     <button

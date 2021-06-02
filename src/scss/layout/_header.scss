@@ -488,6 +488,10 @@
           }
         }
 
+        svg {
+          width: 30px;
+        }
+
         &.active {
           span {
             background: $white;

@@ -45,6 +45,8 @@ const ReaderPage = () => {
     clientPhone: "",
   });
 
+  const [showMore, setShowMore] = useState(false);
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(`&fullname=${e.target.searchInput.value}`);
@@ -123,7 +125,7 @@ const ReaderPage = () => {
               </svg>
             </button>
           </form>
-          <ul className="filter">
+          <ul className={`filter ${showMore ? "filter--active" : ""}`}>
             <li>
               <button
                 className={`${positionStt === "All" ? "active" : ""}`}
@@ -197,6 +199,13 @@ const ReaderPage = () => {
               </button>
             </li>
           </ul>
+          <div className={`show ${showMore ? "show--active" : ""}`}>
+            <button
+              onClick={() => setShowMore((state) => (state ? false : true))}
+            >
+              <span></span>
+            </button>
+          </div>
         </div>
         <ul className="readers__list">
           {users && users.data.users.length ? (

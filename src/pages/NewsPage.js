@@ -25,7 +25,7 @@ const NewsPage = () => {
   const [showMore, setShowMore] = useState(false);
   const [showReaction, setShowReaction] = useState(Array(10).fill(false));
   const [showReviewReaction, setShowReviewReaction] = useState(
-    Array(10).fill(false)
+    Array(100).fill(false)
   );
 
   const handleReaction = (typeVal, idVal, emojiVal) => {
