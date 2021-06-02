@@ -29,9 +29,18 @@ const ReaderPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [positionStt, setPositionStt] = useState("All");
+
   const [showModal, setShowModal] = useState(false);
   const [formInput, setFormInput] = useState({
-    serviceType: "Offline",
+    serviceType: "Offline Advisory",
+    appointmentDate: "",
+    clientPhone: "",
+  });
+
+  const [showApply, setShowApply] = useState(false);
+  const [formApply, setFormApply] = useState({
+    serviceType: "Recruitment",
+    position: "Tarot",
     appointmentDate: "",
     clientPhone: "",
   });
@@ -48,7 +57,13 @@ const ReaderPage = () => {
   };
 
   const handleChange = (e) => {
+    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
+  };
+
+  const handleApplyChange = (e) => {
+    console.log({ ...formApply, [e.target.name]: e.target.value });
+    setFormApply({ ...formApply, [e.target.name]: e.target.value });
   };
 
   const handleSend = (id) => {
@@ -61,6 +76,19 @@ const ReaderPage = () => {
       })
     );
     setShowModal(false);
+  };
+
+  const handleApplySend = () => {
+    const { serviceType, position, appointmentDate, clientPhone } = formApply;
+    dispatch(
+      appointmentActions.sendAppointment("60a1440bf93fdb1099248396", {
+        serviceType,
+        position,
+        appointmentDate,
+        clientPhone,
+      })
+    );
+    setShowApply(false);
   };
 
   useEffect(() => {
@@ -247,9 +275,14 @@ const ReaderPage = () => {
         ) : (
           ""
         )}
-        <div className="readers__contact"></div>
       </div>
 
+      <div className="readers__hiring">
+        <p className="heading">Join Our Team!</p>
+        <button onClick={() => setShowApply(true)}>Apply Now</button>
+      </div>
+
+      {/* APPOINTMENT */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Make an appointment</Modal.Title>
@@ -285,8 +318,8 @@ const ReaderPage = () => {
               </div>
               <div className="item">
                 <select name="serviceType" onChange={handleChange}>
-                  <option value="Offline">Offline</option>
-                  <option value="Online">Online</option>
+                  <option value="Offline Advisory">Offline Advisory</option>
+                  <option value="Online Advisory">Online Advisory</option>
                 </select>
               </div>
             </div>
@@ -315,6 +348,82 @@ const ReaderPage = () => {
             onClick={() => handleSend(singleUser && singleUser.data._id)}
             className={
               formInput.appointmentDate && formInput.clientPhone ? "active" : ""
+            }
+          >
+            Send
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* APPLY */}
+      <Modal show={showApply} onHide={() => setShowApply(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Apply to Rune House</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="reader">
+            <div
+              className="reader__avatar"
+              style={{
+                backgroundImage: `url('${
+                  currentUser && currentUser.data.avatar
+                    ? currentUser.data.avatar
+                    : noimg
+                }')`,
+              }}
+            ></div>
+            <div className="reader__info">
+              <p className="name">{currentUser && currentUser.data.fullname}</p>
+              <p className="position">
+                {currentUser && currentUser.data.position}
+              </p>
+            </div>
+          </div>
+          <form className="form">
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="text"
+                  value={currentUser && currentUser.data.fullname}
+                  disabled
+                />
+              </div>
+              <div className="item">
+                <select name="position" onChange={handleApplyChange}>
+                  <option value="Tarot">Tarot Reader</option>
+                  <option value="Oracle">Oracle Reader</option>
+                  <option value="Lenormand">Lenormand Reader</option>
+                  <option value="I Ching">I Ching Reader</option>
+                  <option value="Tea Leaf">Tea Leaf Reader</option>
+                </select>
+              </div>
+            </div>
+            <div className="form__group">
+              <div className="item">
+                <input
+                  type="date"
+                  name="appointmentDate"
+                  onChange={handleApplyChange}
+                />
+              </div>
+              <div className="item">
+                <input
+                  type="number"
+                  name="clientPhone"
+                  placeholder="Phone Number"
+                  onChange={handleApplyChange}
+                />
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            onClick={handleApplySend}
+            className={
+              formApply.appointmentDate && formApply.clientPhone ? "active" : ""
             }
           >
             Send

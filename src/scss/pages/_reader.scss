@@ -192,6 +192,29 @@
       }
     }
   }
-  &__contact {
+  &__hiring {
+    background: linear-gradient(to right bottom, $orange 0%, #fc575e 74%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 300px;
+    padding: 0 15px;
+    position: relative;
+    .heading {
+      color: $white;
+      font-size: 42px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+    button {
+      background: $white;
+      border-radius: 100px;
+      color: $orange;
+      font-size: 18px;
+      padding: 12px 20px;
+    }
   }
 }

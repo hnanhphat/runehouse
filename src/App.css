@@ -813,6 +813,29 @@ input:focus {
   background: rgba(255, 0, 0, 0.1);
   color: #ff0000;
 }
+.modal .modal-dialog .modal-content .modal-body .order__heading strong.status-other {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 2px 10px;
+  margin-left: 5px;
+}
+.modal .modal-dialog .modal-content .modal-body .order__heading strong.status-other.requesting {
+  background: rgba(30, 144, 255, 0.1);
+  color: #1e90ff;
+}
+.modal .modal-dialog .modal-content .modal-body .order__heading strong.status-other.processing {
+  background: rgba(214, 123, 53, 0.1);
+  color: #d67b35;
+}
+.modal .modal-dialog .modal-content .modal-body .order__heading strong.status-other.completed {
+  background: rgba(50, 205, 50, 0.1);
+  color: #32cd32;
+}
+.modal .modal-dialog .modal-content .modal-body .order__heading strong.status-other.cancelled {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+}
 .modal .modal-dialog .modal-content .modal-body .order__info {
   border: 1px solid #d67b35;
   border-radius: 5px;
@@ -1688,7 +1711,7 @@ input:focus {
   right: 158px;
 }
 .header--scroll .search--no-login {
-  right: 110px;
+  right: 50px;
 }
 .header--scroll .search form input {
   width: 0;
@@ -6523,6 +6546,32 @@ input:focus {
   font-size: 16px;
   margin-top: 10px;
 }
+.readers__hiring {
+  background: linear-gradient(to right bottom, #d67b35 0%, #fc575e 74%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 300px;
+  padding: 0 15px;
+  position: relative;
+}
+.readers__hiring .heading {
+  color: #fff;
+  font-size: 42px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+.readers__hiring button {
+  background: #fff;
+  border-radius: 100px;
+  color: #d67b35;
+  font-size: 18px;
+  padding: 12px 20px;
+}
+
 .verify__area {
   display: flex;
   align-items: center;

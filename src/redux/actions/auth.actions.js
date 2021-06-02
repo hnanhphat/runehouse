@@ -21,7 +21,7 @@ const login = (data) => async (dispatch) => {
     const res = await api.post("/auth/login", data);
     localStorage.setItem("accessToken", res.data.data.accessToken);
     localStorage.setItem("isAdmin", res.data.data.user.position);
-    localStorage.setItem("language", "vn");
+    localStorage.setItem("language", "en");
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));

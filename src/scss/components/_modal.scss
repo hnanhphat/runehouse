@@ -469,6 +469,29 @@
                   color: $red;
                 }
               }
+              &.status-other {
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                font-weight: bold;
+                padding: 2px 10px;
+                margin-left: 5px;
+                &.requesting {
+                  background: rgba($color: $blue, $alpha: 0.1);
+                  color: $blue;
+                }
+                &.processing {
+                  background: rgba($color: $orange, $alpha: 0.1);
+                  color: $orange;
+                }
+                &.completed {
+                  background: rgba($color: $green, $alpha: 0.1);
+                  color: $green;
+                }
+                &.cancelled {
+                  background: rgba($color: $red, $alpha: 0.1);
+                  color: $red;
+                }
+              }
             }
           }
           &__info {

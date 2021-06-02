@@ -2,6 +2,7 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appointmentActions } from "../redux/actions/appointment.actions";
+import { userActions } from "../redux/actions/user.actions";
 
 import { Modal } from "react-bootstrap";
 
@@ -9,6 +10,8 @@ import PaginationBar from "../components/PaginationBar";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
+import advisory from "../img/categoris/advisory.svg";
+import recruitment from "../img/categoris/recruitment.svg";
 import requesting from "../img/categoris/requesting.svg";
 import processing from "../img/categoris/processing.svg";
 import completed from "../img/categoris/completed.svg";
@@ -17,6 +20,7 @@ import cancelled from "../img/categoris/cancel.svg";
 const AdminAppointmentsPage = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser.data);
+  const singleUser = useSelector((state) => state.user.singleUser.data);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const appointments = useSelector(
     (state) => state.appointment.appointments.data
@@ -26,14 +30,20 @@ const AdminAppointmentsPage = () => {
   );
   const totalPage = useSelector((state) => state.appointment.totalPages);
 
+  console.log(singleUser);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
 
   const [showEdit, setShowEdit] = useState(false);
+
   const [formEdit, setFormEdit] = useState({
     status: "",
   });
+
+  const [formApply, setFormApply] = useState({});
+  const [targetApply, setTargetApply] = useState("");
 
   const [showDelete, setShowDelete] = useState(false);
   const [target, setTarget] = useState("");
@@ -43,6 +53,12 @@ const AdminAppointmentsPage = () => {
 
   const filter = [
     { title: "All", image: all, search: "" },
+    { title: "Advisory", image: advisory, search: "&serviceType=Advisory" },
+    {
+      title: "Recruitment",
+      image: recruitment,
+      search: "&serviceType=Recruitment",
+    },
     { title: "Requesting", image: requesting, search: "&role=Admin" },
     { title: "Processing", image: processing, search: "&role=Reader" },
     { title: "Completed", image: completed, search: "&role=User" },
@@ -83,6 +99,19 @@ const AdminAppointmentsPage = () => {
     setShowEdit(false);
   };
 
+  const handleAccept = (val) => {
+    const { avatar, fullname, username, position } = formApply;
+    dispatch(
+      userActions.updateSinlgeUser(val, {
+        avatar,
+        fullname,
+        username,
+        position,
+      })
+    );
+    setShowDetail(false);
+  };
+
   useEffect(() => {
     if (isAdmin === "Admin") {
       dispatch(
@@ -105,6 +134,15 @@ const AdminAppointmentsPage = () => {
       status: singleAppointment && singleAppointment.data.status,
     });
   }, [singleAppointment]);
+
+  useEffect(() => {
+    setFormApply({
+      avatar: singleUser && singleUser.data.avatar,
+      fullname: singleUser && singleUser.data.fullname,
+      username: singleUser && singleUser.data.username,
+      position: "Reader",
+    });
+  }, [singleUser]);
 
   return (
     <div id="admin-users" className="admin__content">
@@ -178,6 +216,8 @@ const AdminAppointmentsPage = () => {
                     dispatch(
                       appointmentActions.getSingleAppointment(appointment._id)
                     );
+                    dispatch(userActions.getSingleUser(appointment.from));
+                    setTargetApply(appointment.from);
                   }}
                 >
                   <span>#{appointment._id}</span>
@@ -187,7 +227,11 @@ const AdminAppointmentsPage = () => {
                 <span>{appointment.appointmentDate}</span>
               </div>
               <div className="col col--04">
-                <span>{appointment.serviceType}</span>
+                <span>
+                  {appointment.serviceType
+                    ? appointment.serviceType
+                    : "Recruitment"}
+                </span>
               </div>
               <div className="col col--05">
                 <span className={`status ${appointment.status.toLowerCase()}`}>
@@ -423,7 +467,7 @@ const AdminAppointmentsPage = () => {
                 <p>
                   Status:{" "}
                   <strong
-                    className={`status ${singleAppointment.data.status
+                    className={`status-other ${singleAppointment.data.status
                       .toLowerCase()
                       .replace(" ", "")}`}
                   >
@@ -451,6 +495,23 @@ const AdminAppointmentsPage = () => {
               </ul>
             </div>
           </Modal.Body>
+        ) : (
+          ""
+        )}
+
+        {singleAppointment &&
+        singleAppointment.data.serviceType === "Recruitment" &&
+        singleUser.data.position === "User" ? (
+          <Modal.Footer>
+            <button
+              className={
+                singleAppointment.data.status === "Completed" ? "active" : ""
+              }
+              onClick={() => handleAccept(targetApply)}
+            >
+              Accept
+            </button>
+          </Modal.Footer>
         ) : (
           ""
         )}

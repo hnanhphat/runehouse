@@ -16,6 +16,7 @@ const ProfilePage = () => {
     avatar: currentUser && currentUser.data.avatar,
     fullname: currentUser && currentUser.data.fullname,
     username: currentUser && currentUser.data.username,
+    position: currentUser && currentUser.data.position,
   });
 
   const handleEditAvatar = (e) => {
@@ -39,12 +40,15 @@ const ProfilePage = () => {
   };
 
   const handleChange = (e) => {
+    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
-    const { avatar, fullname, username } = formInput;
-    dispatch(userActions.updateCurrentUser({ avatar, fullname, username }));
+    const { avatar, fullname, username, position } = formInput;
+    dispatch(
+      userActions.updateCurrentUser({ avatar, fullname, username, position })
+    );
   };
 
   useEffect(() => {}, [dispatch]);
@@ -78,6 +82,7 @@ const ProfilePage = () => {
                   avatar: currentUser && currentUser.data.avatar,
                   fullname: currentUser && currentUser.data.fullname,
                   username: currentUser && currentUser.data.username,
+                  position: currentUser && currentUser.data.position,
                 });
               }}
             >
