@@ -26,8 +26,6 @@ const AdminNewsPage = () => {
   const [filterStt, setFilterStt] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(singleNews);
-
   const [showCreate, setShowCreate] = useState(false);
   const [formCreate, setFormCreate] = useState({
     title: "",
@@ -71,7 +69,6 @@ const AdminNewsPage = () => {
 
   // CREATE
   const handleCreateChange = (e) => {
-    console.log({ ...formCreate, [e.target.name]: e.target.value });
     setFormCreate({ ...formCreate, [e.target.name]: e.target.value });
   };
 
@@ -89,7 +86,6 @@ const AdminNewsPage = () => {
 
   // EDIT
   const handleEditChange = (e) => {
-    console.log({ ...formEdit, [e.target.name]: e.target.value });
     setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
   };
 

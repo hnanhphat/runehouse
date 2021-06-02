@@ -18,8 +18,6 @@ const NewsDetailPage = () => {
   const [showComment, setShowComment] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
 
-  console.log(singleNews);
-
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
       targetType: typeVal,
@@ -33,8 +31,6 @@ const NewsDetailPage = () => {
 
   const handleReview = (e, id) => {
     e.preventDefault();
-    console.log(id);
-    console.log(e.target.comment.value);
     const { targetType, targetId, content } = {
       targetType: "News",
       targetId: id,

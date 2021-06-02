@@ -16,8 +16,6 @@ const AdminUsersPage = () => {
   const users = useSelector((state) => state.user.allUser.data);
   const totalPage = useSelector((state) => state.user.totalPages);
 
-  console.log(users);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");

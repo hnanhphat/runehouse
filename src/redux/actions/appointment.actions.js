@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const getListOfAppointments = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
-    console.log(`/appointments?page=${pageNumber + option}`);
     const res = await api.get(`/appointments?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,

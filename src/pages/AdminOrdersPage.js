@@ -22,8 +22,6 @@ const AdminOrdersPage = () => {
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
-  console.log(singleOrders);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [orderStatus, setOrderStatus] = useState("All");
   const [searchInput, setSearchInput] = useState("");

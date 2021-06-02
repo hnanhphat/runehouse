@@ -20,8 +20,6 @@ const HomePage = () => {
   const search = useSelector((state) => state.decks.search.data);
   const news = useSelector((state) => state.news.news.data);
 
-  console.log(sale);
-
   useEffect(() => {
     dispatch(decksActions.getListOfDecks(1, "&limit=2&sale=true", "sale"));
     dispatch(decksActions.getListOfDecks(1, "&limit=4", "decks"));

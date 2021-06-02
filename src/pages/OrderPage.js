@@ -30,9 +30,6 @@ const OrderPage = () => {
   const [target, setTarget] = useState("");
   const [showDetail, setShowDetail] = useState(false);
 
-  // console.log(orders);
-  console.log(singleOrders);
-
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(`&payment=${e.target.searchInput.value}`);

@@ -26,8 +26,6 @@ const AdminCardsPage = ({ t }) => {
   const [showOriginal, setShowOriginal] = useState(false);
   const [showReverse, setShowReverse] = useState(false);
 
-  console.log(singleCards);
-
   const filter = [
     { title: "All", image: all, search: "" },
     { title: "Major Arcana", image: major, search: "?category=Major%20Arcana" },

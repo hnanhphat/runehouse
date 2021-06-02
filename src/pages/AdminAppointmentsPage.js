@@ -26,8 +26,6 @@ const AdminAppointmentsPage = () => {
   );
   const totalPage = useSelector((state) => state.appointment.totalPages);
 
-  console.log(appointments);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");

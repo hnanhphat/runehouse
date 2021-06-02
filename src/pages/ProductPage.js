@@ -18,8 +18,6 @@ const ProductPage = () => {
   const [showFilter, setShowFilter] = useState(Array(2).fill(false));
   const [currentPage, setCurrentPage] = useState(1);
 
-  // console.log(decks);
-
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(decksActions.searchDecks(`&name=${e.target.searchInput.value}`));

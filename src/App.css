@@ -3129,12 +3129,13 @@ input:focus {
 }
 #home .search__list {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 -15px;
   padding: 50px 0;
 }
 #home .search__list li {
   width: 25%;
-  padding: 0 15px;
+  padding: 0 15px 30px;
 }
 #home .search__list li a {
   display: flex;

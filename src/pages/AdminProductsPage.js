@@ -53,9 +53,6 @@ const AdminProductsPage = () => {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState("");
 
-  // console.log(decks);
-  console.log(singleDecks);
-
   const filter = [
     { title: "All", image: all, search: "" },
     { title: "Tarot", image: tarot, search: "&category=Tarot" },
@@ -99,7 +96,6 @@ const AdminProductsPage = () => {
   };
 
   const handleCreateChange = (e) => {
-    console.log({ ...formCreate, [e.target.name]: e.target.value });
     setFormCreate({ ...formCreate, [e.target.name]: e.target.value });
   };
 
@@ -179,7 +175,6 @@ const AdminProductsPage = () => {
   };
 
   const handleEditChange = (e) => {
-    console.log({ ...formEdit, [e.target.name]: e.target.value });
     setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
   };
 

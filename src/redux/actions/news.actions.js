@@ -17,7 +17,6 @@ const createNews = (data, pageNumber, option) => async (dispatch) => {
 const getListOfNews = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
-    console.log(`/news?page=${pageNumber + option}`);
     const res = await api.get(`/news?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,

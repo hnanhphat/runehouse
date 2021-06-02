@@ -23,8 +23,6 @@ const NewsPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [cateStt, setCateStt] = useState("All");
 
-  console.log(showAllComments);
-
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
       targetType: typeVal,

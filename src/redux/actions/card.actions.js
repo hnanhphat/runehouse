@@ -14,7 +14,6 @@ const createCard = (data) => async (dispatch) => {
 const getListOfCards = (option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
-    console.log(`/card${option}`);
     const res = await api.get(`/card${option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,

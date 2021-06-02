@@ -33,8 +33,6 @@ const ReaderDetailPage = () => {
     clientPhone: "",
   });
 
-  console.log(news);
-
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
       targetType: typeVal,
@@ -53,8 +51,6 @@ const ReaderDetailPage = () => {
 
   const handleReview = (e, postId) => {
     e.preventDefault();
-    console.log(postId);
-    console.log(e.target.comment.value);
     const { targetType, targetId, content } = {
       targetType: "News",
       targetId: postId,
