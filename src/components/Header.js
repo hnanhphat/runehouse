@@ -32,8 +32,10 @@ const Header = ({ t }) => {
 
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const carts = useSelector((state) => state.cart.carts.data);
   const card = useSelector((state) => state.card.random.data);
+
   const [random, setRandom] = useState(Math.floor(Math.random() * 2));
   const [randomArray, setRandomArray] = useState([
     Math.floor(Math.random() * 2),
@@ -59,10 +61,11 @@ const Header = ({ t }) => {
   };
 
   const handleDeleteCart = (val) => {
-    dispatch(cartActions.deleteCart(val));
-    setTimeout(() => {
-      dispatch(cartActions.getUserCart());
-    }, 500);
+    dispatch(cartActions.deleteCart(val, 1, "&isOrdered=false"));
+  };
+
+  const handleUpdate = (quantity, id) => {
+    dispatch(cartActions.updateCart({ quantity }, id, 1, "&isOrdered=false"));
   };
 
   const changeLanguage = (lng) => {
@@ -149,21 +152,6 @@ const Header = ({ t }) => {
               News
             </Link>
           </div>
-          {/* <div className="directory__item">
-              <Link to="/faq" className="upper">
-                FAQ
-              </Link>
-            </div>
-            <div className="directory__item">
-              <Link to="/about" className="upper">
-                About Us
-              </Link>
-            </div>
-            <div className="directory__item">
-              <Link to="/contact" className="upper">
-                Contact
-              </Link>
-            </div> */}
         </div>
         {isAuth ? (
           <div className="user">
@@ -237,24 +225,28 @@ const Header = ({ t }) => {
                   ></path>
                 </svg>
               </Link>
-              <Link to="/admin">
-                <span>Dashboard</span>
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  data-prefix="fas"
-                  data-icon="columns"
-                  className="svg-inline--fa fa-columns fa-w-16"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64V160h160v256zm224 0H288V160h160v256z"
-                  ></path>
-                </svg>
-              </Link>
+              {isAdmin !== "User" ? (
+                <Link to="/admin">
+                  <span>Dashboard</span>
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fas"
+                    data-icon="columns"
+                    className="svg-inline--fa fa-columns fa-w-16"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64V160h160v256zm224 0H288V160h160v256z"
+                    ></path>
+                  </svg>
+                </Link>
+              ) : (
+                ""
+              )}
               <Link to="/" onClick={handleLogout}>
                 <span>Logout</span>
                 <svg
@@ -299,7 +291,7 @@ const Header = ({ t }) => {
         <Link to="/" className="logo">
           <img src={logo} alt="Rune House" />
         </Link>
-        <div className="search">
+        <div className={`search ${isAuth ? "" : "search--no-login"}`}>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -346,84 +338,104 @@ const Header = ({ t }) => {
               </svg>
             </button>
           </div>
-          <div className="other__item">
-            <Link to="/cart" className="icon">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="shopping-cart"
-                className="svg-inline--fa fa-shopping-cart fa-w-18"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 576 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
-                ></path>
-              </svg>
-              {isAuth && carts && carts.data.carts.length ? (
-                <span className="number">
-                  {carts.data.carts.reduce((a, b) => a + b.quantity, 0)}
-                </span>
-              ) : (
-                <span className="number">0</span>
-              )}
-            </Link>
-            {isAuth ? (
-              <ul className="dropdown">
-                {carts &&
-                  carts.data.carts.map((el) => (
-                    <li key={el._id}>
-                      <div
-                        className="img"
-                        style={{
-                          backgroundImage: `url('${
-                            el.decks.images ? el.decks.images : noimg
-                          }')`,
-                        }}
-                      ></div>
-                      <div className="content">
-                        <p className="name">{el.decks.name}</p>
-                        <p className="price">
-                          {el.decks.defaultPrice ? (
-                            <span className="price__before">
-                              ${el.decks.defaultPrice}
+          {isAuth ? (
+            <div className="other__item">
+              <Link to="/cart" className="icon">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="shopping-cart"
+                  className="svg-inline--fa fa-shopping-cart fa-w-18"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
+                  ></path>
+                </svg>
+                {isAuth && carts && carts.data.carts.length ? (
+                  <span className="number">
+                    {carts.data.carts.reduce((a, b) => a + b.quantity, 0)}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </Link>
+
+              {carts && carts.data.carts.length ? (
+                <ul className="dropdown">
+                  {carts &&
+                    carts.data.carts.map((el) => (
+                      <li key={el._id}>
+                        <div
+                          className="img"
+                          style={{
+                            backgroundImage: `url('${
+                              el.decks.image ? el.decks.image : noimg
+                            }')`,
+                          }}
+                        ></div>
+                        <div className="content">
+                          <p className="name">{el.decks.name}</p>
+                          <p className="price">
+                            {el.decks.defaultPrice ? (
+                              <span className="price__before">
+                                ${el.decks.defaultPrice}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                            <span className="price__after">
+                              ${el.decks.oficialPrice}
                             </span>
-                          ) : (
-                            ""
-                          )}
-                          <span className="price__after">
-                            ${el.decks.oficialPrice}
-                          </span>
-                        </p>
-                        <p className="quantity">{el.quantity}pc</p>
-                      </div>
-                      <button onClick={() => handleDeleteCart(el._id)}>
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          data-prefix="fas"
-                          data-icon="times"
-                          className="svg-inline--fa fa-times fa-w-11"
-                          role="img"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 352 512"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            ) : (
-              ""
-            )}
-          </div>
+                          </p>
+                          <p className="quantity">{el.quantity}pc</p>
+                          <div className="btns">
+                            <span className="number">{el.quantity}</span>
+                            <div className="group">
+                              <button
+                                onClick={() => handleUpdate(-1, el._id)}
+                                className={`down ${
+                                  el.quantity <= 1 ? "hide" : ""
+                                }`}
+                              ></button>
+                              <button
+                                onClick={() => handleUpdate(1, el._id)}
+                                className="up"
+                              ></button>
+                            </div>
+                          </div>
+                        </div>
+                        <button onClick={() => handleDeleteCart(el._id)}>
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="times"
+                            className="svg-inline--fa fa-times fa-w-11"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 352 512"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            ></path>
+                          </svg>
+                        </button>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                ""
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 

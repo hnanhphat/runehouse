@@ -16,6 +16,8 @@ import cancelled from "../img/categoris/cancel.svg";
 
 const AdminAppointmentsPage = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser.data);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const appointments = useSelector(
     (state) => state.appointment.appointments.data
   );
@@ -24,7 +26,7 @@ const AdminAppointmentsPage = () => {
   );
   const totalPage = useSelector((state) => state.appointment.totalPages);
 
-  console.log(singleAppointment);
+  console.log(appointments);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
@@ -84,10 +86,21 @@ const AdminAppointmentsPage = () => {
   };
 
   useEffect(() => {
-    dispatch(
-      appointmentActions.getListOfAppointments(currentPage, searchInput)
-    );
-  }, [dispatch, searchInput, currentPage]);
+    if (isAdmin === "Admin") {
+      dispatch(
+        appointmentActions.getListOfAppointments(currentPage, searchInput)
+      );
+    } else {
+      if (currentUser) {
+        dispatch(
+          appointmentActions.getListOfAppointments(
+            currentPage,
+            `&to=${currentUser.data._id}${searchInput}`
+          )
+        );
+      }
+    }
+  }, [dispatch, searchInput, currentPage, currentUser, isAdmin]);
 
   useEffect(() => {
     setFormEdit({
@@ -164,6 +177,9 @@ const AdminAppointmentsPage = () => {
                 <button
                   onClick={() => {
                     setShowDetail(true);
+                    dispatch(
+                      appointmentActions.getSingleAppointment(appointment._id)
+                    );
                   }}
                 >
                   <span>#{appointment._id}</span>

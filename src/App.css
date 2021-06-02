@@ -1455,7 +1455,7 @@ input:focus {
   top: 100%;
   right: -8px;
   width: 400px;
-  max-height: 400px;
+  max-height: 390px;
   padding-top: 20px;
   overflow: auto;
   z-index: 20;
@@ -1495,8 +1495,8 @@ input:focus {
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 3px;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 .header .other__item .dropdown li .content {
   display: flex;
@@ -1550,6 +1550,97 @@ input:focus {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.header .other__item .dropdown li .content .btns {
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+.header .other__item .dropdown li .content .btns .number {
+  background: #fff;
+  border: 1px solid #d67b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  position: relative;
+  z-index: 5;
+}
+.header .other__item .dropdown li .content .btns .group {
+  border-radius: 100px;
+  width: 60px;
+  height: 15px;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.header .other__item .dropdown li .content .btns .group button {
+  background: #d67b35;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+}
+.header .other__item .dropdown li .content .btns .group button.down {
+  left: 0;
+}
+.header .other__item .dropdown li .content .btns .group button.down::before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  left: 4px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.header .other__item .dropdown li .content .btns .group button.down.hide {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.header .other__item .dropdown li .content .btns .group button.up {
+  right: 0;
+}
+.header .other__item .dropdown li .content .btns .group button.up::before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  right: 4px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.header .other__item .dropdown li .content .btns .group button.up::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 8px;
+  height: 2px;
+  top: 50%;
+  right: 4px;
+  -webkit-transform: translateY(-50%) rotate(90deg);
+  -moz-transform: translateY(-50%) rotate(90deg);
+  -ms-transform: translateY(-50%) rotate(90deg);
+  -o-transform: translateY(-50%) rotate(90deg);
+  transform: translateY(-50%) rotate(90deg);
+}
 .header .other__item .dropdown li button {
   display: flex;
   align-items: center;
@@ -1595,6 +1686,9 @@ input:focus {
   width: auto;
   padding: 0;
   right: 158px;
+}
+.header--scroll .search--no-login {
+  right: 110px;
 }
 .header--scroll .search form input {
   width: 0;
@@ -3393,7 +3487,6 @@ input:focus {
   padding: 0 15px;
 }
 .news-detail__box .bot__upper {
-  border-bottom: 1px solid #dbdbdb;
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
@@ -3483,6 +3576,7 @@ input:focus {
   line-height: 20px;
 }
 .news-detail__box .bot__lower {
+  border-top: 1px solid #dbdbdb;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3580,6 +3674,9 @@ input:focus {
 }
 .news-detail__box .bot__hidden .list__item:not(:last-child) {
   display: none;
+}
+.news-detail__box .bot__hidden .list__item--space:not(:last-child) {
+  margin-bottom: 10px;
 }
 .news-detail__box .bot__hidden .list__item .avatar {
   background-position: center;
@@ -3948,7 +4045,6 @@ input:focus {
   padding: 0 15px;
 }
 .news-page__list li .bot__upper {
-  border-bottom: 1px solid #dbdbdb;
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
@@ -4038,6 +4134,7 @@ input:focus {
   line-height: 20px;
 }
 .news-page__list li .bot__lower {
+  border-top: 1px solid #dbdbdb;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4119,6 +4216,10 @@ input:focus {
 .news-page__list li .bot__hidden--show {
   display: block;
 }
+.news-page__list li .bot__hidden--no-item {
+  border: none;
+  padding-bottom: 0;
+}
 .news-page__list li .bot__hidden .setting {
   text-align: right;
 }
@@ -4135,6 +4236,9 @@ input:focus {
 }
 .news-page__list li .bot__hidden .list__item:not(:last-child) {
   display: none;
+}
+.news-page__list li .bot__hidden .list__item--space:not(:last-child) {
+  margin-bottom: 10px;
 }
 .news-page__list li .bot__hidden .list__item .avatar {
   background-position: center;
@@ -4785,6 +4889,7 @@ input:focus {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 381px);
+  padding: 40px 0 80px;
 }
 .product-detail__container {
   background: #fff;
@@ -5703,6 +5808,12 @@ input:focus {
   bottom: 0;
   left: 15px;
 }
+.reader-detail__info .user .info--no-bd {
+  margin-bottom: 0;
+}
+.reader-detail__info .user .info--no-bd::before {
+  display: none;
+}
 .reader-detail__info .user .info .name {
   font-size: 18px;
   font-weight: bold;
@@ -5801,7 +5912,6 @@ input:focus {
   padding: 0 15px;
 }
 .reader-detail__posts li .bot__upper {
-  border-bottom: 1px solid #dbdbdb;
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
@@ -5891,6 +6001,7 @@ input:focus {
   line-height: 20px;
 }
 .reader-detail__posts li .bot__lower {
+  border-top: 1px solid #dbdbdb;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -5988,6 +6099,9 @@ input:focus {
 }
 .reader-detail__posts li .bot__hidden .list__item:not(:last-child) {
   display: none;
+}
+.reader-detail__posts li .bot__hidden .list__item--space:not(:last-child) {
+  margin-bottom: 10px;
 }
 .reader-detail__posts li .bot__hidden .list__item .avatar {
   background-position: center;

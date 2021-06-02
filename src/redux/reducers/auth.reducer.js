@@ -39,7 +39,7 @@ const authReducer = (state = initialState, action) => {
       break;
     case types.LOGOUT_SUCCESS:
       state.isAuth = "";
-      state.isAdmin = false;
+      state.isAdmin = "";
       state.loading = false;
       break;
     case types.VERIFY_SUCCESS:

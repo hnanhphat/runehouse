@@ -67,7 +67,6 @@
     .bot {
       padding: 0 15px;
       &__upper {
-        border-bottom: 1px solid $grey-light;
         display: flex;
         justify-content: space-between;
         padding: 10px 0;
@@ -141,6 +140,7 @@
         }
       }
       &__lower {
+        border-top: 1px solid $grey-light;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -233,6 +233,11 @@
             justify-content: space-between;
             &:not(:last-child) {
               display: none;
+            }
+            &--space {
+              &:not(:last-child) {
+                margin-bottom: 10px;
+              }
             }
             .avatar {
               background-position: center;

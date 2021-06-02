@@ -21,7 +21,7 @@ const login = (data) => async (dispatch) => {
     const res = await api.post("/auth/login", data);
     console.log(res);
     localStorage.setItem("accessToken", res.data.data.accessToken);
-    localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
+    localStorage.setItem("isAdmin", res.data.data.user.position);
     localStorage.setItem("language", "vn");
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
@@ -30,7 +30,7 @@ const login = (data) => async (dispatch) => {
       type: types.LOGIN_SUCCESS,
       payload: {
         accessToken: res.data.data.accessToken,
-        isAdmin: res.data.data.user.isAdmin,
+        isAdmin: res.data.data.user.position,
       },
     });
     toast.success(res.data.message);
@@ -45,7 +45,7 @@ const loginWithFb = (access_token) => async (dispatch) => {
     const res = await api.post("/auth/login/facebook", { access_token });
     console.log(res);
     localStorage.setItem("accessToken", res.data.data.accessToken);
-    localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
+    localStorage.setItem("isAdmin", res.data.data.user.position);
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));
@@ -53,7 +53,7 @@ const loginWithFb = (access_token) => async (dispatch) => {
       type: types.FACEBOOK_SUCCESS,
       payload: {
         accessToken: res.data.data.accessToken,
-        isAdmin: res.data.data.user.isAdmin,
+        isAdmin: res.data.data.user.position,
       },
     });
   } catch (error) {
@@ -67,7 +67,7 @@ const loginWithGg = (access_token) => async (dispatch) => {
     const res = await api.post("/auth/login/google", { access_token });
     console.log(res);
     localStorage.setItem("accessToken", res.data.data.accessToken);
-    localStorage.setItem("isAdmin", res.data.data.user.isAdmin);
+    localStorage.setItem("isAdmin", res.data.data.user.position);
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
     dispatch(routeActions.redirect("/"));
@@ -75,7 +75,7 @@ const loginWithGg = (access_token) => async (dispatch) => {
       type: types.GOOGLE_SUCCESS,
       payload: {
         accessToken: res.data.data.accessToken,
-        isAdmin: res.data.data.user.isAdmin,
+        isAdmin: res.data.data.user.position,
       },
     });
   } catch (error) {

@@ -21,6 +21,7 @@ const AdminNewsPage = () => {
   const singleNews = useSelector((state) => state.news.singleNews.data);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,8 +112,19 @@ const AdminNewsPage = () => {
   };
 
   useEffect(() => {
-    dispatch(newsActions.getListOfNews(currentPage, searchInput));
-  }, [dispatch, currentPage, searchInput]);
+    if (isAdmin === "Admin") {
+      dispatch(newsActions.getListOfNews(currentPage, searchInput));
+    } else {
+      if (currentUser) {
+        dispatch(
+          newsActions.getListOfNews(
+            currentPage,
+            `&author=${currentUser.data._id}${searchInput}`
+          )
+        );
+      }
+    }
+  }, [dispatch, currentPage, searchInput, currentUser, isAdmin]);
 
   useEffect(() => {
     setFormEdit({

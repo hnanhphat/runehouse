@@ -17,16 +17,26 @@ const AdminSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser.data);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
-  const directory = [
-    { title: "users", image: users },
-    { title: "cards", image: cards },
-    { title: "products", image: products },
-    { title: "news", image: news },
-    { title: "orders", image: orders },
-    { title: "appointments", image: appointments },
-    // { title: "interviews", image: interviews },
-  ];
+  let directory;
+
+  if (isAdmin === "Admin") {
+    directory = [
+      { title: "users", image: users },
+      { title: "cards", image: cards },
+      { title: "products", image: products },
+      { title: "news", image: news },
+      { title: "orders", image: orders },
+      { title: "appointments", image: appointments },
+    ];
+  } else {
+    directory = [
+      { title: "cards", image: cards },
+      { title: "news", image: news },
+      { title: "appointments", image: appointments },
+    ];
+  }
 
   useEffect(() => {
     dispatch(userActions.getCurrentUser());
@@ -48,7 +58,11 @@ const AdminSidebar = () => {
           </div>
           <div className="user__info">
             <p className="name">{currentUser.data.fullname}</p>
-            <p className="position">{currentUser.data.position}</p>
+            <p className="position">
+              {currentUser.data.position === "Admin"
+                ? currentUser.data.position
+                : `${currentUser.data.position} Reader`}
+            </p>
             <em className="quote">{currentUser.data.quote}</em>
           </div>
         </div>
