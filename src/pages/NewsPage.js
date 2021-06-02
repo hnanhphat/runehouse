@@ -22,6 +22,11 @@ const NewsPage = () => {
   const [showAllComments, setShowAllComments] = useState(Array(10).fill(false));
   const [searchInput, setSearchInput] = useState("");
   const [cateStt, setCateStt] = useState("All");
+  const [showMore, setShowMore] = useState(false);
+  const [showReaction, setShowReaction] = useState(Array(10).fill(false));
+  const [showReviewReaction, setShowReviewReaction] = useState(
+    Array(10).fill(false)
+  );
 
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
@@ -104,7 +109,7 @@ const NewsPage = () => {
               </button>
             </form>
           </li>
-          <li className="filter">
+          <li className={`filter ${showMore ? "filter--active" : ""}`}>
             <button
               className={`${cateStt === "All" ? "active" : ""}`}
               onClick={() => {
@@ -115,7 +120,7 @@ const NewsPage = () => {
               All
             </button>
           </li>
-          <li className="filter">
+          <li className={`filter ${showMore ? "filter--active" : ""}`}>
             <h3 className="tit">Categories</h3>
             {news &&
               news.data.categories.map((cate) => (
@@ -130,6 +135,13 @@ const NewsPage = () => {
                   {cate._id}
                 </button>
               ))}
+          </li>
+          <li className={`show ${showMore ? "show--active" : ""}`}>
+            <button
+              onClick={() => setShowMore((state) => (state ? false : true))}
+            >
+              <span></span>
+            </button>
           </li>
         </ul>
         {news && news.data.news.length ? (
@@ -216,14 +228,22 @@ const NewsPage = () => {
                         <div className="bot__lower">
                           <div className="group">
                             <button
-                              className="upper"
-                              onClick={() =>
-                                handleReaction("News", el._id, "like")
-                              }
+                              className={`upper ${
+                                showReaction[i] ? "active" : ""
+                              }`}
+                              onClick={() => {
+                                let arr = [...showReaction];
+                                arr[i] = arr[i] ? false : true;
+                                setShowReaction(arr);
+                              }}
                             >
                               Like
                             </button>
-                            <div className="icons">
+                            <div
+                              className={`icons ${
+                                showReaction[i] ? "active" : ""
+                              }`}
+                            >
                               <button
                                 className="lower lower--like"
                                 onClick={() =>
@@ -397,18 +417,26 @@ const NewsPage = () => {
                                     <div className="other">
                                       <div className="group">
                                         <button
-                                          className="upper"
-                                          onClick={() =>
-                                            handleReaction(
-                                              "Review",
-                                              review._id,
-                                              "like"
-                                            )
-                                          }
+                                          className={`upper ${
+                                            showReviewReaction[i]
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            let arr = [...showReviewReaction];
+                                            arr[i] = arr[i] ? false : true;
+                                            setShowReviewReaction(arr);
+                                          }}
                                         >
                                           Like
                                         </button>
-                                        <div className="icons">
+                                        <div
+                                          className={`icons ${
+                                            showReviewReaction[i]
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                        >
                                           <button
                                             className="lower lower--like"
                                             onClick={() =>
@@ -515,6 +543,23 @@ const NewsPage = () => {
                                 name="comment"
                                 placeholder="Write a comment ..."
                               />
+                              <button type="submit">
+                                <svg
+                                  aria-hidden="true"
+                                  focusable="false"
+                                  data-prefix="fas"
+                                  data-icon="paper-plane"
+                                  className="svg-inline--fa fa-paper-plane fa-w-16"
+                                  role="img"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"
+                                  ></path>
+                                </svg>
+                              </button>
                             </div>
                             <p className="note">Press Enter to post.</p>
                           </form>

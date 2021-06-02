@@ -16,5 +16,9 @@
     text-align: center;
     padding: 60px 20px;
     position: relative;
+    @include respond(phone) {
+      font-size: 32px;
+      padding: 30px 15px;
+    }
   }
 }

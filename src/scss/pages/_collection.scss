@@ -1,6 +1,9 @@
 .collection {
   .container {
     padding: 40px 0 80px;
+    @include respond(phone) {
+      padding: 20px 0 40px;
+    }
   }
   &__list {
     background: $white;
@@ -10,9 +13,17 @@
     flex-wrap: wrap;
     align-items: flex-start;
     padding: 20px 5px;
+    @include respond(phone) {
+      justify-content: space-between;
+      padding: 15px;
+    }
     li {
       padding: 0 15px 30px;
       width: 25%;
+      @include respond(phone) {
+        width: calc(50% - 8px);
+        padding: 0 0 30px;
+      }
       button {
         border-radius: 5px;
         display: block;
@@ -29,6 +40,9 @@
           left: 0;
           opacity: 0;
           @include transition_c(all 0.3s ease-out);
+          @include respond(phone) {
+            opacity: 1;
+          }
         }
         .img {
           aspect-ratio: 1 / 1;
@@ -95,6 +109,11 @@
           left: 0;
           @include tranform_c(translateY(20px));
           @include transition_c(all 0.3s ease-out);
+          @include respond(phone) {
+            font-size: 20px;
+            opacity: 1;
+            @include tranform_c(translateY(0));
+          }
         }
 
         @include respond(hover) {

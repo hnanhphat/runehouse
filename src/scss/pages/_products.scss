@@ -4,14 +4,22 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 40px 0;
+    padding: 40px 0 80px;
+    @include respond(phone) {
+      padding: 20px 0 40px;
+    }
   }
   &__sidebar {
     background: $white;
     border-radius: 10px;
     box-shadow: $bs;
     width: 24%;
-    padding: 20px 15px;
+    overflow: hidden;
+    padding: 20px 15px 0;
+    @include respond(phone) {
+      width: 100%;
+      margin-bottom: 20px;
+    }
     li {
       &.search {
         border-bottom: 1px solid $grey-light;
@@ -26,6 +34,9 @@
             width: 100%;
             height: 38px;
             padding: 8px 15px 8px 44px;
+            @include respond(phone) {
+              padding: 8px 44px 8px 15px;
+            }
           }
           button {
             position: absolute;
@@ -37,6 +48,10 @@
             top: 50%;
             left: 5px;
             @include tranform_c(translateY(-50%));
+            @include respond(phone) {
+              left: auto;
+              right: 5px;
+            }
             svg {
               width: 22px;
             }
@@ -46,6 +61,12 @@
       &.filter {
         display: flex;
         flex-direction: column;
+        @include respond(phone) {
+          display: none;
+          &--active {
+            display: flex;
+          }
+        }
         &__list {
           > button:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
             display: none;
@@ -57,7 +78,7 @@
           }
         }
         @include transition_c(all 0.3s ease-out);
-        &:not(:last-of-type) {
+        &:not(:nth-last-child(2)) {
           margin-bottom: 30px;
         }
         .tit {
@@ -118,6 +139,35 @@
           }
         }
       }
+      &.show {
+        display: none;
+        @include respond(phone) {
+          background: $orange;
+          display: block;
+          margin: 0 -15px;
+          text-align: center;
+          button {
+            width: 100%;
+            height: 30px;
+            position: relative;
+            span {
+              position: absolute;
+              border-top: 10px solid $white;
+              border-left: 8px solid transparent;
+              border-right: 8px solid transparent;
+              top: 50%;
+              left: 50%;
+              @include tranform_c(translate(-50%, -50%));
+            }
+          }
+
+          &--active {
+            button span {
+              @include tranform_c(translate(-50%, -50%) rotate(180deg));
+            }
+          }
+        }
+      }
     }
   }
   &__list {
@@ -128,10 +178,19 @@
     flex-wrap: wrap;
     width: calc(76% - 40px);
     padding: 20px 5px 0;
+    @include respond(phone) {
+      justify-content: space-between;
+      width: 100%;
+      padding: 15px;
+    }
     li {
       width: 25%;
       padding: 0 15px 30px;
       position: relative;
+      @include respond(phone) {
+        width: calc(50% - 8px);
+        padding: 0 0 30px;
+      }
       a {
         display: flex;
         flex-direction: column;
@@ -159,21 +218,33 @@
           color: $grey;
           font-size: 14px;
           margin: 10px 0;
+          @include respond(phone) {
+            font-size: 12px;
+          }
         }
         .price {
           display: flex;
           align-items: center;
           line-height: 30px;
+          @include respond(phone) {
+            line-height: 20px;
+          }
           &__before {
             color: $grey;
             font-size: 16px;
             font-weight: bold;
             margin-right: 8px;
             text-decoration: line-through;
+            @include respond(phone) {
+              font-size: 14px;
+            }
           }
           &__after {
             font-size: 18px;
             font-weight: bold;
+            @include respond(phone) {
+              font-size: 16px;
+            }
           }
         }
       }
@@ -209,5 +280,9 @@
   }
   .pagination {
     justify-content: flex-end;
+    @include respond(phone) {
+      justify-content: center;
+      width: 100%;
+    }
   }
 }

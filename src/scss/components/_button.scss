@@ -53,6 +53,10 @@
   width: 100%;
   max-width: 140px;
   height: 38px;
+  @include respond(phone) {
+    max-width: unset;
+    flex: 1;
+  }
   svg {
     width: 20px;
     margin-right: 6px;

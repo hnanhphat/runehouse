@@ -18,6 +18,10 @@ const ProductPage = () => {
   const [showFilter, setShowFilter] = useState(Array(2).fill(false));
   const [currentPage, setCurrentPage] = useState(1);
 
+  console.log(decks);
+
+  const [showMore, setShowMore] = useState(false);
+
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(decksActions.searchDecks(`&name=${e.target.searchInput.value}`));
@@ -61,7 +65,7 @@ const ProductPage = () => {
               </button>
             </form>
           </li>
-          <li className="filter">
+          <li className={`filter ${showMore ? "filter--active" : ""}`}>
             <button
               className={`${cateField === "All" ? "active" : ""}`}
               onClick={() => {
@@ -84,7 +88,7 @@ const ProductPage = () => {
           <li
             className={`filter filter__list ${
               showFilter[1] ? "filter__list--show" : ""
-            }`}
+            } ${showMore ? "filter--active" : ""}`}
           >
             <h3 className="tit">
               Categories
@@ -125,7 +129,7 @@ const ProductPage = () => {
           <li
             className={`filter filter__list ${
               showFilter[2] ? "filter__list--show" : ""
-            }`}
+            } ${showMore ? "filter--active" : ""}`}
           >
             <h3 className="tit">
               Genres
@@ -162,6 +166,13 @@ const ProductPage = () => {
                   {genre._id}
                 </button>
               ))}
+          </li>
+          <li className={`show ${showMore ? "show--active" : ""}`}>
+            <button
+              onClick={() => setShowMore((state) => (state ? false : true))}
+            >
+              <span></span>
+            </button>
           </li>
         </ul>
         {decks && decks.data.decks.length ? (
@@ -206,7 +217,8 @@ const ProductPage = () => {
             </button>
           </p>
         )}
-        {totalPage > 1 && decks && decks.data.decks.length ? (
+
+        {totalPage > 1 ? (
           <PaginationBar
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

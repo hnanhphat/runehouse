@@ -2,6 +2,9 @@
   .container {
     padding: 40px 0 80px;
     max-width: 660px;
+    @include respond(phone) {
+      padding: 20px 0 40px;
+    }
   }
   &__box {
     background: $white;
@@ -158,6 +161,9 @@
             width: 100%;
             height: 30px;
             font-size: 16px;
+            &.active {
+              background: $grey-light;
+            }
           }
           .icons {
             position: absolute;
@@ -176,6 +182,11 @@
               width: 48px;
               height: 48px;
               margin: 0 5px;
+              @include respond(phone) {
+                width: 30px;
+                height: 30px;
+                margin: 0 3px;
+              }
               &--like {
                 background: url("./img/reactions/like.png") center/cover no-repeat;
               }
@@ -198,16 +209,10 @@
                 background: url("./img/reactions/angry.png") center/cover no-repeat;
               }
             }
-          }
-          @include respond(hover) {
-            &:hover {
-              .upper {
-                background: $grey-light;
-              }
-              .icons {
-                pointer-events: auto;
-                opacity: 1;
-              }
+
+            &.active {
+              pointer-events: auto;
+              opacity: 1;
             }
           }
         }
@@ -368,6 +373,11 @@
                       width: 36px;
                       height: 36px;
                       margin: 0 3px;
+                      @include respond(phone) {
+                        width: 28px;
+                        height: 28px;
+                        margin: 0 2px;
+                      }
                       &--like {
                         background: url("./img/reactions/like.png") center/cover no-repeat;
                       }
@@ -390,14 +400,10 @@
                         background: url("./img/reactions/angry.png") center/cover no-repeat;
                       }
                     }
-                  }
 
-                  @include respond(hover) {
-                    &:hover {
-                      .icons {
-                        pointer-events: auto;
-                        opacity: 1;
-                      }
+                    &.active {
+                      pointer-events: auto;
+                      opacity: 1;
                     }
                   }
                 }
@@ -419,6 +425,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
             .avatar {
               background-position: center;
               background-size: cover;
@@ -437,11 +444,31 @@
               padding: 8px 12px;
               line-height: 20px;
             }
+            button {
+              position: absolute;
+              background: $orange;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 22px;
+              height: 22px;
+              top: 50%;
+              right: 6px;
+              @include tranform_c(translateY(-50%));
+              svg {
+                color: $white;
+                width: 12px;
+              }
+            }
           }
           .note {
             font-size: 12px;
             padding-left: 42px;
             line-height: 20px;
+            @include respond(phone) {
+              display: none;
+            }
           }
         }
       }
