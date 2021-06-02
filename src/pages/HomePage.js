@@ -26,7 +26,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(newsActions.getListOfNews(1, "&limit=3"));
+    dispatch(newsActions.getListOfNews(1, "&limit=4"));
   }, [dispatch]);
 
   return (

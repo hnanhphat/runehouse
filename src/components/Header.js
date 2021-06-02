@@ -43,6 +43,8 @@ const Header = ({ t }) => {
     Math.floor(Math.random() * 2),
   ]);
 
+  const [hamberger, setHamberger] = useState(false);
+
   const handleLogout = () => {
     localStorage.clear();
     dispatch(authActions.logout());
@@ -437,6 +439,238 @@ const Header = ({ t }) => {
         ) : (
           ""
         )}
+
+        <div className="hamberger">
+          <button
+            onClick={() => setHamberger((state) => (state ? false : true))}
+            className={hamberger ? "active" : ""}
+          >
+            <span></span>
+          </button>
+        </div>
+
+        <div className={`menu ${hamberger ? "show" : ""}`}>
+          {currentUser ? (
+            <div className="menu__user">
+              <div
+                className="avatar"
+                style={{
+                  backgroundImage: `url('${
+                    currentUser.data.avatar ? currentUser.data.avatar : noimg
+                  }')`,
+                }}
+              ></div>
+              <div className="info">
+                <p>{currentUser && currentUser.data.fullname}</p>
+                <span>{currentUser && currentUser.data.position}</span>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="menu__search">
+            <form
+              onSubmit={(e) => {
+                handleSubmit(e);
+                setHamberger(false);
+              }}
+            >
+              <input
+                type="text"
+                name="searchInput"
+                placeholder="Find Your Card "
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button type="submit">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="search"
+                  className="svg-inline--fa fa-search fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                  ></path>
+                </svg>
+              </button>
+            </form>
+          </div>
+          <div className="menu__language">
+            <button
+              className={
+                localStorage.getItem("language") === "en" ? "active" : ""
+              }
+              onClick={() => handleLanguage("en")}
+            >
+              <img src={us} alt="United State" />
+              <span>EN</span>
+            </button>
+            <button
+              className={
+                localStorage.getItem("language") === "vn" ? "active" : ""
+              }
+              onClick={() => handleLanguage("vn")}
+            >
+              <img src={vn} alt="Vietnamese" />
+              <span>VN</span>
+            </button>
+          </div>
+          <ul className="menu__list">
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/");
+                  setHamberger(false);
+                }}
+              >
+                <span>Home</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/products");
+                  setHamberger(false);
+                }}
+              >
+                <span>Products</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/readers");
+                  setHamberger(false);
+                }}
+              >
+                <span>Readers</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/news");
+                  setHamberger(false);
+                }}
+              >
+                <span>News</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/profile");
+                  setHamberger(false);
+                }}
+              >
+                <span>Profile</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  history.push("/orders");
+                  setHamberger(false);
+                }}
+              >
+                <span>Orders</span>
+              </button>
+            </li>
+            {isAuth ? (
+              <li className="full">
+                <button
+                  onClick={() => {
+                    history.push("/admin");
+                    setHamberger(false);
+                  }}
+                >
+                  <span>Dashboard</span>
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
+          </ul>
+          <ul className="menu__other">
+            <div className="item">
+              <button
+                onClick={() => {
+                  setShowModal(true);
+                  setHamberger(false);
+                }}
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="dice"
+                  className="svg-inline--fa fa-dice fa-w-20"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div className="item">
+              <button
+                onClick={() => {
+                  history.push("/cart");
+                  setHamberger(false);
+                }}
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="shopping-cart"
+                  className="svg-inline--fa fa-shopping-cart fa-w-18"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div className="item">
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setHamberger(false);
+                }}
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fas"
+                  data-icon="sign-out-alt"
+                  className="svg-inline--fa fa-sign-out-alt fa-w-16"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </ul>
+        </div>
       </div>
 
       <Modal
