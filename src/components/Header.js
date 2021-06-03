@@ -104,8 +104,6 @@ const Header = ({ t }) => {
     dispatch(cardActions.getRandomCard(3));
   };
 
-  console.log(currentUser);
-
   useEffect(() => {
     changeLanguage(localStorage.getItem("language"));
   }, []);

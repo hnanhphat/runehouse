@@ -505,6 +505,7 @@ const AdminAppointmentsPage = () => {
 
         {singleAppointment &&
         singleAppointment.data.serviceType === "Recruitment" &&
+        singleUser &&
         singleUser.data.position === "User" ? (
           <Modal.Footer>
             <button
