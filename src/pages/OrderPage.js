@@ -1,3 +1,4 @@
+import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../redux/actions/order.actions";
@@ -343,9 +344,14 @@ const OrderPage = ({ t }) => {
               <ul className="order__list">
                 {singleOrders.data.carts.map((cart) => (
                   <li key={cart._id}>
-                    <div className="img">
-                      <img src={cart.decks.image} alt={cart.decks.name} />
-                    </div>
+                    <div
+                      className="img"
+                      style={{
+                        backgroundImage: `url('${
+                          cart.decks.image ? cart.decks.image : noimg
+                        }')`,
+                      }}
+                    ></div>
                     <div className="info">
                       <p>{cart.decks.name}</p>
                       <span>

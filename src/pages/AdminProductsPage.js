@@ -312,8 +312,13 @@ const AdminProductsPage = ({ t }) => {
         <ul className="admin__products">
           {decks.data.decks.map((deck) => (
             <li key={deck._id}>
-              <div className="img">
-                <img src={deck.image ? deck.image : noimg} alt={deck.name} />
+              <div
+                className="img"
+                style={{
+                  backgroundImage: `url('${deck.image ? deck.image : noimg}')`,
+                }}
+              >
+                {/* <img src={deck.image ? deck.image : noimg} alt={deck.name} /> */}
                 <div className="btns">
                   <button
                     onClick={() => {

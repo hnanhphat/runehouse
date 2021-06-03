@@ -497,11 +497,27 @@
         padding: 0 0 16px;
       }
       .img {
+        aspect-ratio: 1 / 1;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
         border-radius: 5px;
         overflow: hidden;
         position: relative;
-        img {
-          width: 100%;
+        // img {
+        //   width: 100%;
+        // }
+        @supports not (aspect-ratio: 1 / 1) {
+          &::before {
+            float: left;
+            padding-top: 100%;
+            content: "";
+          }
+          &::after {
+            display: block;
+            content: "";
+            clear: both;
+          }
         }
         .btns {
           position: absolute;

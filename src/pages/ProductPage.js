@@ -7,12 +7,14 @@ import { decksActions } from "../redux/actions/decks.actions";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
 const ProductPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
+  const loading = useSelector((state) => state.decks.loading);
   const totalPage = useSelector((state) => state.decks.totalPages);
   const searchField = useSelector((state) => state.decks.searchField);
   const cateField = useSelector((state) => state.decks.cateField);
@@ -21,6 +23,8 @@ const ProductPage = ({ t }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [showMore, setShowMore] = useState(false);
+
+  console.log(loading);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -179,7 +183,9 @@ const ProductPage = ({ t }) => {
             </button>
           </li>
         </ul>
-        {decks && decks.data.decks.length ? (
+        {loading ? (
+          <Loading />
+        ) : decks && decks.data.decks.length ? (
           <ul className="products__list">
             {decks.data.decks.map((deck) => (
               <li key={deck._id}>

@@ -646,14 +646,27 @@
                 padding-bottom: 10px;
               }
               .img {
+                aspect-ratio: 1 / 1;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
                 border-radius: 5px;
                 width: 80px;
                 overflow: hidden;
+                @supports not (aspect-ratio: 1 / 1) {
+                  &::before {
+                    float: left;
+                    padding-top: 100%;
+                    content: "";
+                  }
+                  &::after {
+                    display: block;
+                    content: "";
+                    clear: both;
+                  }
+                }
                 @include respond(phone) {
                   width: 60px;
-                }
-                img {
-                  width: 100%;
                 }
               }
               .info {
