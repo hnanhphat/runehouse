@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { authActions } from "../redux/actions/auth.actions";
+
+import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 
 const VerifyPage = () => {
@@ -13,7 +15,8 @@ const VerifyPage = () => {
     dispatch(authActions.verify(code));
   }, [dispatch, code]);
   return (
-    <div id="verify" className="verify">
+    <div id="verify" className="verify bg-grey">
+      <MainVisual heading="Verify" />
       <Breadcrumb leaf="verify" />
       <div className="verify__area">
         <div className="verify__container">

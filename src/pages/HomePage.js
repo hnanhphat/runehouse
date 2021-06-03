@@ -175,7 +175,10 @@ const HomePage = () => {
             <div className="container">
               <div className="primary-heading">
                 <h2>Our Products</h2>
-                <p>Text of the printing and typesetting industry.</p>
+                <p>
+                  Every deck has its own beauty and value. Let choose the right
+                  deck for you
+                </p>
               </div>
               <ul className="product__list">
                 {decks &&
@@ -217,7 +220,10 @@ const HomePage = () => {
             <div className="container">
               <div className="primary-heading">
                 <h2>News</h2>
-                <p>Text of the printing and typesetting industry.</p>
+                <p>
+                  Providing knowledge, tip and tricks for becoming a better
+                  reader.
+                </p>
               </div>
               <ul className="news__list">
                 {news &&
