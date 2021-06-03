@@ -66,6 +66,7 @@ svg {
 }
 
 input {
+  @include addPrefix(appearance, none);
   &:focus {
     outline: none;
   }

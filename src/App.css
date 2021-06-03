@@ -68,6 +68,13 @@ svg {
   vertical-align: middle;
 }
 
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
 input:focus {
   outline: none;
 }
