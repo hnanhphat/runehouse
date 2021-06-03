@@ -695,6 +695,13 @@ const Header = ({ t }) => {
                   ></path>
                 </svg>
               </button>
+              {carts && carts.data.carts.length ? (
+                <span>
+                  {carts.data.carts.reduce((a, b) => a + b.quantity, 0)}
+                </span>
+              ) : (
+                ""
+              )}
             </div>
             <div className="item">
               <button
@@ -933,11 +940,13 @@ const Header = ({ t }) => {
               <div className="results__tab">
                 <Tabs defaultActiveKey="tab01">
                   {card &&
+                    card.data.length &&
                     card.data.map((item, index) => (
                       <Tab
                         eventKey={`tab0${index + 1}`}
                         title={t(`Card 0${index + 1}`)}
                         key={item._id}
+                        className="tab-pane--large"
                       >
                         {randomArray[index] === 0 ? (
                           <div className="results__item">

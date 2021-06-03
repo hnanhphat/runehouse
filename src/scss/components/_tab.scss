@@ -28,8 +28,14 @@
     display: block;
   }
   .tab-pane {
-    min-height: 200px;
+    height: 200px;
     overflow: auto;
     padding: 10px 5px;
+    &--large {
+      height: 380px;
+      @include respond(phone) {
+        height: 300px;
+      }
+    }
   }
 }
