@@ -2662,6 +2662,18 @@ input:focus {
   overflow: hidden;
   position: relative;
 }
+@supports not (aspect-ratio: 1/1) {
+  .admin__news li .img::before {
+    float: left;
+    padding-top: 60%;
+    content: "";
+  }
+  .admin__news li .img::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
 .admin__news li .img--noimg {
   background-size: contain;
 }
@@ -6548,6 +6560,18 @@ input:focus {
   background-repeat: no-repeat;
   border-radius: 5px;
   width: 100%;
+}
+@supports not (aspect-ratio: 1/1) {
+  .products__list li a .img::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+  .products__list li a .img::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
 }
 .products__list li a .sale {
   background: rgba(0, 0, 0, 0.8);

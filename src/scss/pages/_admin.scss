@@ -587,6 +587,18 @@
         border-radius: 5px;
         overflow: hidden;
         position: relative;
+        @supports not (aspect-ratio: 1 / 1) {
+          &::before {
+            float: left;
+            padding-top: 60%;
+            content: "";
+          }
+          &::after {
+            display: block;
+            content: "";
+            clear: both;
+          }
+        }
         &--noimg {
           background-size: contain;
         }
