@@ -399,6 +399,11 @@
               text-transform: uppercase;
             }
           }
+          &__tab {
+            border: 1px solid $orange;
+            border-radius: 5px;
+            padding: 10px;
+          }
           &__item {
             display: flex;
             justify-content: space-between;

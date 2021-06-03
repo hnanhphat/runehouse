@@ -794,6 +794,11 @@ input:focus {
 .modal .modal-dialog .modal-content .modal-body .results__title::first-letter {
   text-transform: uppercase;
 }
+.modal .modal-dialog .modal-content .modal-body .results__tab {
+  border: 1px solid #d67b35;
+  border-radius: 5px;
+  padding: 10px;
+}
 .modal .modal-dialog .modal-content .modal-body .results__item {
   display: flex;
   justify-content: space-between;
@@ -1325,8 +1330,18 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
 }
+@media only screen and (max-width: 48em) {
+  .nav {
+    justify-content: center;
+  }
+}
 .nav.nav-tabs {
   border-bottom: 1px solid #d67b35;
+}
+@media only screen and (max-width: 48em) {
+  .nav.nav-tabs {
+    border: none;
+  }
 }
 .nav.nav-tabs .nav-link {
   border: 1px solid transparent;
@@ -1337,10 +1352,22 @@ input:focus {
   padding: 5px 10px;
   margin-bottom: -1px;
 }
+@media only screen and (max-width: 48em) {
+  .nav.nav-tabs .nav-link {
+    border-radius: 5px;
+    margin-bottom: 0;
+    line-height: 16px;
+  }
+}
 .nav.nav-tabs .nav-link.active {
   background-color: #fff;
   border-color: #d67b35 #d67b35 #fff;
   color: #d67b35;
+}
+@media only screen and (max-width: 48em) {
+  .nav.nav-tabs .nav-link.active {
+    border: 1px solid #d67b35;
+  }
 }
 
 .tab-content > .tab-pane {

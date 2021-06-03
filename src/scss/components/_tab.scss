@@ -1,8 +1,14 @@
 .nav {
   display: flex;
   flex-wrap: wrap;
+  @include respond(phone) {
+    justify-content: center;
+  }
   &.nav-tabs {
     border-bottom: 1px solid $orange;
+    @include respond(phone) {
+      border: none;
+    }
     .nav-link {
       border: 1px solid transparent;
       border-top-left-radius: 5px;
@@ -11,10 +17,18 @@
       font-size: 14px;
       padding: 5px 10px;
       margin-bottom: -1px;
+      @include respond(phone) {
+        border-radius: 5px;
+        margin-bottom: 0;
+        line-height: 16px;
+      }
       &.active {
         background-color: $white;
         border-color: $orange $orange $white;
         color: $orange;
+        @include respond(phone) {
+          border: 1px solid $orange;
+        }
       }
     }
   }
