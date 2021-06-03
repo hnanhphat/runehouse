@@ -276,6 +276,19 @@
               background-repeat: no-repeat;
               border-radius: 5px;
               width: 100%;
+
+              @supports not (aspect-ratio: 1 / 1) {
+                &::before {
+                  float: left;
+                  padding-top: 100%;
+                  content: "";
+                }
+                &::after {
+                  display: block;
+                  content: "";
+                  clear: both;
+                }
+              }
             }
             .sale {
               background: rgba($color: $black, $alpha: 0.8);
@@ -361,6 +374,19 @@
             background-repeat: no-repeat;
             border-radius: 5px;
             width: 100%;
+
+            @supports not (aspect-ratio: 1 / 1) {
+              &::before {
+                float: left;
+                padding-top: 100%;
+                content: "";
+              }
+              &::after {
+                display: block;
+                content: "";
+                clear: both;
+              }
+            }
           }
           .sale {
             background: rgba($color: $black, $alpha: 0.8);
@@ -448,6 +474,18 @@
             background-size: cover;
             background-repeat: no-repeat;
             border-radius: 5px;
+            @supports not (aspect-ratio: 1 / 1) {
+              &::before {
+                float: left;
+                padding-top: 60%;
+                content: "";
+              }
+              &::after {
+                display: block;
+                content: "";
+                clear: both;
+              }
+            }
             &--noimg {
               background-size: contain;
             }
@@ -528,6 +566,19 @@
             background-repeat: no-repeat;
             border-radius: 5px;
             width: 100%;
+
+            @supports not (aspect-ratio: 1 / 1) {
+              &::before {
+                float: left;
+                padding-top: 100%;
+                content: "";
+              }
+              &::after {
+                display: block;
+                content: "";
+                clear: both;
+              }
+            }
           }
           .sale {
             background: rgba($color: $black, $alpha: 0.8);
