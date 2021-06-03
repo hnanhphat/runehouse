@@ -8,6 +8,7 @@ import Moment from "react-moment";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
+import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
@@ -15,6 +16,7 @@ const NewsDetailPage = ({ t }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const singleNews = useSelector((state) => state.news.singleNews.data);
+  const loading = useSelector((state) => state.news.loading);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [showComment, setShowComment] = useState(false);
@@ -60,7 +62,9 @@ const NewsDetailPage = ({ t }) => {
         branchTxt={t("nd.News")}
         leaf={singleNews && singleNews.data.title}
       />
-      {singleNews ? (
+      {loading ? (
+        <Loading />
+      ) : singleNews ? (
         <div className="container">
           <div className="news-detail__box">
             <div className="top">
