@@ -6,6 +6,7 @@ import { decksActions } from "../redux/actions/decks.actions";
 import { Modal } from "react-bootstrap";
 
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -21,6 +22,7 @@ import { withNamespaces } from "react-i18next";
 const AdminProductsPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
+  const loading = useSelector((state) => state.decks.loading);
   const singleDecks = useSelector((state) => state.decks.singleDecks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
   const [searchInput, setSearchInput] = useState("");
@@ -308,7 +310,9 @@ const AdminProductsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {decks && decks.data.decks.length ? (
+      {loading ? (
+        <Loading />
+      ) : decks && decks.data.decks.length ? (
         <ul className="admin__products">
           {decks.data.decks.map((deck) => (
             <li key={deck._id}>

@@ -12,6 +12,7 @@ import { Modal } from "react-bootstrap";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
@@ -19,6 +20,7 @@ const CartPage = ({ t }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.carts.data);
+  const loading = useSelector((state) => state.cart.loading);
   const totalPage = useSelector((state) => state.cart.totalPages);
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const currentUser = useSelector((state) => state.user.currentUser.data);
@@ -85,7 +87,9 @@ const CartPage = ({ t }) => {
     <div id="cart-page" className="cart-page bg-grey">
       <MainVisual heading={t("c.Cart")} />
       <Breadcrumb leaf={t("c.Cart")} />
-      {carts && carts.data.carts.length ? (
+      {loading ? (
+        <Loading />
+      ) : carts && carts.data.carts.length ? (
         <div className="container">
           <div className="cart-page__details">
             <ul>
@@ -196,7 +200,7 @@ const CartPage = ({ t }) => {
       ) : (
         <div className="container">
           <p className="cart-page__no-item">
-            {t("Do not have any items.")}
+            {t("c.Do not have any items.")}
             <Link to="/">{t("c.Go Back")}</Link>
           </p>
         </div>

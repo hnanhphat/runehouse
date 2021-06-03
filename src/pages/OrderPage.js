@@ -9,6 +9,7 @@ import Moment from "react-moment";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -23,6 +24,7 @@ import { withNamespaces } from "react-i18next";
 const OrderPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.userOrders.data);
+  const loading = useSelector((state) => state.order.loading);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
@@ -169,7 +171,9 @@ const OrderPage = ({ t }) => {
             </button>
           </div>
         </div>
-        {orders && orders.data.orders.length ? (
+        {loading ? (
+          <Loading />
+        ) : orders && orders.data.orders.length ? (
           <div className="order-page__list">
             <ul>
               <li>
@@ -254,9 +258,19 @@ const OrderPage = ({ t }) => {
             </ul>
           </div>
         ) : (
-          <ul className="order-page__list">
-            <li className="no-item">{t("o.Do not have any Order.")}</li>
-          </ul>
+          <div className="container">
+            <p className="cart-page__no-item">
+              {t("o.Do not have any Order.")}
+              <button
+                onClick={() => {
+                  setOrderStatus("All");
+                  setSearchInput("");
+                }}
+              >
+                {t("o.Go Back")}
+              </button>
+            </p>
+          </div>
         )}
         {totalPage > 1 ? (
           <PaginationBar

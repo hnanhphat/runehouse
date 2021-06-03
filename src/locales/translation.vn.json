@@ -180,6 +180,7 @@
   "o.Visa": "Visa",
   "o.Installment": "Trả Góp",
   "o.Do not have any Order.": "Không tìm thấy đơn hàng.",
+  "o.Go Back": "Trở Về",
   "o.Do you wish to cancel this order?": "Bạn muốn xoá đơn hàng?",
   "o.Delete": "Xoá",
   "o.Cancel": "Huỷ",
@@ -213,6 +214,7 @@
   "au.Admin": "Quản Trị Viên",
   "au.Reader": "Đọc Giả",
   "au.User": "Người Dùng",
+  "au.Do not have any User.": "Không tìm thấy Người Dùng.",
 
   "__ADMIN CARDS": "ADMIN CARDS PAGE",
   "ac.Search": "Tìm Kiếm",
@@ -223,6 +225,9 @@
   "ac.Water": "Nước",
   "ac.Air": "Khí",
   "ac.Earth": "Đất",
+  "ac.Do not have any Cards.": "Không tìm thấy Thẻ Bài.",
+  "ac.Original Meaning": "Nghĩa Xuôi Chiều",
+  "ac.Reverse Meaning": "Nghĩa Ngược Chiều",
 
   "__ADMIN PRODUCTS": "ADMIN PRODUCTS PAGE",
   "ap.Search": "Tìm Kiếm",

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/actions/user.actions";
 
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -16,6 +17,7 @@ import { withNamespaces } from "react-i18next";
 const AdminUsersPage = ({ t }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.allUser.data);
+  const loading = useSelector((state) => state.user.loading);
   const totalPage = useSelector((state) => state.user.totalPages);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,6 +86,7 @@ const AdminUsersPage = ({ t }) => {
           ))}
         </ul>
       </div>
+      {loading ? <Loading /> : ""}
       {users && users.data.users.length ? (
         <ul className="admin__users">
           {users.data.users.map((user) => (
@@ -113,7 +116,7 @@ const AdminUsersPage = ({ t }) => {
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any Orders.</p>
+        <p className="admin__no-item">{t("au.Do not have any User.")}</p>
       )}
 
       {totalPage > 1 ? (

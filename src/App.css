@@ -6242,6 +6242,34 @@ select:focus {
   font-size: 16px;
   margin-top: 10px;
 }
+.order-page__no-item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+.order-page__no-item a,
+.order-page__no-item button {
+  background: #d67b35;
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 120px;
+  height: 38px;
+  font-size: 16px;
+  margin-top: 10px;
+}
 .order-page .pagination {
   padding-bottom: 40px;
   margin: 0 auto;

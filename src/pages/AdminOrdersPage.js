@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap";
 import Moment from "react-moment";
 
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -21,6 +22,7 @@ import { withNamespaces } from "react-i18next";
 const AdminOrdersPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders.data);
+  const loading = useSelector((state) => state.order.loading);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
@@ -123,7 +125,9 @@ const AdminOrdersPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {orders && orders.data.orders.length ? (
+      {loading ? (
+        <Loading />
+      ) : orders && orders.data.orders.length ? (
         <div className="admin__orders">
           <ul>
             <li>

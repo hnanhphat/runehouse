@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cardActions } from "../redux/actions/card.actions";
 
 import { Modal, Tabs, Tab } from "react-bootstrap";
+import Loading from "../components/Loading";
 
 // import i18n from "../i18n";
 import { withNamespaces } from "react-i18next";
@@ -19,6 +20,7 @@ import earth from "../img/categoris/earth.svg";
 const AdminCardsPage = ({ t }) => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.card.cards.data);
+  const loading = useSelector((state) => state.card.loading);
   const singleCards = useSelector((state) => state.card.single.data);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
@@ -91,7 +93,9 @@ const AdminCardsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {cards && cards.data.cards.length ? (
+      {loading ? (
+        <Loading />
+      ) : cards && cards.data.cards.length ? (
         <ul className="admin__cards">
           {cards.data.cards.map((card) => (
             <li key={card._id}>
@@ -148,13 +152,13 @@ const AdminCardsPage = ({ t }) => {
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any Cards.</p>
+        <p className="admin__no-item">{t("ac.Do not have any Cards.")}</p>
       )}
 
       {/* ORIGINAL */}
       <Modal show={showOriginal} onHide={() => setShowOriginal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Original Meaning</Modal.Title>
+          <Modal.Title>{"ac.Original Meaning"}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
@@ -253,7 +257,7 @@ const AdminCardsPage = ({ t }) => {
       {/* REVERSE */}
       <Modal show={showReverse} onHide={() => setShowReverse(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Reverse Meaning</Modal.Title>
+          <Modal.Title>{t("ac.Reverse Meaning")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">

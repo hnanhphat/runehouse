@@ -180,6 +180,7 @@
   "o.Visa": "Visa",
   "o.Installment": "Installment",
   "o.Do not have any Order.": "Do not have any Order.",
+  "o.Go Back": "Go Back",
   "o.Do you wish to cancel this order?": "Do you wish to cancel this order?",
   "o.Delete": "Delete",
   "o.Cancel": "Cancel",
@@ -213,6 +214,7 @@
   "au.Admin": "Admin",
   "au.Reader": "Reader",
   "au.User": "User",
+  "au.Do not have any User.": "Do not have any User.",
 
   "__ADMIN CARDS": "ADMIN CARDS PAGE",
   "ac.Search": "Search",
@@ -223,6 +225,9 @@
   "ac.Water": "Water",
   "ac.Air": "Air",
   "ac.Earth": "Earth",
+  "ac.Do not have any Cards.": "Do not have any Cards.",
+  "ac.Original Meaning": "Original Meaning",
+  "ac.Reverse Meaning": "Reverse Meaning",
 
   "__ADMIN PRODUCTS": "ADMIN PRODUCTS PAGE",
   "ap.Search": "Search",

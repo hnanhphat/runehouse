@@ -7,6 +7,7 @@ import { userActions } from "../redux/actions/user.actions";
 import { Modal } from "react-bootstrap";
 
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -30,6 +31,7 @@ const AdminAppointmentsPage = ({ t }) => {
   const singleAppointment = useSelector(
     (state) => state.appointment.singleAppointment.data
   );
+  const loading = useSelector((state) => state.appointment.loading);
   const totalPage = useSelector((state) => state.appointment.totalPages);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -186,7 +188,9 @@ const AdminAppointmentsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {appointments && appointments.data.appointments.length ? (
+      {loading ? (
+        <Loading />
+      ) : appointments && appointments.data.appointments.length ? (
         <div className="admin__appointments">
           <ul>
             <li>
