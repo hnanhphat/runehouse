@@ -86,8 +86,9 @@ const AdminUsersPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loading ? <Loading /> : ""}
-      {users && users.data.users.length ? (
+      {loading ? (
+        <Loading />
+      ) : users && users.data.users.length ? (
         <ul className="admin__users">
           {users.data.users.map((user) => (
             <li key={user._id}>

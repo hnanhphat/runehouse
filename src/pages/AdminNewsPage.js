@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap";
 
 import Moment from "react-moment";
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -20,6 +21,7 @@ import { withNamespaces } from "react-i18next";
 const AdminNewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
+  const loading = useSelector((state) => state.news.loading);
   const singleNews = useSelector((state) => state.news.singleNews.data);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
@@ -189,7 +191,9 @@ const AdminNewsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {news && news.data.news.length ? (
+      {loading ? (
+        <Loading />
+      ) : news && news.data.news.length ? (
         <ul className="admin__news">
           {news.data.news.map((item) => (
             <li key={item._id}>
