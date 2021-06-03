@@ -11,7 +11,9 @@ import admin from "../img/categoris/admin.svg";
 import reader from "../img/categoris/reader.svg";
 import user from "../img/categoris/user.svg";
 
-const AdminUsersPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminUsersPage = ({ t }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.allUser.data);
   const totalPage = useSelector((state) => state.user.totalPages);
@@ -46,7 +48,7 @@ const AdminUsersPage = () => {
     <div id="admin-users" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("au.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -76,7 +78,7 @@ const AdminUsersPage = () => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`au.${item.title}`)}</span>
               </button>
             </li>
           ))}
@@ -127,4 +129,4 @@ const AdminUsersPage = () => {
   );
 };
 
-export default AdminUsersPage;
+export default withNamespaces()(AdminUsersPage);

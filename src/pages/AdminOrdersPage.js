@@ -16,7 +16,9 @@ import truck from "../img/categoris/truck.svg";
 import checked from "../img/categoris/checked.svg";
 import cancel from "../img/categoris/cancel.svg";
 
-const AdminOrdersPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminOrdersPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders.data);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
@@ -85,7 +87,7 @@ const AdminOrdersPage = () => {
     <div id="admin-cards" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("ao.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -115,7 +117,7 @@ const AdminOrdersPage = () => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`ao.${item.title}`)}</span>
               </button>
             </li>
           ))}
@@ -129,16 +131,16 @@ const AdminOrdersPage = () => {
                 <strong>#</strong>
               </div>
               <div className="col col--02">
-                <strong>Order</strong>
+                <strong>{t("ao.Order")}</strong>
               </div>
               <div className="col col--03">
-                <strong>Payment</strong>
+                <strong>{t("ao.Payment")}</strong>
               </div>
               <div className="col col--04">
-                <strong>Total</strong>
+                <strong>{t("ao.Total")}</strong>
               </div>
               <div className="col col--05">
-                <strong>Status</strong>
+                <strong>{t("ao.Status")}</strong>
               </div>
               <div className="col col--06"></div>
             </li>
@@ -158,7 +160,7 @@ const AdminOrdersPage = () => {
                   </button>
                 </div>
                 <div className="col col--03">
-                  <span>{order.payment}</span>
+                  <span>{t(`ao.${order.payment}`)}</span>
                 </div>
                 <div className="col col--04">
                   <span>${order.total}</span>
@@ -169,35 +171,39 @@ const AdminOrdersPage = () => {
                       .toLowerCase()
                       .replace(" ", "")}`}
                   >
-                    {order.status}
+                    {t(`ao.${order.status}`)}
                   </span>
                 </div>
                 <div className="col col--06">
-                  <button
-                    className="edit"
-                    onClick={() => {
-                      setShowEdit(true);
-                      setEditStatus(order.status);
-                      setTarget(order._id);
-                      dispatch(orderActions.getSingleOrder(order._id));
-                    }}
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fas"
-                      data-icon="sliders-h"
-                      className="svg-inline--fa fa-sliders-h fa-w-16"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
+                  {order.status !== "Completed" ? (
+                    <button
+                      className="edit"
+                      onClick={() => {
+                        setShowEdit(true);
+                        setEditStatus(order.status);
+                        setTarget(order._id);
+                        dispatch(orderActions.getSingleOrder(order._id));
+                      }}
                     >
-                      <path
-                        fill="currentColor"
-                        d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"
-                      ></path>
-                    </svg>
-                  </button>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="sliders-h"
+                        className="svg-inline--fa fa-sliders-h fa-w-16"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"
+                        ></path>
+                      </svg>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   <button
                     className="trash"
                     onClick={() => {
@@ -227,7 +233,7 @@ const AdminOrdersPage = () => {
           </ul>
         </div>
       ) : (
-        <p className="admin__no-item">Don't have any Orders.</p>
+        <p className="admin__no-item">{t("ao.Do not have any Orders.")}</p>
       )}
 
       {totalPage > 1 ? (
@@ -243,7 +249,7 @@ const AdminOrdersPage = () => {
       {/* EDIT  */}
       <Modal show={showEdit} onHide={() => setShowEdit(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Change Status</Modal.Title>
+          <Modal.Title>{t("ao.Change Status")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -277,11 +283,11 @@ const AdminOrdersPage = () => {
                   value={formEdit.status}
                   onChange={handleChange}
                 >
-                  <option value="To Pay">To Pay</option>
-                  <option value="To Ship">To Ship</option>
-                  <option value="To Receive">To Receive</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="To Pay">{t("ao.To Pay")}</option>
+                  <option value="To Ship">{t("ao.To Ship")}</option>
+                  <option value="To Receive">{t("ao.To Receive")}</option>
+                  <option value="Completed">{t("ao.Completed")}</option>
+                  <option value="Cancelled">{t("ao.Cancelled")}</option>
                 </select>
               </div>
             </div>
@@ -293,7 +299,7 @@ const AdminOrdersPage = () => {
             className={formEdit.status !== editStatus ? "active" : ""}
             onClick={() => handleEdit(target)}
           >
-            Change
+            {t("ao.Change")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -301,7 +307,7 @@ const AdminOrdersPage = () => {
       {/* DELETE  */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Do you wish to cancel this order?</Modal.Title>
+          <Modal.Title>{t("ao.Do you wish to cancel this order?")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -312,9 +318,11 @@ const AdminOrdersPage = () => {
                 setShowDelete(false);
               }}
             >
-              Delete
+              {t("ao.Delete")}
             </button>
-            <button onClick={() => setShowDelete(false)}>Cancel</button>
+            <button onClick={() => setShowDelete(false)}>
+              {t("ao.Cancel")}
+            </button>
           </div>
         </Modal.Body>
       </Modal>
@@ -322,7 +330,7 @@ const AdminOrdersPage = () => {
       {/* DETAIL  */}
       <Modal show={showDetail} onHide={() => setShowDetail(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Order Detail</Modal.Title>
+          <Modal.Title>{t("ao.Order Detail")}</Modal.Title>
         </Modal.Header>
 
         {singleOrders ? (
@@ -348,10 +356,10 @@ const AdminOrdersPage = () => {
             <div className="order order--admin">
               <div className="order__heading">
                 <p>
-                  Phone: <strong>{singleOrders.data.phone}</strong>
+                  {t("ao.Phone")}: <strong>{singleOrders.data.phone}</strong>
                 </p>
                 <p>
-                  Status:{" "}
+                  {t("ao.Status")}:{" "}
                   <strong
                     className={`status ${singleOrders.data.status
                       .toLowerCase()
@@ -364,13 +372,13 @@ const AdminOrdersPage = () => {
               <ul className="order__info">
                 <li>
                   <div className="col col--01">
-                    <strong>Date</strong>
+                    <strong>{t("ao.Date")}</strong>
                   </div>
                   <div className="col col--02">
-                    <strong>Payment</strong>
+                    <strong>{t("ao.Payment")}</strong>
                   </div>
                   <div className="col col--03">
-                    <strong>Address</strong>
+                    <strong>{t("ao.Address")}</strong>
                   </div>
                 </li>
                 <li>
@@ -396,8 +404,12 @@ const AdminOrdersPage = () => {
                     </div>
                     <div className="info">
                       <p>{cart.decks.name}</p>
-                      <span>Quantity: {cart.quantity}</span>
-                      <span>Unit Price: {cart.decks.oficialPrice}</span>
+                      <span>
+                        {t("ao.Quantity")}: {cart.quantity}
+                      </span>
+                      <span>
+                        {t("ao.Unit Price")}: {cart.decks.oficialPrice}
+                      </span>
                     </div>
                     <div className="price">
                       ${cart.quantity * cart.decks.oficialPrice}
@@ -407,7 +419,7 @@ const AdminOrdersPage = () => {
               </ul>
               <div className="order__total">
                 <div className="box">
-                  <span>Total:</span>
+                  <span>{t("ao.Total")}:</span>
                   <strong>${singleOrders.data.total}</strong>
                 </div>
               </div>
@@ -421,4 +433,4 @@ const AdminOrdersPage = () => {
   );
 };
 
-export default AdminOrdersPage;
+export default withNamespaces()(AdminOrdersPage);

@@ -12,7 +12,9 @@ import Breadcrumb from "../components/Breadcrumb";
 import tarot from "../img/collections/tarot.jpeg";
 import oracle from "../img/collections/oracle.jpeg";
 
-const HomePage = () => {
+import { withNamespaces } from "react-i18next";
+
+const HomePage = ({ t }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const sale = useSelector((state) => state.decks.sale.data);
@@ -33,7 +35,7 @@ const HomePage = () => {
     <div id="home" className="home">
       {search ? (
         <div id="search" className="search">
-          <Breadcrumb leaf="search" />
+          <Breadcrumb leaf={t("home.Search")} />
           <div className="container">
             <ul className="search__list">
               {search &&
@@ -83,16 +85,15 @@ const HomePage = () => {
             <div className="container">
               <div className="collections__item">
                 <h3 className="tit">
-                  Rune House
+                  {t("home.Rune House")}
                   <br />
-                  Collection
+                  {t("home.Collection")}
                 </h3>
                 <p className="txt">
-                  "Simplicity, patience, compassion. these three are your
-                  greatest treasures." - <em>Lao Tzu</em>
+                  "{t("home.Quote")}" - <em>{t("home.Author")}</em>
                 </p>
                 <Link to="/collection" className="btn-view">
-                  <span>View All</span>
+                  <span>{t("home.View All")}</span>
                 </Link>
               </div>
               <div className="collections__item">
@@ -126,9 +127,10 @@ const HomePage = () => {
           {sale && sale.data.decks.length ? (
             <div id="deal" className="deal">
               <div className="deal__container">
-                <h3 className="tit">Flash Deal</h3>
+                <h3 className="tit">{t("home.Flash Deal")}</h3>
                 <p className="txt">
-                  Sale up to <strong>50%</strong> for several items.
+                  {t("home.Sale up to")} <strong>50%</strong>{" "}
+                  {t("home.for several items.")}
                 </p>
                 <button
                   className="btn-view btn-view--white"
@@ -138,7 +140,7 @@ const HomePage = () => {
                     dispatch(decksActions.cateDecks("Sale"));
                   }}
                 >
-                  <span>View All</span>
+                  <span>{t("home.View All")}</span>
                 </button>
                 <ul className="list">
                   {sale &&
@@ -175,11 +177,8 @@ const HomePage = () => {
           <div id="product" className="product">
             <div className="container">
               <div className="primary-heading">
-                <h2>Our Products</h2>
-                <p>
-                  Every deck has its own beauty and value. Let choose the right
-                  deck for you
-                </p>
+                <h2>{t("home.Our Products")}</h2>
+                <p>{t("home.Products Quote")}</p>
               </div>
               <ul className="product__list">
                 {decks &&
@@ -213,18 +212,15 @@ const HomePage = () => {
                   ))}
               </ul>
               <Link to="/products" className="btn-view btn-view--center">
-                <span>View All</span>
+                <span>{t("home.View All")}</span>
               </Link>
             </div>
           </div>
           <div id="news" className="news">
             <div className="container">
               <div className="primary-heading">
-                <h2>News</h2>
-                <p>
-                  Providing knowledge, tip and tricks for becoming a better
-                  reader.
-                </p>
+                <h2>{t("home.News")}</h2>
+                <p>{t("home.News Quote")}</p>
               </div>
               <ul className="news__list">
                 {news &&
@@ -245,7 +241,7 @@ const HomePage = () => {
                           </span>
                           <span className="comments">
                             {item.reviews.length ? item.reviews.length : 0}{" "}
-                            Comment(s)
+                            {t("home.Comment(s)")}
                           </span>
                         </p>
                       </Link>
@@ -253,7 +249,7 @@ const HomePage = () => {
                   ))}
               </ul>
               <Link to="/news" className="btn-view btn-view--center">
-                <span>View All</span>
+                <span>{t("home.View All")}</span>
               </Link>
             </div>
           </div>
@@ -263,4 +259,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default withNamespaces()(HomePage);

@@ -9,7 +9,9 @@ import Moment from "react-moment";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 
-const NewsDetailPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const NewsDetailPage = ({ t }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const singleNews = useSelector((state) => state.news.singleNews.data);
@@ -53,7 +55,11 @@ const NewsDetailPage = () => {
   return (
     <div id="news-detail" className="news-detail bg-grey">
       <MainVisual heading={singleNews && singleNews.data.title} />
-      <Breadcrumb branch="news" leaf={singleNews && singleNews.data.title} />
+      <Breadcrumb
+        branch="news"
+        branchTxt={t("nd.News")}
+        leaf={singleNews && singleNews.data.title}
+      />
       {singleNews ? (
         <div className="container">
           <div className="news-detail__box">
@@ -124,8 +130,7 @@ const NewsDetailPage = () => {
                 </div>
                 {singleNews.data.reviews.length ? (
                   <p className="comments">
-                    {singleNews.data.reviews.length} comment
-                    {singleNews.data.reviews.length === 1 ? "" : "s"}
+                    {singleNews.data.reviews.length} {t("nd.comment(s)")}
                   </p>
                 ) : (
                   ""
@@ -141,7 +146,7 @@ const NewsDetailPage = () => {
                           setShowReaction((state) => (state ? false : true))
                         }
                       >
-                        Like
+                        {t("nd.Like")}
                       </button>
                       <div className={`icons ${showReaction ? "active" : ""}`}>
                         <button
@@ -194,14 +199,14 @@ const NewsDetailPage = () => {
                           className="upper"
                           onClick={() => setShowComment(false)}
                         >
-                          Hide
+                          {t("nd.Hide")}
                         </button>
                       ) : (
                         <button
                           className="upper"
                           onClick={() => setShowComment(true)}
                         >
-                          Comment
+                          {t("nd.Comment")}
                         </button>
                       )}
                     </div>
@@ -212,7 +217,7 @@ const NewsDetailPage = () => {
                         rel="noopener noreferrer"
                         className="upper"
                       >
-                        Share
+                        {t("nd.Share")}
                       </a>
                     </div>
                   </div>
@@ -225,11 +230,11 @@ const NewsDetailPage = () => {
                       <div className="setting">
                         {showAllComments ? (
                           <button onClick={() => setShowAllComments(false)}>
-                            Hide comments
+                            {t("nd.Hide comments")}
                           </button>
                         ) : (
                           <button onClick={() => setShowAllComments(true)}>
-                            See all comments
+                            {t("nd.See all comments")}
                           </button>
                         )}
                       </div>
@@ -302,7 +307,7 @@ const NewsDetailPage = () => {
                                       setShowReviewReaction(arr);
                                     }}
                                   >
-                                    Like
+                                    {t("nd.Like")}
                                   </button>
                                   <div
                                     className={`icons ${
@@ -410,7 +415,7 @@ const NewsDetailPage = () => {
                         <input
                           type="text"
                           name="comment"
-                          placeholder="Write a comment ..."
+                          placeholder={t("nd.Write a comment ...")}
                         />
                         <button type="submit">
                           <svg
@@ -430,7 +435,7 @@ const NewsDetailPage = () => {
                           </svg>
                         </button>
                       </div>
-                      <p className="note">Press Enter to post.</p>
+                      <p className="note">{t("nd.Press Enter to post.")}</p>
                     </form>
                   </div>
                 </>
@@ -444,11 +449,11 @@ const NewsDetailPage = () => {
                     <div className="setting">
                       {showAllComments ? (
                         <button onClick={() => setShowAllComments(false)}>
-                          Hide comments
+                          {t("nd.Hide comments")}
                         </button>
                       ) : (
                         <button onClick={() => setShowAllComments(true)}>
-                          See all comments
+                          {t("nd.See all comments")}
                         </button>
                       )}
                     </div>
@@ -531,4 +536,4 @@ const NewsDetailPage = () => {
   );
 };
 
-export default NewsDetailPage;
+export default withNamespaces()(NewsDetailPage);

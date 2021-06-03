@@ -19,7 +19,9 @@ import lenormand from "../img/categoris/hour-glass.svg";
 import iching from "../img/categoris/ouroboros.svg";
 import tealeaf from "../img/categoris/wall-clock.svg";
 
-const ReaderPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const ReaderPage = ({ t }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.allUser.data);
   const singleUser = useSelector((state) => state.user.singleUser.data);
@@ -59,12 +61,10 @@ const ReaderPage = () => {
   };
 
   const handleChange = (e) => {
-    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
   const handleApplyChange = (e) => {
-    console.log({ ...formApply, [e.target.name]: e.target.value });
     setFormApply({ ...formApply, [e.target.name]: e.target.value });
   };
 
@@ -101,12 +101,16 @@ const ReaderPage = () => {
 
   return (
     <div id="readers" className="readers bg-grey">
-      <MainVisual heading="Readers" />
-      <Breadcrumb leaf="readers" />
+      <MainVisual heading={t("rd.Readers")} />
+      <Breadcrumb leaf={t("rd.Readers")} />
       <div className="container">
         <div className="readers__controller">
           <form onSubmit={handleSearch} className="search">
-            <input type="text" name="searchInput" placeholder="Search" />
+            <input
+              type="text"
+              name="searchInput"
+              placeholder={t("rd.Search")}
+            />
             <button>
               <svg
                 aria-hidden="true"
@@ -135,7 +139,7 @@ const ReaderPage = () => {
                 }}
               >
                 <img src={all} alt="All" />
-                <span>All</span>
+                <span>{t("rd.All")}</span>
               </button>
             </li>
             <li>
@@ -249,7 +253,7 @@ const ReaderPage = () => {
                           d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
                         ></path>
                       </svg>
-                      <span>Make an appointment</span>
+                      <span>{t("rd.Make an appointment")}</span>
                     </button>
                   ) : (
                     ""
@@ -259,7 +263,7 @@ const ReaderPage = () => {
             ))
           ) : (
             <li className="no-item">
-              Don't have any Reader.
+              {t(`rd.Do not have any Reader.`)}
               {searchInput ? (
                 <button
                   onClick={() => {
@@ -267,10 +271,10 @@ const ReaderPage = () => {
                     setSearchInput(``);
                   }}
                 >
-                  Go back
+                  {t("rd.Go Back")}
                 </button>
               ) : (
-                <Link to="/">Go home</Link>
+                <Link to="/">{t("rd.Go Home")}</Link>
               )}
             </li>
           )}
@@ -287,14 +291,14 @@ const ReaderPage = () => {
       </div>
 
       <div className="readers__hiring">
-        <p className="heading">Join Our Team!</p>
-        <button onClick={() => setShowApply(true)}>Apply Now</button>
+        <p className="heading">{t("rd.Join Our Team!")}</p>
+        <button onClick={() => setShowApply(true)}>{t("rd.Apply Now")}</button>
       </div>
 
       {/* APPOINTMENT */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Make an appointment</Modal.Title>
+          <Modal.Title>{t("rd.Make an appointment")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -327,8 +331,12 @@ const ReaderPage = () => {
               </div>
               <div className="item">
                 <select name="serviceType" onChange={handleChange}>
-                  <option value="Offline Advisory">Offline Advisory</option>
-                  <option value="Online Advisory">Online Advisory</option>
+                  <option value="Offline Advisory">
+                    {t("rd.Offline Advisory")}
+                  </option>
+                  <option value="Online Advisory">
+                    {t("rd.Online Advisory")}
+                  </option>
                 </select>
               </div>
             </div>
@@ -344,7 +352,7 @@ const ReaderPage = () => {
                 <input
                   type="number"
                   name="clientPhone"
-                  placeholder="Phone Number"
+                  placeholder={t("rd.Phone Number")}
                   onChange={handleChange}
                 />
               </div>
@@ -359,7 +367,7 @@ const ReaderPage = () => {
               formInput.appointmentDate && formInput.clientPhone ? "active" : ""
             }
           >
-            Send
+            {t("rd.Send")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -367,7 +375,7 @@ const ReaderPage = () => {
       {/* APPLY */}
       <Modal show={showApply} onHide={() => setShowApply(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Apply to Rune House</Modal.Title>
+          <Modal.Title>{t("rd.Apply to Rune House")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -420,7 +428,7 @@ const ReaderPage = () => {
                 <input
                   type="number"
                   name="clientPhone"
-                  placeholder="Phone Number"
+                  placeholder={t("rd.Phone Number")}
                   onChange={handleApplyChange}
                 />
               </div>
@@ -435,7 +443,7 @@ const ReaderPage = () => {
               formApply.appointmentDate && formApply.clientPhone ? "active" : ""
             }
           >
-            Send
+            {t("rd.Send")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -443,4 +451,4 @@ const ReaderPage = () => {
   );
 };
 
-export default ReaderPage;
+export default withNamespaces()(ReaderPage);

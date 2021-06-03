@@ -55,7 +55,7 @@ const AdminCardsPage = ({ t }) => {
     <div id="admin-cards" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("ac.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -85,7 +85,7 @@ const AdminCardsPage = ({ t }) => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`ac.${item.title}`)}</span>
               </button>
             </li>
           ))}

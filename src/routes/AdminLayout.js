@@ -15,7 +15,9 @@ import AdminNewsPage from "../pages/AdminNewsPage";
 import AdminOrdersPage from "../pages/AdminOrdersPage";
 import AdminAppointmentsPage from "../pages/AdminAppointmentsPage";
 
-const AdminLayout = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminLayout = ({ t }) => {
   const location = useLocation();
 
   return (
@@ -23,9 +25,13 @@ const AdminLayout = () => {
       <MainVisual
         heading={
           location.pathname === "/admin"
-            ? "Admin"
-            : location.pathname.replace("/admin/", "")[0].toUpperCase() +
-              location.pathname.replace("/admin/", "").slice(1)
+            ? t("a.Admin")
+            : t(
+                `asb.${
+                  location.pathname.replace("/admin/", "")[0].toUpperCase() +
+                  location.pathname.replace("/admin/", "").slice(1)
+                }`
+              )
         }
       />
       {location.pathname === "/admin" ? (
@@ -33,7 +39,8 @@ const AdminLayout = () => {
       ) : (
         <Breadcrumb
           branch="admin"
-          leaf={location.pathname.replace("/admin/", "")}
+          branchTxt={t("a.Admin")}
+          leaf={t(`a.${location.pathname.replace("/admin/", "")}`)}
         />
       )}
       <div className="admin__container">
@@ -55,4 +62,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default withNamespaces()(AdminLayout);

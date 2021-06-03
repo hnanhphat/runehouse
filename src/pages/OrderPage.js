@@ -17,7 +17,9 @@ import truck from "../img/categoris/truck.svg";
 import checked from "../img/categoris/checked.svg";
 import cancel from "../img/categoris/cancel.svg";
 
-const OrderPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const OrderPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.userOrders.data);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
@@ -60,12 +62,12 @@ const OrderPage = () => {
 
   return (
     <div id="order-page" className="order-page">
-      <MainVisual heading="Orders" />
-      <Breadcrumb leaf="Orders" />
+      <MainVisual heading={t("o.Orders")} />
+      <Breadcrumb leaf={t("o.Orders")} />
       <div className="container">
         <div className="order-page__controller">
           <form onSubmit={handleSearch} className="search">
-            <input type="text" name="searchInput" placeholder="Search" />
+            <input type="text" name="searchInput" placeholder={t("o.Search")} />
             <button>
               <svg
                 aria-hidden="true"
@@ -94,7 +96,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={all} alt="All" />
-                <span>All</span>
+                <span>{t("o.All")}</span>
               </button>
             </li>
             <li>
@@ -106,7 +108,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={wallet} alt="To Pay" />
-                <span>To Pay</span>
+                <span>{t("o.To Pay")}</span>
               </button>
             </li>
             <li>
@@ -118,7 +120,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={box} alt="To Ship" />
-                <span>To Ship</span>
+                <span>{t("o.To Ship")}</span>
               </button>
             </li>
             <li>
@@ -130,7 +132,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={truck} alt="To Receive" />
-                <span>To Receive</span>
+                <span>{t("o.To Receive")}</span>
               </button>
             </li>
             <li>
@@ -142,7 +144,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={checked} alt="Completed" />
-                <span>Completed</span>
+                <span>{t("o.Completed")}</span>
               </button>
             </li>
             <li>
@@ -154,7 +156,7 @@ const OrderPage = () => {
                 }}
               >
                 <img src={cancel} alt="Cancelled" />
-                <span>Cancelled</span>
+                <span>{t("o.Cancelled")}</span>
               </button>
             </li>
           </ul>
@@ -174,16 +176,16 @@ const OrderPage = () => {
                   <strong>#</strong>
                 </div>
                 <div className="col col--02">
-                  <strong>Order</strong>
+                  <strong>{t("o.Order")}</strong>
                 </div>
                 <div className="col col--03">
-                  <strong>Payment</strong>
+                  <strong>{t("o.Payment")}</strong>
                 </div>
                 <div className="col col--04">
-                  <strong>Total</strong>
+                  <strong>{t("o.Total")}</strong>
                 </div>
                 <div className="col col--05">
-                  <strong>Status</strong>
+                  <strong>{t("o.Status")}</strong>
                 </div>
                 <div className="col col--06"></div>
               </li>
@@ -203,7 +205,7 @@ const OrderPage = () => {
                     </button>
                   </div>
                   <div className="col col--03">
-                    <span>{order.payment}</span>
+                    <span>{t(`o.${order.payment}`)}</span>
                   </div>
                   <div className="col col--04">
                     <span>${order.total}</span>
@@ -214,7 +216,7 @@ const OrderPage = () => {
                         .toLowerCase()
                         .replace(" ", "")}`}
                     >
-                      {order.status}
+                      {t(`o.${order.status}`)}
                     </span>
                   </div>
                   <div className="col col--06">
@@ -252,7 +254,7 @@ const OrderPage = () => {
           </div>
         ) : (
           <ul className="order-page__list">
-            <li className="no-item">Don't have any Order.</li>
+            <li className="no-item">{t("o.Do not have any Order.")}</li>
           </ul>
         )}
         {totalPage > 1 ? (
@@ -268,7 +270,7 @@ const OrderPage = () => {
 
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Do you wish to cancel this order?</Modal.Title>
+          <Modal.Title>{t("o.Do you wish to cancel this order?")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -279,16 +281,18 @@ const OrderPage = () => {
                 setShowDelete(false);
               }}
             >
-              Delete
+              {t("o.Delete")}
             </button>
-            <button onClick={() => setShowDelete(false)}>Cancel</button>
+            <button onClick={() => setShowDelete(false)}>
+              {t("o.Cancel")}
+            </button>
           </div>
         </Modal.Body>
       </Modal>
 
       <Modal show={showDetail} onHide={() => setShowDetail(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Order Detail</Modal.Title>
+          <Modal.Title>{t("o.Order Detail")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
@@ -296,10 +300,10 @@ const OrderPage = () => {
             <div className="order">
               <div className="order__heading">
                 <p>
-                  Phone: <strong>{singleOrders.data.phone}</strong>
+                  {t("o.Phone")}: <strong>{singleOrders.data.phone}</strong>
                 </p>
                 <p>
-                  Status:{" "}
+                  {t("o.Status")}:{" "}
                   <strong
                     className={`status ${singleOrders.data.status
                       .toLowerCase()
@@ -312,18 +316,17 @@ const OrderPage = () => {
               <ul className="order__info">
                 <li>
                   <div className="col col--01">
-                    <strong>Date</strong>
+                    <strong>{t("o.Date")}</strong>
                   </div>
                   <div className="col col--02">
-                    <strong>Payment</strong>
+                    <strong>{t("o.Payment")}</strong>
                   </div>
                   <div className="col col--03">
-                    <strong>Address</strong>
+                    <strong>{t("o.Address")}</strong>
                   </div>
                 </li>
                 <li>
                   <div className="col col--01">
-                    {/* <span>{singleOrders.data.createdAt}</span> */}
                     <Moment
                       format="MMM D, YYYY"
                       withTitle={singleOrders.data.createdAt}
@@ -345,8 +348,12 @@ const OrderPage = () => {
                     </div>
                     <div className="info">
                       <p>{cart.decks.name}</p>
-                      <span>Quantity: {cart.quantity}</span>
-                      <span>Unit Price: {cart.decks.oficialPrice}</span>
+                      <span>
+                        {t("o.Quantity")}: {cart.quantity}
+                      </span>
+                      <span>
+                        {t("o.Unit Price")}: {cart.decks.oficialPrice}
+                      </span>
                     </div>
                     <div className="price">
                       ${cart.quantity * cart.decks.oficialPrice}
@@ -356,7 +363,7 @@ const OrderPage = () => {
               </ul>
               <div className="order__total">
                 <div className="box">
-                  <span>Total:</span>
+                  <span>{t("o.Total")}:</span>
                   <strong>${singleOrders.data.total}</strong>
                 </div>
               </div>
@@ -370,4 +377,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default withNamespaces()(OrderPage);

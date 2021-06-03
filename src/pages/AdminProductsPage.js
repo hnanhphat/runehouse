@@ -16,7 +16,9 @@ import iching from "../img/categoris/ouroboros.svg";
 import tealeaf from "../img/categoris/wall-clock.svg";
 import other from "../img/categoris/other.svg";
 
-const AdminProductsPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminProductsPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
   const singleDecks = useSelector((state) => state.decks.singleDecks.data);
@@ -253,7 +255,7 @@ const AdminProductsPage = () => {
     <div id="admin-cards" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("ap.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -300,7 +302,7 @@ const AdminProductsPage = () => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`ap.${item.title}`)}</span>
               </button>
             </li>
           ))}
@@ -365,7 +367,7 @@ const AdminProductsPage = () => {
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any Products.</p>
+        <p className="admin__no-item">{t("ap.Do not have any Products.")}</p>
       )}
 
       {totalPage > 1 ? (
@@ -381,7 +383,7 @@ const AdminProductsPage = () => {
       {/* CREATE  */}
       <Modal show={showCreate} onHide={() => setShowCreate(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Create Product</Modal.Title>
+          <Modal.Title>{t("ap.Create Product")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -395,7 +397,7 @@ const AdminProductsPage = () => {
               }}
               onClick={handleCreateImages}
             >
-              <span>Edit</span>
+              <span>{t("ap.Edit")}</span>
             </button>
           </div>
           <form className="form">
@@ -404,7 +406,7 @@ const AdminProductsPage = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Product Name"
+                  placeholder={t("ap.Product Name")}
                   onChange={handleCreateChange}
                 />
               </div>
@@ -414,8 +416,8 @@ const AdminProductsPage = () => {
                   value={formCreate.saleChecked}
                   onChange={handleCreateChange}
                 >
-                  <option value="Not Sale">Not Sale</option>
-                  <option value="Sale">Sale</option>
+                  <option value="Not Sale">{t("ap.Not Sale")}</option>
+                  <option value="Sale">{t("ap.Sale")}</option>
                 </select>
               </div>
             </div>
@@ -424,7 +426,7 @@ const AdminProductsPage = () => {
                 <input
                   type="number"
                   name="defaultPrice"
-                  placeholder="Price"
+                  placeholder={t("ap.Price")}
                   onChange={handleCreateChange}
                 />
               </div>
@@ -432,7 +434,7 @@ const AdminProductsPage = () => {
                 <input
                   type="number"
                   name="salePrice"
-                  placeholder="Discount"
+                  placeholder={t("ap.Discount")}
                   value={
                     formCreate.saleChecked === "Not Sale"
                       ? ""
@@ -457,10 +459,10 @@ const AdminProductsPage = () => {
                   <option value="Lenormand">Lenormand</option>
                   <option value="I Ching">I Ching</option>
                   <option value="Tea Leaf">Tea Leaf</option>
-                  <option value="Blanket">Blanket</option>
-                  <option value="Book">Book</option>
+                  <option value="Blanket">{t("ap.Blanket")}</option>
+                  <option value="Book">{t("ap.Book")}</option>
                   <option value="Rune">Rune</option>
-                  <option value="Accessories">Accessories</option>
+                  <option value="Accessories">{t("ap.Accessories")}</option>
                 </select>
               </div>
               <div className="item">
@@ -469,16 +471,16 @@ const AdminProductsPage = () => {
                   value={formCreate.genres}
                   onChange={handleCreateChange}
                 >
-                  <option value="Edge Plating">Edge Plating</option>
-                  <option value="God">God</option>
-                  <option value="Devil">Devil</option>
-                  <option value="Home Tools">Home Tools</option>
-                  <option value="Life Journey">Life Journey</option>
-                  <option value="Magic">Magic</option>
-                  <option value="Nature">Nature</option>
-                  <option value="Fairy Tale">Fairy Tale</option>
-                  <option value="18+">18+</option>
-                  <option value="Other">Other</option>
+                  <option value="Edge Plating">{t("ap.Edge Plating")}</option>
+                  <option value="God">{t("ap.God")}</option>
+                  <option value="Devil">{t("ap.Devil")}</option>
+                  <option value="Home Tools">{t("ap.Home Tools")}</option>
+                  <option value="Life Journey">{t("ap.Life Journey")}</option>
+                  <option value="Magic">{t("ap.Magic")}</option>
+                  <option value="Nature">{t("ap.Nature")}</option>
+                  <option value="Fairy Tale">{t("ap.Fairy Tale")}</option>
+                  <option value="18+">{t("ap.18+")}</option>
+                  <option value="Other">{t("ap.Other")}</option>
                 </select>
               </div>
             </div>
@@ -486,7 +488,7 @@ const AdminProductsPage = () => {
               <div className="item item--full">
                 <textarea
                   name="description"
-                  placeholder="Description"
+                  placeholder={t("ap.Description")}
                   onChange={handleCreateChange}
                 ></textarea>
               </div>
@@ -507,7 +509,7 @@ const AdminProductsPage = () => {
             }
             onClick={handleCreateProduct}
           >
-            Create
+            {t("ap.Create")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -515,7 +517,7 @@ const AdminProductsPage = () => {
       {/* EDIT  */}
       <Modal show={showEdit} onHide={() => setShowEdit(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Product</Modal.Title>
+          <Modal.Title>{t("ap.Edit Product")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -529,7 +531,7 @@ const AdminProductsPage = () => {
               }}
               onClick={handleEditImages}
             >
-              <span>Edit</span>
+              <span>{t("ap.Edit")}</span>
             </button>
           </div>
           <form className="form">
@@ -539,7 +541,7 @@ const AdminProductsPage = () => {
                   type="text"
                   name="name"
                   value={formEdit.name}
-                  placeholder="Product Name"
+                  placeholder={t("ap.Product Name")}
                   onChange={handleEditChange}
                 />
               </div>
@@ -549,8 +551,8 @@ const AdminProductsPage = () => {
                   value={formEdit.saleChecked}
                   onChange={handleEditChange}
                 >
-                  <option value="Not Sale">Not Sale</option>
-                  <option value="Sale">Sale</option>
+                  <option value="Not Sale">{t("ap.Not Sale")}</option>
+                  <option value="Sale">{t("ap.Sale")}</option>
                 </select>
               </div>
             </div>
@@ -564,7 +566,7 @@ const AdminProductsPage = () => {
                       ? formEdit.defaultPrice
                       : formEdit.oficialPrice
                   }
-                  placeholder="Price"
+                  placeholder={t("ap.Price")}
                   onChange={handleEditChange}
                 />
               </div>
@@ -572,7 +574,7 @@ const AdminProductsPage = () => {
                 <input
                   type="number"
                   name="salePrice"
-                  placeholder="Discount"
+                  placeholder={t("ap.Discount")}
                   value={
                     formEdit.saleChecked === "Not Sale"
                       ? ""
@@ -597,10 +599,10 @@ const AdminProductsPage = () => {
                   <option value="Lenormand">Lenormand</option>
                   <option value="I Ching">I Ching</option>
                   <option value="Tea Leaf">Tea Leaf</option>
-                  <option value="Blanket">Blanket</option>
-                  <option value="Book">Book</option>
+                  <option value="Blanket">{t("ap.Blanket")}</option>
+                  <option value="Book">{t("ap.Book")}</option>
                   <option value="Rune">Rune</option>
-                  <option value="Accessories">Accessories</option>
+                  <option value="Accessories">{t("ap.Accessories")}</option>
                 </select>
               </div>
               <div className="item">
@@ -609,16 +611,16 @@ const AdminProductsPage = () => {
                   value={formEdit.genres}
                   onChange={handleEditChange}
                 >
-                  <option value="Edge Plating">Edge Plating</option>
-                  <option value="God">God</option>
-                  <option value="Devil">Devil</option>
-                  <option value="Home Tools">Home Tools</option>
-                  <option value="Life Journey">Life Journey</option>
-                  <option value="Magic">Magic</option>
-                  <option value="Nature">Nature</option>
-                  <option value="Fairy Tale">Fairy Tale</option>
-                  <option value="18+">18+</option>
-                  <option value="Other">Other</option>
+                  <option value="Edge Plating">{t("ap.Edge Plating")}</option>
+                  <option value="God">{t("ap.God")}</option>
+                  <option value="Devil">{t("ap.Devil")}</option>
+                  <option value="Home Tools">{t("ap.Home Tools")}</option>
+                  <option value="Life Journey">{t("ap.Life Journey")}</option>
+                  <option value="Magic">{t("ap.Magic")}</option>
+                  <option value="Nature">{t("ap.Nature")}</option>
+                  <option value="Fairy Tale">{t("ap.Fairy Tale")}</option>
+                  <option value="18+">{t("ap.18+")}</option>
+                  <option value="Other">{t("ap.Other")}</option>
                 </select>
               </div>
             </div>
@@ -627,7 +629,7 @@ const AdminProductsPage = () => {
                 <textarea
                   name="description"
                   value={formEdit.description}
-                  placeholder="Description"
+                  placeholder={t("ap.Description")}
                   onChange={handleEditChange}
                 ></textarea>
               </div>
@@ -648,7 +650,7 @@ const AdminProductsPage = () => {
             }
             onClick={() => handleEditProduct(editTarget)}
           >
-            Edit
+            {t("ap.Edit")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -656,7 +658,7 @@ const AdminProductsPage = () => {
       {/* DELETE  */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Product</Modal.Title>
+          <Modal.Title>{t("ap.Delete Product")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -667,9 +669,11 @@ const AdminProductsPage = () => {
                 setShowDelete(false);
               }}
             >
-              Delete
+              {t("ap.Delete")}
             </button>
-            <button onClick={() => setShowDelete(false)}>Cancel</button>
+            <button onClick={() => setShowDelete(false)}>
+              {t("ap.Cancel")}
+            </button>
           </div>
         </Modal.Body>
       </Modal>
@@ -677,4 +681,4 @@ const AdminProductsPage = () => {
   );
 };
 
-export default AdminProductsPage;
+export default withNamespaces()(AdminProductsPage);

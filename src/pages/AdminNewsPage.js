@@ -15,7 +15,9 @@ import researching from "../img/categoris/researching.svg";
 import rating from "../img/categoris/rating.svg";
 import review from "../img/categoris/review.svg";
 
-const AdminNewsPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminNewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
   const singleNews = useSelector((state) => state.news.singleNews.data);
@@ -134,7 +136,7 @@ const AdminNewsPage = () => {
     <div id="admin-users" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("an.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -181,7 +183,7 @@ const AdminNewsPage = () => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`an.${item.title}`)}</span>
               </button>
             </li>
           ))}
@@ -304,14 +306,15 @@ const AdminNewsPage = () => {
                   <Moment format="MMM D, YYYY" withTitle={item.createdAt} />
                 </span>
                 <span className="comments">
-                  {item.reviews.length ? item.reviews.length : 0} Comment(s)
+                  {item.reviews.length ? item.reviews.length : 0}{" "}
+                  {t("an.Comment(s)")}
                 </span>
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="admin__no-item">Don't have any News.</p>
+        <p className="admin__no-item">{t("an.Do not have any News.")}</p>
       )}
 
       {totalPage > 1 ? (
@@ -327,7 +330,7 @@ const AdminNewsPage = () => {
       {/* CREATE */}
       <Modal show={showCreate} onHide={() => setShowCreate(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Create News</Modal.Title>
+          <Modal.Title>{t("an.Create News")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -355,16 +358,16 @@ const AdminNewsPage = () => {
                 <input
                   type="text"
                   name="title"
-                  placeholder="News Title"
+                  placeholder={t("an.News Title")}
                   onChange={handleCreateChange}
                 />
               </div>
               <div className="item">
                 <select name="category" onChange={handleCreateChange}>
-                  <option value="Sharing">Sharing</option>
-                  <option value="Researching">Researching</option>
-                  <option value="Rating">Rating</option>
-                  <option value="Review">Review</option>
+                  <option value="Sharing">{t("an.Sharing")}</option>
+                  <option value="Researching">{t("an.Researching")}</option>
+                  <option value="Rating">{t("an.Rating")}</option>
+                  <option value="Review">{t("an.Review")}</option>
                 </select>
               </div>
             </div>
@@ -372,7 +375,7 @@ const AdminNewsPage = () => {
               <div className="item item--full">
                 <textarea
                   name="content"
-                  placeholder="Description"
+                  placeholder={t("an.Description")}
                   onChange={handleCreateChange}
                 ></textarea>
               </div>
@@ -385,7 +388,7 @@ const AdminNewsPage = () => {
             className={formCreate.title && formCreate.content ? "active" : ""}
             onClick={handleCreateNews}
           >
-            Create
+            {t("an.Create")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -393,7 +396,7 @@ const AdminNewsPage = () => {
       {/* EDIT  */}
       <Modal show={showEdit} onHide={() => setShowEdit(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit News</Modal.Title>
+          <Modal.Title>{t("an.Edit News")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -424,7 +427,7 @@ const AdminNewsPage = () => {
                   type="text"
                   name="title"
                   value={formEdit.title}
-                  placeholder="News Title"
+                  placeholder={t("an.News Title")}
                   onChange={handleEditChange}
                 />
               </div>
@@ -434,10 +437,10 @@ const AdminNewsPage = () => {
                   value={formEdit.category}
                   onChange={handleEditChange}
                 >
-                  <option value="Sharing">Sharing</option>
-                  <option value="Researching">Researching</option>
-                  <option value="Rating">Rating</option>
-                  <option value="Review">Review</option>
+                  <option value="Sharing">{t("an.Sharing")}</option>
+                  <option value="Researching">{t("an.Researching")}</option>
+                  <option value="Rating">{t("an.Rating")}</option>
+                  <option value="Review">{t("an.Review")}</option>
                 </select>
               </div>
             </div>
@@ -446,7 +449,7 @@ const AdminNewsPage = () => {
                 <textarea
                   name="content"
                   value={formEdit.content}
-                  placeholder="Description"
+                  placeholder={t("an.Description")}
                   onChange={handleEditChange}
                 ></textarea>
               </div>
@@ -459,7 +462,7 @@ const AdminNewsPage = () => {
             className={formEdit.title && formEdit.content ? "active" : ""}
             onClick={() => handleEditNews(editTarget)}
           >
-            Edit
+            {t("an.Edit")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -467,7 +470,7 @@ const AdminNewsPage = () => {
       {/* DELETE  */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete News</Modal.Title>
+          <Modal.Title>{t("an.Delete News")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -478,9 +481,11 @@ const AdminNewsPage = () => {
                 setShowDelete(false);
               }}
             >
-              Delete
+              {t("an.Delete")}
             </button>
-            <button onClick={() => setShowDelete(false)}>Cancel</button>
+            <button onClick={() => setShowDelete(false)}>
+              {t("an.Cancel")}
+            </button>
           </div>
         </Modal.Body>
       </Modal>
@@ -488,4 +493,4 @@ const AdminNewsPage = () => {
   );
 };
 
-export default AdminNewsPage;
+export default withNamespaces()(AdminNewsPage);

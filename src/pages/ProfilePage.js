@@ -17,6 +17,7 @@ const ProfilePage = () => {
     fullname: currentUser && currentUser.data.fullname,
     username: currentUser && currentUser.data.username,
     position: currentUser && currentUser.data.position,
+    role: currentUser && currentUser.data.role,
   });
 
   const handleEditAvatar = (e) => {
@@ -40,7 +41,6 @@ const ProfilePage = () => {
   };
 
   const handleChange = (e) => {
-    console.log({ ...formInput, [e.target.name]: e.target.value });
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
@@ -83,6 +83,7 @@ const ProfilePage = () => {
                   fullname: currentUser && currentUser.data.fullname,
                   username: currentUser && currentUser.data.username,
                   position: currentUser && currentUser.data.position,
+                  role: currentUser && currentUser.data.role,
                 });
               }}
             >

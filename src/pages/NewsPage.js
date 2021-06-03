@@ -11,7 +11,9 @@ import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
 
-const NewsPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const NewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
   const totalPage = useSelector((state) => state.news.totalPages);
@@ -79,17 +81,17 @@ const NewsPage = () => {
 
   return (
     <div id="news-page" className="news-page bg-grey">
-      <MainVisual heading="News" />
-      {cateStt && cateStt !== "All" ? (
-        <Breadcrumb branch="news" leaf={cateStt} />
-      ) : (
-        <Breadcrumb leaf="news" />
-      )}
+      <MainVisual heading={t("n.News")} />
+      <Breadcrumb leaf={t("n.News")} />
       <div className="container">
         <ul className="news-page__sidebar">
           <li className="search">
             <form onSubmit={handleSearch} className="search__form">
-              <input type="text" name="searchInput" placeholder="Search" />
+              <input
+                type="text"
+                name="searchInput"
+                placeholder={t("n.Search")}
+              />
               <button>
                 <svg
                   aria-hidden="true"
@@ -117,7 +119,7 @@ const NewsPage = () => {
                 setSearchInput(``);
               }}
             >
-              All
+              {t("n.All")}
             </button>
           </li>
           <li className={`filter ${showMore ? "filter--active" : ""}`}>
@@ -132,7 +134,7 @@ const NewsPage = () => {
                     setSearchInput(`&category=${cate._id}`);
                   }}
                 >
-                  {cate._id}
+                  {t(`n.${cate._id}`)}
                 </button>
               ))}
           </li>
@@ -216,8 +218,7 @@ const NewsPage = () => {
                       </div>
                       {el.reviews.length ? (
                         <p className="comments">
-                          {el.reviews.length} comment
-                          {el.reviews.length === 1 ? "" : "s"}
+                          {el.reviews.length} {t("n.comment(s)")}
                         </p>
                       ) : (
                         ""
@@ -237,7 +238,7 @@ const NewsPage = () => {
                                 setShowReaction(arr);
                               }}
                             >
-                              Like
+                              {t("n.Like")}
                             </button>
                             <div
                               className={`icons ${
@@ -298,7 +299,7 @@ const NewsPage = () => {
                                   setShowComment(arr);
                                 }}
                               >
-                                Hide
+                                {t("n.Hide")}
                               </button>
                             ) : (
                               <button
@@ -309,7 +310,7 @@ const NewsPage = () => {
                                   setShowComment(arr);
                                 }}
                               >
-                                Comment
+                                {t("n.Comment")}
                               </button>
                             )}
                           </div>
@@ -320,7 +321,7 @@ const NewsPage = () => {
                               rel="noopener noreferrer"
                               className="upper"
                             >
-                              Share
+                              {t("n.Share")}
                             </a>
                           </div>
                         </div>
@@ -339,7 +340,7 @@ const NewsPage = () => {
                                     setShowAllComments(arr);
                                   }}
                                 >
-                                  Hide comments
+                                  {t("n.Hide comments")}
                                 </button>
                               ) : (
                                 <button
@@ -349,7 +350,7 @@ const NewsPage = () => {
                                     setShowAllComments(arr);
                                   }}
                                 >
-                                  See all comments
+                                  {t("n.See all comments")}
                                 </button>
                               )}
                             </div>
@@ -428,7 +429,7 @@ const NewsPage = () => {
                                             setShowReviewReaction(arr);
                                           }}
                                         >
-                                          Like
+                                          {t("n.Like")}
                                         </button>
                                         <div
                                           className={`icons ${
@@ -541,7 +542,7 @@ const NewsPage = () => {
                               <input
                                 type="text"
                                 name="comment"
-                                placeholder="Write a comment ..."
+                                placeholder={t("n.Write a comment ...")}
                               />
                               <button type="submit">
                                 <svg
@@ -561,7 +562,9 @@ const NewsPage = () => {
                                 </svg>
                               </button>
                             </div>
-                            <p className="note">Press Enter to post.</p>
+                            <p className="note">
+                              {t("n.Press Enter to post.")}
+                            </p>
                           </form>
                         </div>
                       </>
@@ -581,7 +584,7 @@ const NewsPage = () => {
                                   setShowAllComments(arr);
                                 }}
                               >
-                                Hide comments
+                                {t("n.Hide comments")}
                               </button>
                             ) : (
                               <button
@@ -591,7 +594,7 @@ const NewsPage = () => {
                                   setShowAllComments(arr);
                                 }}
                               >
-                                See all comments
+                                {t("n.See all comments")}
                               </button>
                             )}
                           </div>
@@ -674,7 +677,7 @@ const NewsPage = () => {
           </ul>
         ) : (
           <p className="news-page__no-item">
-            Don't have any news post.
+            {t("n.Do not have any News.")}
             {searchInput ? (
               <button
                 onClick={() => {
@@ -682,10 +685,10 @@ const NewsPage = () => {
                   setSearchInput(``);
                 }}
               >
-                Go back
+                {t("n.Go Back")}
               </button>
             ) : (
-              <Link to="/">Go home</Link>
+              <Link to="/">{t("n.Go Home")}</Link>
             )}
           </p>
         )}
@@ -703,4 +706,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default withNamespaces()(NewsPage);

@@ -79,6 +79,10 @@ input:focus {
   outline: none;
 }
 
+select:focus {
+  outline: none;
+}
+
 .container {
   width: calc(100% - 30px);
   max-width: 1024px;
@@ -3822,7 +3826,7 @@ input:focus {
   font-size: 42px;
   padding-bottom: 34px;
   margin-bottom: 34px;
-  line-height: 38px;
+  line-height: 42px;
   text-transform: uppercase;
   position: relative;
 }

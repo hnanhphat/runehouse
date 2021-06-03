@@ -53,7 +53,6 @@ const updateCurrentUser = (data) => async (dispatch) => {
 const updateSinlgeUser = (id, data) => async (dispatch) => {
   try {
     dispatch({ type: types.UPDATE_USER_REQUEST, payload: null });
-    console.log(`/users/${id}`);
     const res = await api.put(`/users/${id}`, data);
     dispatch({ type: types.UPDATE_USER_SUCCESS, payload: data });
     dispatch(getSingleUser(id));

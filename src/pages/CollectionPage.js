@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { decksActions } from "../redux/actions/decks.actions";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
+import { withNamespaces } from "react-i18next";
 
-const CollectionPage = () => {
+const CollectionPage = ({ t }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -32,8 +33,8 @@ const CollectionPage = () => {
 
   return (
     <div id="collection" className="collection bg-grey">
-      <MainVisual heading="Collection" />
-      <Breadcrumb leaf="collection" />
+      <MainVisual heading={t("clt.Collection")} />
+      <Breadcrumb leaf={t("clt.Collection")} />
       <div className="container">
         <ul className="collection__list">
           {collections.map((collection, i) => (
@@ -50,4 +51,4 @@ const CollectionPage = () => {
   );
 };
 
-export default CollectionPage;
+export default withNamespaces()(CollectionPage);

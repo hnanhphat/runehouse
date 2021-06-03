@@ -11,9 +11,10 @@ import products from "../img/categoris/products.svg";
 import news from "../img/categoris/news.svg";
 import orders from "../img/categoris/orders.svg";
 import appointments from "../img/categoris/appointments.svg";
-// import interviews from "../img/categoris/interviews.svg";
 
-const AdminSidebar = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminSidebar = ({ t }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser.data);
@@ -82,7 +83,9 @@ const AdminSidebar = () => {
               }
             >
               <img src={item.image} alt={item.title} />
-              <span>{item.title[0].toUpperCase() + item.title.slice(1)}</span>
+              <span>
+                {t(`asb.${item.title[0].toUpperCase() + item.title.slice(1)}`)}
+              </span>
             </Link>
           </li>
         ))}
@@ -98,4 +101,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
+export default withNamespaces()(AdminSidebar);

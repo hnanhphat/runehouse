@@ -151,17 +151,17 @@ const Header = ({ t }) => {
         <div className="directory">
           <div className="directory__item">
             <Link to="/products" className="upper">
-              Products
+              {t("hd.Products")}
             </Link>
           </div>
           <div className="directory__item">
             <Link to="/readers" className="upper">
-              Readers
+              {t("hd.Readers")}
             </Link>
           </div>
           <div className="directory__item">
             <Link to="/news" className="upper">
-              News
+              {t("hd.News")}
             </Link>
           </div>
         </div>
@@ -202,7 +202,7 @@ const Header = ({ t }) => {
                 </button>
               </div>
               <Link to="/profile">
-                <span>Profile</span>
+                <span>{t("hd.Profile")}</span>
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -220,7 +220,7 @@ const Header = ({ t }) => {
                 </svg>
               </Link>
               <Link to="/orders">
-                <span>Orders</span>
+                <span>{t("hd.Orders")}</span>
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -240,7 +240,7 @@ const Header = ({ t }) => {
               {isAdmin !== "User" ? (
                 isAdmin === "Admin" ? (
                   <Link to="/admin/users">
-                    <span>Dashboard</span>
+                    <span>{t("hd.Dashboard")}</span>
                     <svg
                       aria-hidden="true"
                       focusable="false"
@@ -259,7 +259,7 @@ const Header = ({ t }) => {
                   </Link>
                 ) : (
                   <Link to="/admin/cards">
-                    <span>Dashboard</span>
+                    <span>{t("hd.Dashboard")}</span>
                     <svg
                       aria-hidden="true"
                       focusable="false"
@@ -281,7 +281,7 @@ const Header = ({ t }) => {
                 ""
               )}
               <Link to="/" onClick={handleLogout}>
-                <span>Logout</span>
+                <span>{t("hd.Logout")}</span>
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -329,7 +329,7 @@ const Header = ({ t }) => {
             <input
               type="text"
               name="searchInput"
-              placeholder="Find Your Card "
+              placeholder={t("hd.Find Your Deck")}
               onChange={(e) => setSearch(e.target.value)}
             />
             <button type="submit">
@@ -533,7 +533,7 @@ const Header = ({ t }) => {
               <input
                 type="text"
                 name="searchInput"
-                placeholder="Find Your Card "
+                placeholder={t("hd.Find Your Deck")}
                 onChange={(e) => setSearch(e.target.value)}
               />
               <button type="submit">
@@ -589,7 +589,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>Home</span>
+                <span>{t("hd.Home")}</span>
               </button>
             </li>
             <li>
@@ -599,7 +599,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>Products</span>
+                <span>{t("hd.Products")}</span>
               </button>
             </li>
             <li>
@@ -609,7 +609,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>Readers</span>
+                <span>{t("hd.Readers")}</span>
               </button>
             </li>
             <li>
@@ -619,7 +619,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>News</span>
+                <span>{t("hd.News")}</span>
               </button>
             </li>
             <li>
@@ -629,7 +629,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>Profile</span>
+                <span>{t("hd.Profile")}</span>
               </button>
             </li>
             <li>
@@ -639,7 +639,7 @@ const Header = ({ t }) => {
                   setHamberger(false);
                 }}
               >
-                <span>Orders</span>
+                <span>{t("hd.Orders")}</span>
               </button>
             </li>
             {isAdmin !== "User" ? (
@@ -650,7 +650,7 @@ const Header = ({ t }) => {
                     setHamberger(false);
                   }}
                 >
-                  <span>Dashboard</span>
+                  <span>{t("hd.Dashboard")}</span>
                 </button>
               </li>
             ) : (
@@ -753,17 +753,17 @@ const Header = ({ t }) => {
         }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Choose One</Modal.Title>
+          <Modal.Title>{t("hd.Choose One")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
           {!daily && !form && !online ? (
             <div className="option">
               <button className="option__btn" onClick={handleDaily}>
-                {t("Daily Card")}
+                {t("hd.Daily Card")}
               </button>
               <button className="option__btn" onClick={() => setForm(true)}>
-                {t("Tarot Online")}
+                {t("hd.Tarot Online")}
               </button>
             </div>
           ) : daily && card ? (
@@ -796,7 +796,7 @@ const Header = ({ t }) => {
                 <div className="info">
                   <p>
                     {card.data.title}
-                    {random === 1 ? " Reversed" : ""}
+                    {random === 1 ? ` ${t("hd.Reversed")}` : ""}
                   </p>
                   <span>
                     {
@@ -811,7 +811,7 @@ const Header = ({ t }) => {
               </div>
               <div className="card__info">
                 <Tabs defaultActiveKey="introduce">
-                  <Tab eventKey="introduce" title={t("Introduce")}>
+                  <Tab eventKey="introduce" title={t("hd.Introduce")}>
                     {random === 0
                       ? card.data[
                           `introduce${localStorage
@@ -824,7 +824,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="overview" title={t("Overview")}>
+                  <Tab eventKey="overview" title={t("hd.Overview")}>
                     {random === 0
                       ? card.data[
                           `overview${localStorage
@@ -837,7 +837,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="work" title={t("Work")}>
+                  <Tab eventKey="work" title={t("hd.Work")}>
                     {random === 0
                       ? card.data[
                           `work${localStorage
@@ -850,7 +850,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="love" title={t("Love")}>
+                  <Tab eventKey="love" title={t("hd.Love")}>
                     {random === 0
                       ? card.data[
                           `love${localStorage
@@ -863,7 +863,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="finance" title={t("Finance")}>
+                  <Tab eventKey="finance" title={t("hd.Finance")}>
                     {random === 0
                       ? card.data[
                           `finance${localStorage
@@ -876,7 +876,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="health" title={t("Health")}>
+                  <Tab eventKey="health" title={t("hd.Health")}>
                     {random === 0
                       ? card.data[
                           `health${localStorage
@@ -889,7 +889,7 @@ const Header = ({ t }) => {
                             .toUpperCase()}`
                         ]}
                   </Tab>
-                  <Tab eventKey="mentality" title={t("Mentality")}>
+                  <Tab eventKey="mentality" title={t("hd.Mentality")}>
                     {random === 0
                       ? card.data[
                           `mentality${localStorage
@@ -924,28 +924,28 @@ const Header = ({ t }) => {
                   ></path>
                 </svg>
               </button>
-              <p className="form__heading">{t("Choose Your Problem")}</p>
+              <p className="form__heading">{t("hd.Choose Your Problem")}</p>
               <div className="form__group">
                 <div className="item item--full">
                   <select name="problemInput">
-                    <option value="overview">{t("Overview")}</option>
-                    <option value="work">{t("Work")}</option>
-                    <option value="love">{t("Love")}</option>
-                    <option value="finance">{t("Finance")}</option>
-                    <option value="health">{t("Health")}</option>
-                    <option value="mentality">{t("Mentality")}</option>
+                    <option value="overview">{t("hd.Overview")}</option>
+                    <option value="work">{t("hd.Work")}</option>
+                    <option value="love">{t("hd.Love")}</option>
+                    <option value="finance">{t("hd.Finance")}</option>
+                    <option value="health">{t("hd.Health")}</option>
+                    <option value="mentality">{t("hd.Mentality")}</option>
                   </select>
                 </div>
               </div>
               <button className="form__btn" type="submit">
-                Send
+                {t("hd.Send")}
               </button>
             </form>
           ) : online ? (
             <div className="results">
               <p className="results__title">
-                {t("Your Problem")}:{" "}
-                {t(problem[0].toUpperCase() + problem.slice(1))}
+                {t("hd.Your Problem")}:{" "}
+                {t("hd." + problem[0].toUpperCase() + problem.slice(1))}
               </p>
               <div className="results__tab">
                 <Tabs defaultActiveKey="tab01">
@@ -954,7 +954,7 @@ const Header = ({ t }) => {
                     card.data.map((item, index) => (
                       <Tab
                         eventKey={`tab0${index + 1}`}
-                        title={t(`Card 0${index + 1}`)}
+                        title={t(`hd.Card 0${index + 1}`)}
                         key={item._id}
                         className="tab-pane--large"
                       >

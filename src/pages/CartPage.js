@@ -13,7 +13,9 @@ import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
 
-const CartPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const CartPage = ({ t }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.carts.data);
@@ -81,24 +83,24 @@ const CartPage = () => {
 
   return (
     <div id="cart-page" className="cart-page bg-grey">
-      <MainVisual heading="Cart" />
-      <Breadcrumb leaf="cart" />
+      <MainVisual heading={t("c.Cart")} />
+      <Breadcrumb leaf={t("c.Cart")} />
       {carts && carts.data.carts.length ? (
         <div className="container">
           <div className="cart-page__details">
             <ul>
               <li>
                 <div className="col col--01">
-                  <strong>Product</strong>
+                  <strong>{t("c.Product")}</strong>
                 </div>
                 <div className="col col--02">
-                  <strong>Unit Price</strong>
+                  <strong>{t("c.Unit Price")}</strong>
                 </div>
                 <div className="col col--03">
-                  <strong>Quantity</strong>
+                  <strong>{t("c.Quantity")}</strong>
                 </div>
                 <div className="col col--04">
-                  <strong>Total</strong>
+                  <strong>{t("c.Total")}</strong>
                 </div>
                 <div className="col col--05"></div>
               </li>
@@ -164,9 +166,9 @@ const CartPage = () => {
             </ul>
           </div>
           <div className="cart-page__total">
-            <h2 className="tit">Cash Total</h2>
+            <h2 className="tit">{t("c.Cash Total")}</h2>
             <div className="total">
-              <strong>Total</strong>
+              <strong>{t("c.Total")}</strong>
               <span>
                 $
                 {carts &&
@@ -177,7 +179,7 @@ const CartPage = () => {
               </span>
             </div>
             <button onClick={() => setShowModal(true)} className="checkout">
-              Checkout
+              {t("c.Checkout")}
             </button>
           </div>
 
@@ -194,20 +196,20 @@ const CartPage = () => {
       ) : (
         <div className="container">
           <p className="cart-page__no-item">
-            Don't have any items.
-            <Link to="/">Go home</Link>
+            {t("Do not have any items.")}
+            <Link to="/">{t("c.Go Back")}</Link>
           </p>
         </div>
       )}
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Billing Details</Modal.Title>
+          <Modal.Title>{t("c.Billing Details")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <div className="details">
-            <h3 className="details__tit">Your Order Summary</h3>
+            <h3 className="details__tit">{t("c.Your Order Summary")}</h3>
             <ul className="details__list">
               {carts &&
                 carts.data.carts.map((cart) => (
@@ -235,15 +237,15 @@ const CartPage = () => {
                 <input
                   type="text"
                   name="phone"
-                  placeholder="Phone Number"
+                  placeholder={t("c.Phone Number")}
                   onChange={handleChange}
                 />
               </div>
               <div className="item" onChange={handleChange}>
                 <select name="payment">
-                  <option value="COD">COD</option>
-                  <option value="Visa">Visa</option>
-                  <option value="Installment">Installment</option>
+                  <option value="COD">{t("c.COD")}</option>
+                  <option value="Visa">{t("c.Visa")}</option>
+                  <option value="Installment">{t("c.Installment")}</option>
                 </select>
               </div>
             </div>
@@ -265,7 +267,7 @@ const CartPage = () => {
             onClick={handleCheckout}
             className={formInput.shipping && formInput.phone ? "active" : ""}
           >
-            Send
+            {t("c.Send")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -273,4 +275,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default withNamespaces()(CartPage);

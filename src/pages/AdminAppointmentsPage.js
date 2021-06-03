@@ -17,7 +17,9 @@ import processing from "../img/categoris/processing.svg";
 import completed from "../img/categoris/completed.svg";
 import cancelled from "../img/categoris/cancel.svg";
 
-const AdminAppointmentsPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const AdminAppointmentsPage = ({ t }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const singleUser = useSelector((state) => state.user.singleUser.data);
@@ -29,8 +31,6 @@ const AdminAppointmentsPage = () => {
     (state) => state.appointment.singleAppointment.data
   );
   const totalPage = useSelector((state) => state.appointment.totalPages);
-
-  console.log(singleUser);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
@@ -100,13 +100,14 @@ const AdminAppointmentsPage = () => {
   };
 
   const handleAccept = (val) => {
-    const { avatar, fullname, username, position } = formApply;
+    const { avatar, fullname, username, position, role } = formApply;
     dispatch(
       userActions.updateSinlgeUser(val, {
         avatar,
         fullname,
         username,
         position,
+        role,
       })
     );
     setShowDetail(false);
@@ -140,15 +141,16 @@ const AdminAppointmentsPage = () => {
       avatar: singleUser && singleUser.data.avatar,
       fullname: singleUser && singleUser.data.fullname,
       username: singleUser && singleUser.data.username,
-      position: "Reader",
+      position: singleAppointment && singleAppointment.data.position,
+      role: "Reader",
     });
-  }, [singleUser]);
+  }, [singleUser, singleAppointment]);
 
   return (
     <div id="admin-users" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input type="text" name="searchInput" placeholder="Search" />
+          <input type="text" name="searchInput" placeholder={t("apm.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -178,7 +180,7 @@ const AdminAppointmentsPage = () => {
                 }}
               >
                 <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
+                <span>{t(`apm.${item.title}`)}</span>
               </button>
             </li>
           ))}
@@ -192,16 +194,16 @@ const AdminAppointmentsPage = () => {
                 <strong>#</strong>
               </div>
               <div className="col col--02">
-                <strong>Order</strong>
+                <strong>{t("apm.Order")}</strong>
               </div>
               <div className="col col--03">
-                <strong>Date</strong>
+                <strong>{t("apm.Date")}</strong>
               </div>
               <div className="col col--04">
-                <strong>Type</strong>
+                <strong>{t("apm.Type")}</strong>
               </div>
               <div className="col col--05">
-                <strong>Status</strong>
+                <strong>{t("apm.Status")}</strong>
               </div>
               <div className="col col--06"></div>
             </li>
@@ -228,47 +230,49 @@ const AdminAppointmentsPage = () => {
                   <span>{appointment.appointmentDate}</span>
                 </div>
                 <div className="col col--04">
-                  <span>
-                    {appointment.serviceType
-                      ? appointment.serviceType
-                      : "Recruitment"}
-                  </span>
+                  <span>{t(`apm.${appointment.serviceType}`)}</span>
                 </div>
                 <div className="col col--05">
                   <span
                     className={`status ${appointment.status.toLowerCase()}`}
                   >
-                    {appointment.status}
+                    {t(`apm.${appointment.status}`)}
                   </span>
                 </div>
                 <div className="col col--06">
-                  <button
-                    className="edit"
-                    onClick={() => {
-                      setShowEdit(true);
-                      setEditStatus(appointment.status);
-                      setTarget(appointment._id);
-                      dispatch(
-                        appointmentActions.getSingleAppointment(appointment._id)
-                      );
-                    }}
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fas"
-                      data-icon="sliders-h"
-                      className="svg-inline--fa fa-sliders-h fa-w-16"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
+                  {appointment.status !== "Completed" ? (
+                    <button
+                      className="edit"
+                      onClick={() => {
+                        setShowEdit(true);
+                        setEditStatus(appointment.status);
+                        setTarget(appointment._id);
+                        dispatch(
+                          appointmentActions.getSingleAppointment(
+                            appointment._id
+                          )
+                        );
+                      }}
                     >
-                      <path
-                        fill="currentColor"
-                        d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"
-                      ></path>
-                    </svg>
-                  </button>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="sliders-h"
+                        className="svg-inline--fa fa-sliders-h fa-w-16"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"
+                        ></path>
+                      </svg>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   <button
                     className="trash"
                     onClick={() => {
@@ -298,7 +302,9 @@ const AdminAppointmentsPage = () => {
           </ul>
         </div>
       ) : (
-        <p className="admin__no-item">Don't have any Appointments.</p>
+        <p className="admin__no-item">
+          {t("apm.Do not have any Appointments.")}
+        </p>
       )}
 
       {totalPage > 1 ? (
@@ -314,7 +320,7 @@ const AdminAppointmentsPage = () => {
       {/* EDIT  */}
       <Modal show={showEdit} onHide={() => setShowEdit(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Change Status</Modal.Title>
+          <Modal.Title>{t("apm.Change Status")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -349,13 +355,19 @@ const AdminAppointmentsPage = () => {
                       {singleAppointment.data.from.fullname}
                     </p>
                     <p className="position">
-                      {singleAppointment.data.from.position}
+                      {singleAppointment.data.from.position}{" "}
+                      {singleAppointment.data.from.role === "Reader"
+                        ? "Reader"
+                        : ""}
                     </p>
                   </div>
                   <div className="info__item">
                     <p className="name">{singleAppointment.data.to.fullname}</p>
                     <p className="position">
-                      {singleAppointment.data.to.position} Reader
+                      {singleAppointment.data.to.position}{" "}
+                      {singleAppointment.data.to.position === "Admin"
+                        ? ""
+                        : "Reader"}
                     </p>
                   </div>
                 </div>
@@ -372,10 +384,10 @@ const AdminAppointmentsPage = () => {
                   value={formEdit.status}
                   onChange={handleChange}
                 >
-                  <option value="Requesting">Requesting</option>
-                  <option value="Processing">Processing</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="Requesting">{t("apm.Requesting")}</option>
+                  <option value="Processing">{t("apm.Processing")}</option>
+                  <option value="Completed">{t("apm.Completed")}</option>
+                  <option value="Cancelled">{t("apm.Cancelled")}</option>
                 </select>
               </div>
             </div>
@@ -387,7 +399,7 @@ const AdminAppointmentsPage = () => {
             className={formEdit.status !== editStatus ? "active" : ""}
             onClick={() => handleEdit(target)}
           >
-            Change
+            {t("apm.Change")}
           </button>
         </Modal.Footer>
       </Modal>
@@ -395,7 +407,9 @@ const AdminAppointmentsPage = () => {
       {/* DELETE  */}
       <Modal show={showDelete} onHide={() => setShowDelete(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Do you wish to cancel this order?</Modal.Title>
+          <Modal.Title>
+            {t("apm.Do you wish to delete this appointment?")}
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -406,9 +420,11 @@ const AdminAppointmentsPage = () => {
                 setShowDelete(false);
               }}
             >
-              Delete
+              {t("apm.Delete")}
             </button>
-            <button onClick={() => setShowDelete(false)}>Cancel</button>
+            <button onClick={() => setShowDelete(false)}>
+              {t("apm.Cancel")}
+            </button>
           </div>
         </Modal.Body>
       </Modal>
@@ -416,7 +432,7 @@ const AdminAppointmentsPage = () => {
       {/* DETAIL  */}
       <Modal show={showDetail} onHide={() => setShowDetail(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Change Status</Modal.Title>
+          <Modal.Title>{t("apm.Summary Appointment")}</Modal.Title>
         </Modal.Header>
 
         {singleAppointment ? (
@@ -451,13 +467,19 @@ const AdminAppointmentsPage = () => {
                       {singleAppointment.data.from.fullname}
                     </p>
                     <p className="position">
-                      {singleAppointment.data.from.position}
+                      {singleAppointment.data.from.position}{" "}
+                      {singleAppointment.data.from.role === "Reader"
+                        ? "Reader"
+                        : ""}
                     </p>
                   </div>
                   <div className="info__item">
                     <p className="name">{singleAppointment.data.to.fullname}</p>
                     <p className="position">
-                      {singleAppointment.data.to.position} Reader
+                      {singleAppointment.data.to.position}{" "}
+                      {singleAppointment.data.to.position === "Admin"
+                        ? ""
+                        : "Reader"}
                     </p>
                   </div>
                 </div>
@@ -466,10 +488,11 @@ const AdminAppointmentsPage = () => {
             <div className="order order--admin order--appointment">
               <div className="order__heading">
                 <p>
-                  Phone: <strong>{singleAppointment.data.clientPhone}</strong>
+                  {t("apm.Phone")}:{" "}
+                  <strong>{singleAppointment.data.clientPhone}</strong>
                 </p>
                 <p>
-                  Status:{" "}
+                  {t("apm.Status")}:{" "}
                   <strong
                     className={`status-other ${singleAppointment.data.status
                       .toLowerCase()
@@ -482,10 +505,10 @@ const AdminAppointmentsPage = () => {
               <ul className="order__info">
                 <li>
                   <div className="col col--half">
-                    <strong>Date</strong>
+                    <strong>{t("apm.Date")}</strong>
                   </div>
                   <div className="col col--half">
-                    <strong>Type</strong>
+                    <strong>{t("apm.Type")}</strong>
                   </div>
                 </li>
                 <li>
@@ -493,7 +516,9 @@ const AdminAppointmentsPage = () => {
                     <span>{singleAppointment.data.appointmentDate}</span>
                   </div>
                   <div className="col col--half">
-                    <span>{singleAppointment.data.serviceType}</span>
+                    <span>
+                      {t(`apm.${singleAppointment.data.serviceType}`)}
+                    </span>
                   </div>
                 </li>
               </ul>
@@ -514,7 +539,7 @@ const AdminAppointmentsPage = () => {
               }
               onClick={() => handleAccept(targetApply)}
             >
-              Accept
+              {t("apm.Accept")}
             </button>
           </Modal.Footer>
         ) : (
@@ -525,4 +550,4 @@ const AdminAppointmentsPage = () => {
   );
 };
 
-export default AdminAppointmentsPage;
+export default withNamespaces()(AdminAppointmentsPage);

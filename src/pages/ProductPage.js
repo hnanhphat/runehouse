@@ -8,7 +8,9 @@ import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
 
-const ProductPage = () => {
+import { withNamespaces } from "react-i18next";
+
+const ProductPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
@@ -17,8 +19,6 @@ const ProductPage = () => {
 
   const [showFilter, setShowFilter] = useState(Array(2).fill(false));
   const [currentPage, setCurrentPage] = useState(1);
-
-  console.log(decks);
 
   const [showMore, setShowMore] = useState(false);
 
@@ -45,7 +45,11 @@ const ProductPage = () => {
         <ul className="products__sidebar">
           <li className="search">
             <form onSubmit={handleSearch} className="search__form">
-              <input type="text" name="searchInput" placeholder="Search" />
+              <input
+                type="text"
+                name="searchInput"
+                placeholder={t("pd.Search")}
+              />
               <button>
                 <svg
                   aria-hidden="true"
@@ -73,7 +77,7 @@ const ProductPage = () => {
                 dispatch(decksActions.searchDecks(""));
               }}
             >
-              All
+              {t("pd.All")}
             </button>
             <button
               className={`${cateField === "Sale" ? "active" : ""}`}
@@ -82,7 +86,7 @@ const ProductPage = () => {
                 dispatch(decksActions.searchDecks("&sale=true"));
               }}
             >
-              Sale
+              {t("pd.Sale")}
             </button>
           </li>
           <li
@@ -91,7 +95,7 @@ const ProductPage = () => {
             } ${showMore ? "filter--active" : ""}`}
           >
             <h3 className="tit">
-              Categories
+              {t("pd.Categories")}
               {showFilter[1] ? (
                 <button
                   className="more more--show"
@@ -122,7 +126,7 @@ const ProductPage = () => {
                     dispatch(decksActions.searchDecks(`&category=${cate._id}`));
                   }}
                 >
-                  {cate._id}
+                  {t(`pd.${cate._id}`)}
                 </button>
               ))}
           </li>
@@ -132,7 +136,7 @@ const ProductPage = () => {
             } ${showMore ? "filter--active" : ""}`}
           >
             <h3 className="tit">
-              Genres
+              {t("pd.Genres")}
               {showFilter[2] ? (
                 <button
                   className="more more--show"
@@ -163,7 +167,7 @@ const ProductPage = () => {
                     dispatch(decksActions.searchDecks(`&genres=${genre._id}`));
                   }}
                 >
-                  {genre._id}
+                  {t(`pd.${genre._id}`)}
                 </button>
               ))}
           </li>
@@ -232,4 +236,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default withNamespaces()(ProductPage);

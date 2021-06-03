@@ -72,6 +72,12 @@ input {
   }
 }
 
+select {
+  &:focus {
+    outline: none;
+  }
+}
+
 .container {
   width: calc(100% - 30px);
   max-width: 1024px;
