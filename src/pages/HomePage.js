@@ -88,7 +88,8 @@ const HomePage = () => {
                   Collection
                 </h3>
                 <p className="txt">
-                  It is a long established fact that a reader will bedistracted
+                  "Simplicity, patience, compassion. these three are your
+                  greatest treasures." - <em>Lao Tzu</em>
                 </p>
                 <Link to="/collection" className="btn-view">
                   <span>View All</span>

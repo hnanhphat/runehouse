@@ -9,6 +9,7 @@ import { authActions } from "../redux/actions/auth.actions";
 import { decksActions } from "../redux/actions/decks.actions";
 import { cartActions } from "../redux/actions/cart.actions";
 import { cardActions } from "../redux/actions/card.actions";
+import { routeActions } from "../redux/actions/route.actions";
 import { Modal, Tabs, Tab } from "react-bootstrap";
 
 import us from "../img/us.svg";
@@ -30,6 +31,7 @@ const Header = ({ t }) => {
   const [online, setOnline] = useState(false);
   const [problem, setProblem] = useState("");
 
+  const redirectTo = useSelector((state) => state.route.redirectTo);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
@@ -129,6 +131,14 @@ const Header = ({ t }) => {
       dispatch(cartActions.getUserCart(1, "&isOrdered=false"));
     }
   }, [dispatch, isAuth]);
+
+  useEffect(() => {
+    if (redirectTo) {
+      history.push(redirectTo);
+      setStatus(false);
+      dispatch(routeActions.removeRedirectTo());
+    }
+  }, [dispatch, history, redirectTo]);
 
   return (
     <header

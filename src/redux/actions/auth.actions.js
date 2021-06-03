@@ -1,5 +1,6 @@
 import api from "../../apiService";
 import { routeActions } from "./route.actions";
+import { userActions } from "./user.actions";
 import * as types from "../constants/auth.constants";
 import { toast } from "react-toastify";
 
@@ -85,10 +86,11 @@ const loginWithGg = (access_token) => async (dispatch) => {
 const logout = () => async (dispatch) => {
   try {
     dispatch({ type: types.LOGOUT_REQUEST, payload: null });
-    dispatch(routeActions.redirect("/"));
     dispatch({ type: types.LOGOUT_SUCCESS, payload: null });
     api.defaults.headers["authorization"] =
       "Bearer " + localStorage.getItem("accessToken");
+    dispatch(userActions.removeCurrentUser());
+    dispatch(routeActions.redirect("/"));
   } catch (error) {
     dispatch({ type: types.LOGOUT_FAILURE, payload: error.message });
   }

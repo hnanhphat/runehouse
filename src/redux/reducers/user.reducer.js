@@ -43,6 +43,10 @@ const userReducer = (state = initialState, action) => {
       state.singleUser = payload;
       state.loading = false;
       break;
+    case types.REMOVE_CURRENT_USER:
+      state.currentUser = [];
+      state.loading = false;
+      break;
     default:
       break;
   }

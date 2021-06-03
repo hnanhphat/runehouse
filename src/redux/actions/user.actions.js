@@ -63,10 +63,15 @@ const updateSinlgeUser = (id, data) => async (dispatch) => {
   }
 };
 
+const removeCurrentUser = () => (dispatch) => {
+  dispatch({ type: types.REMOVE_CURRENT_USER });
+};
+
 export const userActions = {
   getListOfUsers,
   getCurrentUser,
   getSingleUser,
   updateCurrentUser,
   updateSinlgeUser,
+  removeCurrentUser,
 };
