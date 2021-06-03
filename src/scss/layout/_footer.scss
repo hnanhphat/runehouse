@@ -3,19 +3,40 @@
   padding: 60px 2vw;
   text-align: center;
   &__scroll {
+    position: fixed;
+    background: $white;
+    border-radius: 50%;
+    color: $black;
+    width: 40px;
+    height: 40px;
+    bottom: -200%;
+    right: 20px;
+    @include transition_c(all 0.5s ease-out);
+    svg {
+      width: 100%;
+    }
+
+    &--active {
+      bottom: 20px;
+    }
   }
-  &__social {
-    a {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      margin: 0 24px;
-      position: relative;
-      svg {
-        fill: $white;
-        height: 30px;
-        position: relative;
-        @include transition_c(all 0.3s ease-out);
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include respond(phone) {
+      flex-direction: column;
+    }
+    img {
+      width: 80px;
+    }
+    p {
+      color: $white;
+      font-size: 28px;
+      font-weight: bold;
+      padding-left: 20px;
+      @include respond(phone) {
+        padding: 10px 0 0;
       }
     }
   }
@@ -34,6 +55,12 @@
       top: 0;
       left: 50%;
       @include tranform_c(translateX(-50%));
+    }
+    .pc {
+      display: none;
+      @include respond(phone) {
+        display: block;
+      }
     }
   }
 }
