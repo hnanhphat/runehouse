@@ -4,6 +4,10 @@
     align-items: flex-start;
     justify-content: space-between;
     padding: 30px;
+    @include respond(phone) {
+      flex-wrap: wrap;
+      padding: 20px 15px 40px;
+    }
   }
   &__sidebar {
     background: $white;
@@ -11,6 +15,10 @@
     box-shadow: $bs;
     width: 280px;
     overflow: hidden;
+    @include respond(phone) {
+      width: 100%;
+      margin-bottom: 20px;
+    }
     .user {
       &__avatar {
         background: rgba($color: $orange, $alpha: 0.2);
@@ -78,6 +86,14 @@
     }
     .directory {
       li {
+        @include respond(phone) {
+          &:not(.more) {
+            display: none;
+            &.active {
+              display: block;
+            }
+          }
+        }
         a {
           background: rgba($color: $orange, $alpha: 0.2);
           border-radius: 100px;
@@ -99,11 +115,43 @@
             background: $orange;
           }
         }
+
+        &.more {
+          display: none;
+          @include respond(phone) {
+            background: $orange;
+            display: block;
+            text-align: center;
+            button {
+              width: 100%;
+              height: 30px;
+              position: relative;
+              span {
+                position: absolute;
+                border-top: 10px solid $white;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                top: 50%;
+                left: 50%;
+                @include tranform_c(translate(-50%, -50%));
+              }
+            }
+
+            &--active {
+              button span {
+                @include tranform_c(translate(-50%, -50%) rotate(180deg));
+              }
+            }
+          }
+        }
       }
     }
   }
   &__content {
     width: calc(100% - 320px);
+    @include respond(phone) {
+      width: 100%;
+    }
   }
   &__controller {
     background: $white;
@@ -112,6 +160,9 @@
     display: flex;
     flex-wrap: wrap;
     padding: 20px 15px;
+    @include respond(phone) {
+      padding-bottom: 5px;
+    }
     .search {
       flex: 1;
       position: relative;
@@ -155,6 +206,11 @@
       padding-top: 15px;
       margin: 15px -10px 0;
       position: relative;
+      @include respond(phone) {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 15px 0 0;
+      }
       &::before {
         content: "";
         position: absolute;
@@ -163,18 +219,34 @@
         height: 1px;
         top: 0;
         left: 10px;
+        @include respond(phone) {
+          width: 100%;
+          left: 0;
+        }
       }
       &--four li {
         width: calc(100% / 4);
+        @include respond(phone) {
+          width: calc(100% / 2 - 8px);
+        }
       }
       &--six li {
         width: calc(100% / 6);
+        @include respond(phone) {
+          width: calc(100% / 2 - 8px);
+        }
       }
       &--seven li {
         width: calc(100% / 7);
+        @include respond(phone) {
+          width: calc(100% / 2 - 8px);
+        }
       }
       li {
         padding: 0 10px;
+        @include respond(phone) {
+          padding: 0 0 16px;
+        }
         button {
           border: 1px solid $grey-light;
           border-radius: 10px;
@@ -184,12 +256,21 @@
           justify-content: center;
           width: 100%;
           height: 112px;
+          @include respond(phone) {
+            height: 80px;
+          }
           img {
             height: 48px;
+            @include respond(phone) {
+              height: 30px;
+            }
           }
           span {
             font-size: 16px;
             margin-top: 10px;
+            @include respond(phone) {
+              font-size: 14px;
+            }
           }
           &.active {
             background: rgba($color: $orange, $alpha: 0.02);
@@ -211,10 +292,18 @@
     overflow: hidden;
     padding: 30px 15px;
     margin-top: 20px;
+    @include respond(phone) {
+      justify-content: space-between;
+      padding: 15px 15px 0;
+    }
     li {
       display: flex;
       width: calc(100% / 3);
       padding: 0 15px 30px;
+      @include respond(phone) {
+        width: 100%;
+        padding: 0 0 16px;
+      }
       .user {
         border: 1px solid rgba($color: $orange, $alpha: 0.2);
         border-radius: 10px;
@@ -317,10 +406,18 @@
     flex-wrap: wrap;
     padding: 15px 5px;
     margin-top: 20px;
+    @include respond(phone) {
+      justify-content: space-between;
+      padding: 15px 15px 0;
+    }
     li {
       width: calc(100% / 6);
       padding: 0 10px 20px;
       overflow: hidden;
+      @include respond(phone) {
+        width: calc(100% / 2 - 8px);
+        padding: 0 0 16px;
+      }
       .img {
         box-shadow: $bs;
         display: block;
@@ -345,6 +442,12 @@
           opacity: 0;
           padding: 10px;
           @include transition_c(all 0.3s ease-out);
+          @include respond(phone) {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: flex-end;
+            opacity: 1;
+          }
           button {
             background: $white;
             border-radius: 50%;
@@ -352,6 +455,10 @@
             height: 40px;
             &:not(:last-child) {
               margin-bottom: 10px;
+              @include respond(phone) {
+                margin-bottom: 0;
+                margin-right: 8px;
+              }
             }
             svg {
               color: $orange;
@@ -378,9 +485,17 @@
     flex-wrap: wrap;
     padding: 15px 5px;
     margin-top: 20px;
+    @include respond(phone) {
+      justify-content: space-between;
+      padding: 15px 15px 0;
+    }
     li {
       width: calc(100% / 4);
       padding: 0 10px 20px;
+      @include respond(phone) {
+        width: calc(100% / 2 - 8px);
+        padding: 0 0 16px;
+      }
       .img {
         border-radius: 5px;
         overflow: hidden;
@@ -401,6 +516,12 @@
           opacity: 0;
           padding: 10px;
           @include transition_c(all 0.3s ease-out);
+          @include respond(phone) {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: flex-end;
+            opacity: 1;
+          }
           button {
             background: $white;
             border-radius: 50%;
@@ -408,6 +529,10 @@
             height: 40px;
             &:not(:last-child) {
               margin-bottom: 10px;
+              @include respond(phone) {
+                margin-bottom: 0;
+                margin-right: 8px;
+              }
             }
             svg {
               color: $orange;
@@ -444,9 +569,16 @@
     flex-wrap: wrap;
     padding: 30px 15px;
     margin-top: 20px;
+    @include respond(phone) {
+      padding: 15px 15px 0;
+    }
     li {
       width: calc(100% / 2);
       padding: 0 15px 30px;
+      @include respond(phone) {
+        width: 100%;
+        padding: 0 0 16px;
+      }
       .img {
         aspect-ratio: 5 / 3;
         background-position: center;
@@ -472,6 +604,12 @@
           opacity: 0;
           padding: 10px;
           @include transition_c(all 0.3s ease-out);
+          @include respond(phone) {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: flex-end;
+            opacity: 1;
+          }
           button {
             background: $white;
             border-radius: 50%;
@@ -479,6 +617,10 @@
             height: 40px;
             &:not(:last-child) {
               margin-bottom: 10px;
+              @include respond(phone) {
+                margin-bottom: 0;
+                margin-right: 8px;
+              }
             }
             svg {
               color: $orange;
@@ -532,155 +674,171 @@
     }
   }
   &__orders {
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $bs;
-    overflow: hidden;
-    margin-top: 20px;
-    li {
-      display: flex;
-      padding: 0 10px;
-      &:first-child {
-        background: rgba($color: $orange, $alpha: 0.2);
+    @include respond(phone) {
+      overflow: auto;
+    }
+    ul {
+      background: $white;
+      border-radius: 10px;
+      box-shadow: $bs;
+      overflow: hidden;
+      margin-top: 20px;
+      @include respond(phone) {
+        width: 840px;
       }
-      .col {
+      li {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 54px;
-        &--01 {
-          width: 40px;
+        padding: 0 10px;
+        &:first-child {
+          background: rgba($color: $orange, $alpha: 0.2);
         }
-        &--02 {
-          flex: 1;
-        }
-        &--03 {
-          width: 180px;
-        }
-        &--04 {
-          width: 140px;
-        }
-        &--05 {
-          width: 140px;
-        }
-        &--06 {
+        .col {
           display: flex;
           align-items: center;
-          justify-content: space-evenly;
-          width: 80px;
-          svg {
-            color: $orange;
-            &.fa-sliders-h {
-              width: 18px;
-            }
-            &.fa-trash-alt {
-              width: 16px;
+          justify-content: center;
+          min-height: 54px;
+          &--01 {
+            width: 40px;
+          }
+          &--02 {
+            flex: 1;
+          }
+          &--03 {
+            width: 180px;
+          }
+          &--04 {
+            width: 140px;
+          }
+          &--05 {
+            width: 140px;
+          }
+          &--06 {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 80px;
+            svg {
+              color: $orange;
+              &.fa-sliders-h {
+                width: 18px;
+              }
+              &.fa-trash-alt {
+                width: 16px;
+              }
             }
           }
         }
-      }
-      span {
-        font-size: 16px;
-        &.status {
-          border: 1px solid currentColor;
-          border-radius: 4px;
-          font-weight: bold;
-          padding: 2px 10px;
-        }
-        &.topay {
-          background: rgba($color: $blue, $alpha: 0.1);
-          color: $blue;
-        }
-        &.toship {
-          background: rgba($color: $yellow, $alpha: 0.1);
-          color: $yellow;
-        }
-        &.toreceive {
-          background: rgba($color: $orange, $alpha: 0.1);
-          color: $orange;
-        }
-        &.completed {
-          background: rgba($color: $green, $alpha: 0.1);
-          color: $green;
-        }
-        &.cancelled {
-          background: rgba($color: $red, $alpha: 0.1);
-          color: $red;
+        span {
+          font-size: 16px;
+          &.status {
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 2px 10px;
+          }
+          &.topay {
+            background: rgba($color: $blue, $alpha: 0.1);
+            color: $blue;
+          }
+          &.toship {
+            background: rgba($color: $yellow, $alpha: 0.1);
+            color: $yellow;
+          }
+          &.toreceive {
+            background: rgba($color: $orange, $alpha: 0.1);
+            color: $orange;
+          }
+          &.completed {
+            background: rgba($color: $green, $alpha: 0.1);
+            color: $green;
+          }
+          &.cancelled {
+            background: rgba($color: $red, $alpha: 0.1);
+            color: $red;
+          }
         }
       }
     }
   }
   &__appointments {
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $bs;
-    overflow: hidden;
-    margin-top: 20px;
-    li {
-      display: flex;
-      padding: 0 10px;
-      &:first-child {
-        background: rgba($color: $orange, $alpha: 0.2);
+    @include respond(phone) {
+      overflow: auto;
+    }
+    ul {
+      background: $white;
+      border-radius: 10px;
+      box-shadow: $bs;
+      overflow: hidden;
+      margin-top: 20px;
+      @include respond(phone) {
+        width: 840px;
       }
-      .col {
+      li {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 54px;
-        &--01 {
-          width: 40px;
+        padding: 0 10px;
+        &:first-child {
+          background: rgba($color: $orange, $alpha: 0.2);
         }
-        &--02 {
-          flex: 1;
-        }
-        &--03 {
-          width: 180px;
-        }
-        &--04 {
-          width: 140px;
-        }
-        &--05 {
-          width: 140px;
-        }
-        &--06 {
+        .col {
           display: flex;
           align-items: center;
-          justify-content: space-evenly;
-          width: 80px;
-          svg {
-            color: $orange;
-            &.fa-sliders-h {
-              width: 18px;
-            }
-            &.fa-trash-alt {
-              width: 16px;
+          justify-content: center;
+          min-height: 54px;
+          &--01 {
+            width: 40px;
+          }
+          &--02 {
+            flex: 1;
+          }
+          &--03 {
+            width: 180px;
+          }
+          &--04 {
+            width: 140px;
+          }
+          &--05 {
+            width: 140px;
+          }
+          &--06 {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 80px;
+            svg {
+              color: $orange;
+              &.fa-sliders-h {
+                width: 18px;
+              }
+              &.fa-trash-alt {
+                width: 16px;
+              }
             }
           }
         }
-      }
-      span {
-        font-size: 16px;
-        &.status {
-          border: 1px solid currentColor;
-          border-radius: 4px;
-          font-weight: bold;
-          padding: 2px 10px;
-        }
-        &.requesting {
-          background: rgba($color: $blue, $alpha: 0.1);
-          color: $blue;
-        }
-        &.processing {
-          background: rgba($color: $orange, $alpha: 0.1);
-          color: $orange;
-        }
-        &.completed {
-          background: rgba($color: $green, $alpha: 0.1);
-          color: $green;
-        }
-        &.cancelled {
-          background: rgba($color: $red, $alpha: 0.1);
-          color: $red;
+        span {
+          font-size: 16px;
+          &.status {
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 2px 10px;
+          }
+          &.requesting {
+            background: rgba($color: $blue, $alpha: 0.1);
+            color: $blue;
+          }
+          &.processing {
+            background: rgba($color: $orange, $alpha: 0.1);
+            color: $orange;
+          }
+          &.completed {
+            background: rgba($color: $green, $alpha: 0.1);
+            color: $green;
+          }
+          &.cancelled {
+            background: rgba($color: $red, $alpha: 0.1);
+            color: $red;
+          }
         }
       }
     }

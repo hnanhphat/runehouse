@@ -87,6 +87,8 @@ const logout = () => async (dispatch) => {
     dispatch({ type: types.LOGOUT_REQUEST, payload: null });
     dispatch(routeActions.redirect("/"));
     dispatch({ type: types.LOGOUT_SUCCESS, payload: null });
+    api.defaults.headers["authorization"] =
+      "Bearer " + localStorage.getItem("accessToken");
   } catch (error) {
     dispatch({ type: types.LOGOUT_FAILURE, payload: error.message });
   }

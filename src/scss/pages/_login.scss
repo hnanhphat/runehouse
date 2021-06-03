@@ -46,13 +46,16 @@
       display: flex;
       align-items: center;
       text-align: center;
-      height: calc(100vh - 400px);
+      min-height: calc(100vh - 400px);
       overflow: hidden;
       position: absolute;
       top: 50%;
       left: 50%;
       @include tranform_c(translate(-50%, -50%));
       @include transition_c(all 0.5s ease-out);
+      @include respond(phone) {
+        flex-direction: column;
+      }
       &::before {
         content: "";
         position: absolute;
@@ -61,6 +64,9 @@
         height: 100%;
         top: 0;
         @include transition_c(all 0.5s ease-out);
+        @include respond(phone) {
+          display: none;
+        }
       }
     }
 
@@ -69,10 +75,18 @@
       position: relative;
       z-index: 10;
       @include transition_c(all 0.5s ease-out);
+      @include respond(phone) {
+        order: 2;
+        width: 100%;
+        padding: 20px 15px;
+      }
 
       .title {
         color: $orange;
         font-size: 26px;
+        @include respond(phone) {
+          font-size: 22px;
+        }
       }
 
       .social {
@@ -115,6 +129,9 @@
         color: $pink-pale;
         font-size: 14px;
         padding-bottom: 10px;
+        @include respond(phone) {
+          font-size: 12px;
+        }
       }
 
       .form {
@@ -131,9 +148,13 @@
 
           input {
             border: 1px solid $pink-pale;
+            border-radius: 5px;
             width: 100%;
             height: 40px;
             padding: 8px 12px 8px 38px;
+            @include respond(phone) {
+              height: 34px;
+            }
 
             &::placeholder {
               color: $pink-pale;
@@ -193,6 +214,11 @@
           max-width: 120px;
           height: 34px;
           margin: 20px auto 0;
+          @include respond(phone) {
+            max-width: 100px;
+            height: 28px;
+            font-size: 13px;
+          }
         }
       }
     }
@@ -208,13 +234,26 @@
       position: relative;
       z-index: 10;
       @include transition_c(all 0.3s ease-out);
+      @include respond(phone) {
+        background: $orange;
+        order: 1;
+        width: 100%;
+        padding: 20px 15px;
+      }
 
       .title {
         font-size: 26px;
+        @include respond(phone) {
+          font-size: 22px;
+        }
       }
 
       .txt {
         padding: 20px 0 40px;
+        @include respond(phone) {
+          font-size: 13px;
+          padding: 8px 0 24px;
+        }
       }
 
       button {
@@ -228,6 +267,11 @@
         max-width: 120px;
         height: 34px;
         margin: 0 auto;
+        @include respond(phone) {
+          max-width: 100px;
+          height: 28px;
+          font-size: 13px;
+        }
       }
     }
   }

@@ -79,9 +79,9 @@ const HomePage = () => {
               <div className="banner__item banner__item--03"></div>
             </div>
           </div>
-          <div id="collection" className="collection">
+          <div id="collection" className="collections">
             <div className="container">
-              <div className="collection__item">
+              <div className="collections__item">
                 <h3 className="tit">
                   Rune House
                   <br />
@@ -94,7 +94,7 @@ const HomePage = () => {
                   <span>View All</span>
                 </Link>
               </div>
-              <div className="collection__item">
+              <div className="collections__item">
                 <button
                   className="item item--01"
                   onClick={() => {
@@ -107,7 +107,7 @@ const HomePage = () => {
                   <span>Tarot</span>
                 </button>
               </div>
-              <div className="collection__item">
+              <div className="collections__item">
                 <button
                   className="item item--02"
                   onClick={() => {

@@ -1,5 +1,5 @@
 import noimg from "../noimg.jpeg";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/actions/user.actions";
@@ -18,6 +18,7 @@ const AdminSidebar = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const [showMore, setShowMore] = useState(false);
 
   let directory;
 
@@ -71,7 +72,7 @@ const AdminSidebar = () => {
       )}
       <ul className="directory">
         {directory.map((item) => (
-          <li key={item.title}>
+          <li key={item.title} className={`${showMore ? "active" : ""}`}>
             <Link
               to={`/admin/${item.title}`}
               className={
@@ -85,6 +86,13 @@ const AdminSidebar = () => {
             </Link>
           </li>
         ))}
+        <li className={`more ${showMore ? "more--active" : ""}`}>
+          <button
+            onClick={() => setShowMore((state) => (state ? false : true))}
+          >
+            <span></span>
+          </button>
+        </li>
       </ul>
     </div>
   );

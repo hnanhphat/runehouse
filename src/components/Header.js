@@ -104,6 +104,8 @@ const Header = ({ t }) => {
     dispatch(cardActions.getRandomCard(3));
   };
 
+  console.log(currentUser);
+
   useEffect(() => {
     changeLanguage(localStorage.getItem("language"));
   }, []);
@@ -529,7 +531,10 @@ const Header = ({ t }) => {
               className={
                 localStorage.getItem("language") === "en" ? "active" : ""
               }
-              onClick={() => handleLanguage("en")}
+              onClick={() => {
+                handleLanguage("en");
+                setHamberger(false);
+              }}
             >
               <img src={us} alt="United State" />
               <span>EN</span>
@@ -538,7 +543,10 @@ const Header = ({ t }) => {
               className={
                 localStorage.getItem("language") === "vn" ? "active" : ""
               }
-              onClick={() => handleLanguage("vn")}
+              onClick={() => {
+                handleLanguage("vn");
+                setHamberger(false);
+              }}
             >
               <img src={vn} alt="Vietnamese" />
               <span>VN</span>
@@ -605,7 +613,7 @@ const Header = ({ t }) => {
                 <span>Orders</span>
               </button>
             </li>
-            {isAuth ? (
+            {isAdmin !== "User" ? (
               <li className="full">
                 <button
                   onClick={() => {
@@ -673,6 +681,7 @@ const Header = ({ t }) => {
               <button
                 onClick={() => {
                   handleLogout();
+                  history.push("/");
                   setHamberger(false);
                 }}
               >
