@@ -17,6 +17,7 @@ import vn from "../img/vn.svg";
 
 import i18n from "../i18n";
 import { withNamespaces } from "react-i18next";
+import Loading from "../components/Loading";
 
 const Header = ({ t }) => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const Header = ({ t }) => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const carts = useSelector((state) => state.cart.carts.data);
   const card = useSelector((state) => state.card.random.data);
+  const cardLoading = useSelector((state) => state.card.loading);
 
   const [random, setRandom] = useState(Math.floor(Math.random() * 2));
   const [randomArray, setRandomArray] = useState([
@@ -757,7 +759,9 @@ const Header = ({ t }) => {
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
-          {!daily && !form && !online ? (
+          {cardLoading ? (
+            <Loading />
+          ) : !daily && !form && !online ? (
             <div className="option">
               <button className="option__btn" onClick={handleDaily}>
                 {t("hd.Daily Card")}

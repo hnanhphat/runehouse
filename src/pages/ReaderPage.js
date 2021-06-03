@@ -10,6 +10,7 @@ import { Modal } from "react-bootstrap";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
+import Loading from "../components/Loading";
 
 // IMAGES
 import all from "../img/categoris/infinity.svg";
@@ -24,6 +25,7 @@ import { withNamespaces } from "react-i18next";
 const ReaderPage = ({ t }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.allUser.data);
+  const loading = useSelector((state) => state.user.loading);
   const singleUser = useSelector((state) => state.user.singleUser.data);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -211,74 +213,78 @@ const ReaderPage = ({ t }) => {
             </button>
           </div>
         </div>
-        <ul className="readers__list">
-          {users && users.data.users.length ? (
-            users.data.users.map((user) => (
-              <li key={user._id}>
-                <div className="avatar">
-                  <div
-                    className="avatar__circle"
-                    style={{
-                      backgroundImage: `url('${
-                        user.avatar ? user.avatar : noimg
-                      }')`,
-                    }}
-                  ></div>
-                </div>
-                <div className="info">
-                  <Link to={`readers/${user._id}`} className="name">
-                    {user.fullname}
-                  </Link>
-                  <p className="position">{user.position} Reader</p>
-                  <em className="quote">{user.quote}</em>
-                  {isAuth ? (
-                    <button
-                      onClick={() => {
-                        dispatch(userActions.getSingleUser(user._id));
-                        setShowModal(true);
+        {loading ? (
+          <Loading />
+        ) : (
+          <ul className="readers__list">
+            {users && users.data.users.length ? (
+              users.data.users.map((user) => (
+                <li key={user._id}>
+                  <div className="avatar">
+                    <div
+                      className="avatar__circle"
+                      style={{
+                        backgroundImage: `url('${
+                          user.avatar ? user.avatar : noimg
+                        }')`,
                       }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="far"
-                        data-icon="clock"
-                        className="svg-inline--fa fa-clock fa-w-16"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                    ></div>
+                  </div>
+                  <div className="info">
+                    <Link to={`readers/${user._id}`} className="name">
+                      {user.fullname}
+                    </Link>
+                    <p className="position">{user.position} Reader</p>
+                    <em className="quote">{user.quote}</em>
+                    {isAuth ? (
+                      <button
+                        onClick={() => {
+                          dispatch(userActions.getSingleUser(user._id));
+                          setShowModal(true);
+                        }}
                       >
-                        <path
-                          fill="currentColor"
-                          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                        ></path>
-                      </svg>
-                      <span>{t("rd.Make an appointment")}</span>
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="far"
+                          data-icon="clock"
+                          className="svg-inline--fa fa-clock fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+                          ></path>
+                        </svg>
+                        <span>{t("rd.Make an appointment")}</span>
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="no-item">
+                {t(`rd.Do not have any Reader.`)}
+                {searchInput ? (
+                  <button
+                    onClick={() => {
+                      setPositionStt("All");
+                      setSearchInput(``);
+                    }}
+                  >
+                    {t("rd.Go Back")}
+                  </button>
+                ) : (
+                  <Link to="/">{t("rd.Go Home")}</Link>
+                )}
               </li>
-            ))
-          ) : (
-            <li className="no-item">
-              {t(`rd.Do not have any Reader.`)}
-              {searchInput ? (
-                <button
-                  onClick={() => {
-                    setPositionStt("All");
-                    setSearchInput(``);
-                  }}
-                >
-                  {t("rd.Go Back")}
-                </button>
-              ) : (
-                <Link to="/">{t("rd.Go Home")}</Link>
-              )}
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        )}
         {totalPage > 1 && users && users.data.users.length ? (
           <PaginationBar
             currentPage={currentPage}

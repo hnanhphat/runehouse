@@ -5955,6 +5955,11 @@ select:focus {
   text-align: center;
   padding: 20px;
 }
+@media only screen and (max-width: 48em) {
+  .news-page__no-item {
+    width: 100%;
+  }
+}
 .news-page__no-item a,
 .news-page__no-item button {
   background: #d67b35;
@@ -6980,6 +6985,11 @@ select:focus {
   font-weight: bold;
   text-align: center;
   padding: 20px;
+}
+@media only screen and (max-width: 48em) {
+  .products__no-item {
+    width: 100%;
+  }
 }
 .products__no-item a,
 .products__no-item button {

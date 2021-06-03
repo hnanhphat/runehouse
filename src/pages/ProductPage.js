@@ -24,8 +24,6 @@ const ProductPage = ({ t }) => {
 
   const [showMore, setShowMore] = useState(false);
 
-  console.log(loading);
-
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(decksActions.searchDecks(`&name=${e.target.searchInput.value}`));
