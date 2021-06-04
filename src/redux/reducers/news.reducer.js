@@ -4,6 +4,7 @@ const initialState = {
   news: [],
   search: [],
   totalPages: 1,
+  loadingList: false,
   loading: false,
   error: "",
   singleNews: [],
@@ -33,15 +34,15 @@ const newsReducer = (state = initialState, action) => {
       state.loading = false;
       break;
     case types.GET_LIST_REQUEST:
-      state.loading = payload;
+      state.loadingList = payload;
       break;
     case types.GET_LIST_SUCCESS:
       state.news = payload.data;
       state.totalPages = payload.totalPages;
-      state.loading = false;
+      state.loadingList = false;
       break;
     case types.GET_LIST_FAILURE:
-      state.loading = false;
+      state.loadingList = false;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleNews = payload;

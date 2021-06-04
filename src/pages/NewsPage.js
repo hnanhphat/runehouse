@@ -17,7 +17,7 @@ import { withNamespaces } from "react-i18next";
 const NewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
-  const loading = useSelector((state) => state.news.loading);
+  const loadingList = useSelector((state) => state.news.loadingList);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -148,7 +148,7 @@ const NewsPage = ({ t }) => {
             </button>
           </li>
         </ul>
-        {loading ? (
+        {loadingList ? (
           <Loading />
         ) : news && news.data.news.length ? (
           <ul className="news-page__list">
