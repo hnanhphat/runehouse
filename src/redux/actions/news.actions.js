@@ -45,7 +45,7 @@ const createReaction = (data, pageNumber, option, id) => async (dispatch) => {
     dispatch({ type: types.CREATE_REACTION_REQUEST, payload: null });
     const res = await api.post(`/reaction`, data);
     dispatch({ type: types.CREATE_REACTION_SUCCESS, payload: res });
-    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getListOfNews(pageNumber, option, false));
     dispatch(getSingleNews(id));
   } catch (error) {
     dispatch({ type: types.CREATE_REACTION_FAILURE, payload: error.message });
@@ -57,7 +57,7 @@ const createReview = (data, pageNumber, option, id) => async (dispatch) => {
     dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
     const res = await api.post(`/review`, data);
     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res });
-    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getListOfNews(pageNumber, option, false));
     dispatch(getSingleNews(id));
   } catch (error) {
     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error.message });
@@ -70,7 +70,7 @@ const editNews = (data, id, pageNumber, option) => async (dispatch) => {
     const res = await api.put(`/news/${id}`, data);
     dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
     toast.success(res.data.message);
-    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getListOfNews(pageNumber, option, false));
   } catch (error) {
     dispatch({ type: types.EDIT_SINGLE_FAILURE, payload: error.message });
   }
@@ -82,7 +82,7 @@ const deleteNews = (id, pageNumber, option) => async (dispatch) => {
     const res = await api.delete(`/news/${id}`);
     dispatch({ type: types.DELETE_SINGLE_SUCCESS, payload: res });
     toast.success(res.data.message);
-    dispatch(getListOfNews(pageNumber, option));
+    dispatch(getListOfNews(pageNumber, option, false));
   } catch (error) {
     dispatch({ type: types.DELETE_SINGLE_FAILURE, payload: error.message });
   }
