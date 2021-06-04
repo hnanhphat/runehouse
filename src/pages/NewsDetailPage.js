@@ -216,7 +216,7 @@ const NewsDetailPage = ({ t }) => {
                     </div>
                     <div className="group">
                       <a
-                        href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//hnanhphatecommerce.netlify.app/news/${singleNews.data._id}`}
+                        href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//runehouse.netlify.app/news/${singleNews.data._id}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="upper"
