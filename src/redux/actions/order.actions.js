@@ -8,7 +8,7 @@ const createOrder = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_ORDER_REQUEST, payload: null });
     const res = await api.post(`/order`, data);
-    dispatch(routeActions.redirect("/"));
+    dispatch(routeActions.redirect("/orders"));
     dispatch({ type: types.CREATE_ORDER_SUCCESS, payload: res });
     toast.success(res.data.message);
     dispatch(cartActions.getUserCart(1, "&isOrdered=false"));

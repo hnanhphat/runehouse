@@ -1,5 +1,4 @@
 import api from "../../apiService";
-import { routeActions } from "./route.actions";
 import * as types from "../constants/decks.constants";
 import { toast } from "react-toastify";
 
@@ -7,7 +6,6 @@ const createDecks = (data, pageNumber, option, storage) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_DECKS_REQUEST, payload: null });
     const res = await api.post(`/decks`, data);
-    dispatch(routeActions.redirect("/"));
     dispatch({ type: types.CREATE_DECKS_SUCCESS, payload: res });
     toast.success(res.data.message);
     dispatch(getListOfDecks(pageNumber, option, storage));

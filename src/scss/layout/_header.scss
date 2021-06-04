@@ -580,7 +580,7 @@
       &__language {
         display: flex;
         justify-content: space-between;
-        padding: 15px 0;
+        padding-top: 15px;
         position: relative;
         button {
           border: 1px solid $white;
@@ -606,6 +606,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        padding-top: 15px;
         li {
           background: $orange;
           border-radius: 100px;

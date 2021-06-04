@@ -370,8 +370,17 @@ const AdminProductsPage = ({ t }) => {
                     </svg>
                   </button>
                 </div>
+                {deck.sale ? <p className="sale">SALE</p> : ""}
               </div>
               <div className="name">{deck.name}</div>
+              <p className="price">
+                {deck.defaultPrice ? (
+                  <span className="price__before">${deck.defaultPrice}</span>
+                ) : (
+                  ""
+                )}
+                <span className="price__after">${deck.oficialPrice}</span>
+              </p>
             </li>
           ))}
         </ul>

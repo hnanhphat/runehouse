@@ -2195,7 +2195,7 @@ select:focus {
   .header .menu__language {
     display: flex;
     justify-content: space-between;
-    padding: 15px 0;
+    padding-top: 15px;
     position: relative;
   }
   .header .menu__language button {
@@ -2221,6 +2221,7 @@ select:focus {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: 15px;
   }
   .header .menu__list li {
     background: #d67b35;
@@ -2959,6 +2960,7 @@ select:focus {
   left: 0;
   opacity: 0;
   padding: 10px;
+  z-index: 10;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -2997,6 +2999,17 @@ select:focus {
 .admin__products li .img .btns button svg.fa-trash-alt {
   width: 16px;
 }
+.admin__products li .img .sale {
+  background: rgba(0, 0, 0, 0.8);
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  padding: 0 6px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 @media only screen and (min-width: 48em) {
   .admin__products li .img:hover .btns {
     opacity: 1;
@@ -3006,6 +3019,37 @@ select:focus {
   font-weight: bold;
   padding-top: 5px;
   line-height: 22px;
+}
+.admin__products li .price {
+  display: flex;
+  align-items: center;
+  line-height: 30px;
+}
+@media only screen and (max-width: 48em) {
+  .admin__products li .price {
+    line-height: 18px;
+  }
+}
+.admin__products li .price__before {
+  color: #888;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 8px;
+  text-decoration: line-through;
+}
+@media only screen and (max-width: 48em) {
+  .admin__products li .price__before {
+    font-size: 14px;
+  }
+}
+.admin__products li .price__after {
+  font-size: 18px;
+  font-weight: bold;
+}
+@media only screen and (max-width: 48em) {
+  .admin__products li .price__after {
+    font-size: 16px;
+  }
 }
 .admin__news {
   background: #fff;
