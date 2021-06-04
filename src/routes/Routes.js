@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 // COMPONENTS
@@ -12,15 +12,27 @@ import PublicLayout from "./PublicLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 const Routes = () => {
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.scrollY > window.innerHeight / 2) {
+        setStatus(true);
+      } else {
+        setStatus(false);
+      }
+    };
+  }, [status]);
+
   return (
     <div>
       <AlertMsg />
-      <Header />
+      <Header status={status} setStatus={setStatus} />
       <Switch>
         <ProtectedRoute path="/admin" component={AdminLayout} />
         <Route path="/" component={PublicLayout} />
       </Switch>
-      <Footer />
+      <Footer status={status} />
     </div>
   );
 };

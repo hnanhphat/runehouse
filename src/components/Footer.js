@@ -1,20 +1,8 @@
 import logo from "../logo.svg";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
-  const [status, setStatus] = useState(false);
-
-  useEffect(() => {
-    window.onscroll = () => {
-      if (window.scrollY > window.innerHeight) {
-        setStatus(true);
-      } else {
-        setStatus(false);
-      }
-    };
-  }, [status]);
-
+const Footer = ({ status }) => {
   return (
     <footer id="footer" className="footer">
       <button
