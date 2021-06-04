@@ -14,7 +14,7 @@ const createNews = (data, pageNumber, option) => async (dispatch) => {
   }
 };
 
-const getListOfNews = (pageNumber, option) => async (dispatch) => {
+const getListOfNews = (pageNumber, option, loading) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
     const res = await api.get(`/news?page=${pageNumber + option}`);
@@ -23,6 +23,7 @@ const getListOfNews = (pageNumber, option) => async (dispatch) => {
       payload: {
         data: res,
         totalPages: res.data.data.totalPages,
+        loading: loading,
       },
     });
   } catch (error) {

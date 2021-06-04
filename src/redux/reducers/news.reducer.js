@@ -14,7 +14,6 @@ const newsReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case types.CREATE_NEWS_REQUEST:
-    case types.GET_LIST_REQUEST:
     case types.GET_SINGLE_REQUEST:
     case types.CREATE_REACTION_REQUEST:
     case types.CREATE_REVIEW_REQUEST:
@@ -23,7 +22,6 @@ const newsReducer = (state = initialState, action) => {
       state.loading = true;
       break;
     case types.CREATE_NEWS_FAILURE:
-    case types.GET_LIST_FAILURE:
     case types.GET_SINGLE_FAILURE:
     case types.CREATE_REACTION_FAILURE:
     case types.CREATE_REVIEW_FAILURE:
@@ -34,10 +32,16 @@ const newsReducer = (state = initialState, action) => {
     case types.CREATE_NEWS_SUCCESS:
       state.loading = false;
       break;
+    case types.GET_LIST_REQUEST:
+      if (payload.loading) state.loading = true;
+      break;
     case types.GET_LIST_SUCCESS:
       state.news = payload.data;
       state.totalPages = payload.totalPages;
       state.loading = false;
+      break;
+    case types.GET_LIST_FAILURE:
+      if (payload.loading) state.loading = false;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleNews = payload;

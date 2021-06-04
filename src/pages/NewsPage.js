@@ -78,7 +78,7 @@ const NewsPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(newsActions.getListOfNews(currentPage, searchInput));
+    dispatch(newsActions.getListOfNews(currentPage, searchInput, false));
   }, [dispatch, currentPage, searchInput]);
 
   return (
