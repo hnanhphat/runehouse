@@ -121,7 +121,7 @@ const Header = ({ t, status, setStatus }) => {
 
   useEffect(() => {
     if (isAuth) {
-      dispatch(cartActions.getUserCart(1, "&isOrdered=false"));
+      dispatch(cartActions.getUserCart(1, "&isOrdered=false", true));
     }
   }, [dispatch, isAuth]);
 

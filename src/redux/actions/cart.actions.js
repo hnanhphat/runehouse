@@ -12,7 +12,7 @@ const createCart = (data) => async (dispatch) => {
   }
 };
 
-const getUserCart = (pageNumber, option) => async (dispatch) => {
+const getUserCart = (pageNumber, option, loading) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_USER_CART_REQUEST });
     const res = await api.get(`/cart?page=${pageNumber + option}`);
@@ -21,6 +21,7 @@ const getUserCart = (pageNumber, option) => async (dispatch) => {
       payload: {
         data: res,
         totalPages: res.data.data.totalPages,
+        loading: loading,
       },
     });
   } catch (error) {

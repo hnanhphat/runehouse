@@ -72,7 +72,10 @@ const ProfilePage = () => {
             </div>
             <div className="info">
               <p className="name">{currentUser.data.fullname}</p>
-              <p className="position">Normal {currentUser.data.position}</p>
+              <p className="position">
+                {currentUser.data.position}
+                {currentUser.data.role === "Reader" ? " Reader" : ""}
+              </p>
             </div>
             <button
               onClick={() => {
