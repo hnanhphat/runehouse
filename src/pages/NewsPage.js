@@ -10,14 +10,14 @@ import LinesEllipsis from "react-lines-ellipsis";
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
 import PaginationBar from "../components/PaginationBar";
-// import Loading from "../components/Loading";
+import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
 const NewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
-  // const loading = useSelector((state) => state.news.loading);
+  const loading = useSelector((state) => state.news.loading);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -148,7 +148,9 @@ const NewsPage = ({ t }) => {
             </button>
           </li>
         </ul>
-        {news && news.data.news.length ? (
+        {loading ? (
+          <Loading />
+        ) : news && news.data.news.length ? (
           <ul className="news-page__list">
             {news &&
               news.data.news.map((el, i) => (
