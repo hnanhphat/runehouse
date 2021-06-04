@@ -87,9 +87,7 @@ const CartPage = ({ t }) => {
     <div id="cart-page" className="cart-page bg-grey">
       <MainVisual heading={t("c.Cart")} />
       <Breadcrumb leaf={t("c.Cart")} />
-      {loading ? (
-        <Loading />
-      ) : carts && carts.data.carts.length ? (
+      {carts && carts.data.carts.length ? (
         <div className="container">
           <div className="cart-page__details">
             <ul>

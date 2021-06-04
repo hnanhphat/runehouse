@@ -148,9 +148,7 @@ const NewsPage = ({ t }) => {
             </button>
           </li>
         </ul>
-        {loading ? (
-          <Loading />
-        ) : news && news.data.news.length ? (
+        {news && news.data.news.length ? (
           <ul className="news-page__list">
             {news &&
               news.data.news.map((el, i) => (
