@@ -33,7 +33,7 @@ const newsReducer = (state = initialState, action) => {
       state.loading = false;
       break;
     case types.GET_LIST_REQUEST:
-      if (payload.loading) state.loading = true;
+      state.loading = payload;
       break;
     case types.GET_LIST_SUCCESS:
       state.news = payload.data;
@@ -41,7 +41,7 @@ const newsReducer = (state = initialState, action) => {
       state.loading = false;
       break;
     case types.GET_LIST_FAILURE:
-      if (payload.loading) state.loading = false;
+      state.loading = false;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleNews = payload;

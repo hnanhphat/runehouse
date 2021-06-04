@@ -16,14 +16,13 @@ const createNews = (data, pageNumber, option) => async (dispatch) => {
 
 const getListOfNews = (pageNumber, option, loading) => async (dispatch) => {
   try {
-    dispatch({ type: types.GET_LIST_REQUEST });
+    dispatch({ type: types.GET_LIST_REQUEST, payload: loading });
     const res = await api.get(`/news?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,
       payload: {
         data: res,
         totalPages: res.data.data.totalPages,
-        loading: loading,
       },
     });
   } catch (error) {
