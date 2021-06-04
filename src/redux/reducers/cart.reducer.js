@@ -5,7 +5,6 @@ const initialState = {
   cart: [],
   totalPages: 1,
   loading: false,
-  loadingDetail: false,
   error: "",
 };
 
@@ -14,21 +13,16 @@ const cartReducer = (state = initialState, action) => {
   switch (type) {
     case types.CREATE_CART_REQUEST:
     case types.GET_USER_CART_REQUEST:
-      state.loading = true;
-      break;
     case types.UPDATE_CART_REQUEST:
     case types.DELETE_CART_REQUEST:
-      state.loadingDetail = true;
+      state.loading = true;
       break;
     case types.CREATE_CART_FAILURE:
     case types.GET_USER_CART_FAILURE:
-      state.error = payload;
-      state.loading = false;
-      break;
     case types.UPDATE_CART_FAILURE:
     case types.DELETE_CART_FAILURE:
       state.error = payload;
-      state.loadingDetail = false;
+      state.loading = false;
       break;
     case types.CREATE_CART_SUCCESS:
       state.loading = false;
@@ -39,8 +33,11 @@ const cartReducer = (state = initialState, action) => {
       state.loading = false;
       break;
     case types.UPDATE_CART_SUCCESS:
+      state.loading = false;
+      break;
     case types.DELETE_CART_SUCCESS:
-      state.loadingDetail = false;
+      state.cart = {};
+      state.loading = false;
       break;
     default:
       break;
