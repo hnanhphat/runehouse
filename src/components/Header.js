@@ -23,7 +23,8 @@ const Header = ({ t }) => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [status, setStatus] = useState(false);
+  // const [status, setHeaderStatus] = useState(false);
+  const [headerStatus, setHeaderStatus] = useState(false);
   const [search, setSearch] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -115,12 +116,12 @@ const Header = ({ t }) => {
   useEffect(() => {
     window.onscroll = () => {
       if (window.scrollY > window.innerHeight / 4) {
-        setStatus(true);
+        setHeaderStatus(true);
       } else {
-        setStatus(false);
+        setHeaderStatus(false);
       }
     };
-  }, [status]);
+  }, [headerStatus]);
 
   useEffect(() => {
     if (isAuth) {
@@ -137,7 +138,7 @@ const Header = ({ t }) => {
   useEffect(() => {
     if (redirectTo) {
       history.push(redirectTo);
-      setStatus(false);
+      setHeaderStatus(false);
       dispatch(routeActions.removeRedirectTo());
     }
   }, [dispatch, history, redirectTo]);
@@ -146,7 +147,7 @@ const Header = ({ t }) => {
     <header
       id="header"
       className={`header ${
-        status || location.pathname.length > 1 ? "header--scroll" : ""
+        headerStatus || location.pathname.length > 1 ? "header--scroll" : ""
       }`}
     >
       <div className="header__container">
