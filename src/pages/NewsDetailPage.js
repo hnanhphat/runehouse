@@ -26,6 +26,8 @@ const NewsDetailPage = ({ t }) => {
     Array(100).fill(false)
   );
 
+  console.log(singleNews);
+
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
       targetType: typeVal,

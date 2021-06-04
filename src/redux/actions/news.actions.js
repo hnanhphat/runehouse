@@ -30,9 +30,9 @@ const getListOfNews = (pageNumber, option, loading) => async (dispatch) => {
   }
 };
 
-const getSingleNews = (id) => async (dispatch) => {
+const getSingleNews = (id, loading) => async (dispatch) => {
   try {
-    dispatch({ type: types.GET_SINGLE_REQUEST });
+    dispatch({ type: types.GET_SINGLE_REQUEST, payload: loading });
     const res = await api.get(`/news/${id}`);
     dispatch({ type: types.GET_SINGLE_SUCCESS, payload: res });
   } catch (error) {
@@ -46,7 +46,7 @@ const createReaction = (data, pageNumber, option, id) => async (dispatch) => {
     const res = await api.post(`/reaction`, data);
     dispatch({ type: types.CREATE_REACTION_SUCCESS, payload: res });
     dispatch(getListOfNews(pageNumber, option, false));
-    dispatch(getSingleNews(id));
+    // dispatch(getSingleNews(id));
   } catch (error) {
     dispatch({ type: types.CREATE_REACTION_FAILURE, payload: error.message });
   }

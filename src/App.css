@@ -5902,6 +5902,9 @@ select:focus {
   padding: 10px 0;
   line-height: 12px;
 }
+.news-page__list li .bot__hidden .list__item .content .other .group .upper.active {
+  color: #d67b35;
+}
 .news-page__list li .bot__hidden .list__item .content .other .group .icons {
   position: absolute;
   background: #fff;

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../redux/actions/news.actions";
 
 import Moment from "react-moment";
-import LinesEllipsis from "react-lines-ellipsis";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
@@ -22,15 +21,20 @@ const NewsPage = ({ t }) => {
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showComment, setShowComment] = useState(Array(10).fill(false));
-  const [showAllComments, setShowAllComments] = useState(Array(10).fill(false));
   const [searchInput, setSearchInput] = useState("");
   const [cateStt, setCateStt] = useState("All");
   const [showMore, setShowMore] = useState(false);
-  const [showReaction, setShowReaction] = useState(Array(10).fill(false));
-  const [showReviewReaction, setShowReviewReaction] = useState(
-    Array(100).fill(false)
+
+  const [showComment, setShowComment] = useState(
+    Array(news && news.data.news.length).fill(false)
   );
+  const [showAllComments, setShowAllComments] = useState(
+    Array(news && news.data.news.length).fill(false)
+  );
+  const [showReaction, setShowReaction] = useState(
+    Array(news && news.data.news.length).fill(false)
+  );
+  const [showReviewReaction, setShowReviewReaction] = useState();
 
   const handleReaction = (typeVal, idVal, emojiVal) => {
     const { targetType, targetId, emoji } = {
@@ -80,6 +84,12 @@ const NewsPage = ({ t }) => {
   useEffect(() => {
     dispatch(newsActions.getListOfNews(currentPage, searchInput, true));
   }, [dispatch, currentPage, searchInput]);
+
+  useEffect(() => {
+    setShowReviewReaction(
+      news && news.data.news.map((el) => Array(el.reviews.length).fill(false))
+    );
+  }, [news]);
 
   return (
     <div id="news-page" className="news-page bg-grey">
@@ -178,14 +188,6 @@ const NewsPage = ({ t }) => {
                       <Link to={`/news/${el._id}`} className="tit">
                         {el.title}
                       </Link>
-                      <LinesEllipsis
-                        className="txt"
-                        text={el.content}
-                        maxLine="3"
-                        ellipsis="..."
-                        trimRight
-                        basedOn="letters"
-                      />
                     </div>
                     <div className="img">
                       {el.image ? <img src={el.image} alt={el.title} /> : ""}
@@ -251,45 +253,66 @@ const NewsPage = ({ t }) => {
                             >
                               <button
                                 className="lower lower--like"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "like")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "like");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--love"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "love")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "love");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--care"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "care")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "care");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--laugh"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "laugh")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "laugh");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--wow"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "wow")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "wow");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--sad"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "sad")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "sad");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                               <button
                                 className="lower lower--angry"
-                                onClick={() =>
-                                  handleReaction("News", el._id, "angry")
-                                }
+                                onClick={() => {
+                                  handleReaction("News", el._id, "angry");
+                                  let arr = [...showReaction];
+                                  arr[i] = arr[i] ? false : true;
+                                  setShowReaction(arr);
+                                }}
                               ></button>
                             </div>
                           </div>
@@ -299,7 +322,7 @@ const NewsPage = ({ t }) => {
                                 className="upper"
                                 onClick={() => {
                                   let arr = [...showComment];
-                                  arr[i] = false;
+                                  arr[i] = arr[i] ? false : true;
                                   setShowComment(arr);
                                 }}
                               >
@@ -310,7 +333,7 @@ const NewsPage = ({ t }) => {
                                 className="upper"
                                 onClick={() => {
                                   let arr = [...showComment];
-                                  arr[i] = true;
+                                  arr[i] = arr[i] ? false : true;
                                   setShowComment(arr);
                                 }}
                               >
@@ -367,7 +390,7 @@ const NewsPage = ({ t }) => {
                                 showAllComments[i] ? "list--all" : ""
                               }`}
                             >
-                              {el.reviews.map((review) => (
+                              {el.reviews.map((review, j) => (
                                 <div className="list__item" key={review._id}>
                                   <div
                                     className="avatar"
@@ -423,13 +446,17 @@ const NewsPage = ({ t }) => {
                                       <div className="group">
                                         <button
                                           className={`upper ${
-                                            showReviewReaction[i]
+                                            showReviewReaction &&
+                                            showReviewReaction[i] &&
+                                            showReviewReaction[i][j]
                                               ? "active"
                                               : ""
                                           }`}
                                           onClick={() => {
                                             let arr = [...showReviewReaction];
-                                            arr[i] = arr[i] ? false : true;
+                                            arr[i][j] = arr[i][j]
+                                              ? false
+                                              : true;
                                             setShowReviewReaction(arr);
                                           }}
                                         >
@@ -437,7 +464,9 @@ const NewsPage = ({ t }) => {
                                         </button>
                                         <div
                                           className={`icons ${
-                                            showReviewReaction[i]
+                                            showReviewReaction &&
+                                            showReviewReaction[i] &&
+                                            showReviewReaction[i][j]
                                               ? "active"
                                               : ""
                                           }`}

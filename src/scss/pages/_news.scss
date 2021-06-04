@@ -490,6 +490,9 @@
                       font-weight: bold;
                       padding: 10px 0;
                       line-height: 12px;
+                      &.active {
+                        color: $orange;
+                      }
                     }
                     .icons {
                       position: absolute;
