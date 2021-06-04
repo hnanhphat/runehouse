@@ -46,7 +46,9 @@ const createReaction = (data, pageNumber, option, id) => async (dispatch) => {
     const res = await api.post(`/reaction`, data);
     dispatch({ type: types.CREATE_REACTION_SUCCESS, payload: res });
     dispatch(getListOfNews(pageNumber, option, false));
-    // dispatch(getSingleNews(id));
+    if (id) {
+      dispatch(getSingleNews(id));
+    }
   } catch (error) {
     dispatch({ type: types.CREATE_REACTION_FAILURE, payload: error.message });
   }
@@ -58,7 +60,9 @@ const createReview = (data, pageNumber, option, id) => async (dispatch) => {
     const res = await api.post(`/review`, data);
     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res });
     dispatch(getListOfNews(pageNumber, option, false));
-    dispatch(getSingleNews(id));
+    if (id) {
+      dispatch(getSingleNews(id));
+    }
   } catch (error) {
     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: error.message });
   }

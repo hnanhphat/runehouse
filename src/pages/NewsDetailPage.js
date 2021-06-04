@@ -16,14 +16,14 @@ const NewsDetailPage = ({ t }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const singleNews = useSelector((state) => state.news.singleNews.data);
-  const loading = useSelector((state) => state.news.loading);
+  const loadingList = useSelector((state) => state.news.loadingList);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [showComment, setShowComment] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
   const [showReaction, setShowReaction] = useState(false);
   const [showReviewReaction, setShowReviewReaction] = useState(
-    Array(100).fill(false)
+    Array(singleNews && singleNews.data.reviews.length).fill(false)
   );
 
   console.log(singleNews);
@@ -53,7 +53,7 @@ const NewsDetailPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(newsActions.getSingleNews(id));
+    dispatch(newsActions.getSingleNews(id, true));
   }, [dispatch, id]);
 
   return (
@@ -64,7 +64,7 @@ const NewsDetailPage = ({ t }) => {
         branchTxt={t("nd.News")}
         leaf={singleNews && singleNews.data.title}
       />
-      {loading ? (
+      {loadingList ? (
         <Loading />
       ) : singleNews ? (
         <div className="container">
@@ -157,45 +157,60 @@ const NewsDetailPage = ({ t }) => {
                       <div className={`icons ${showReaction ? "active" : ""}`}>
                         <button
                           className="lower lower--like"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "like")
-                          }
+                          onClick={() => {
+                            handleReaction("News", singleNews.data._id, "like");
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--love"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "love")
-                          }
+                          onClick={() => {
+                            handleReaction("News", singleNews.data._id, "love");
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--care"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "care")
-                          }
+                          onClick={() => {
+                            handleReaction("News", singleNews.data._id, "care");
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--laugh"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "laugh")
-                          }
+                          onClick={() => {
+                            handleReaction(
+                              "News",
+                              singleNews.data._id,
+                              "laugh"
+                            );
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--wow"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "wow")
-                          }
+                          onClick={() => {
+                            handleReaction("News", singleNews.data._id, "wow");
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--sad"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "sad")
-                          }
+                          onClick={() => {
+                            handleReaction("News", singleNews.data._id, "sad");
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                         <button
                           className="lower lower--angry"
-                          onClick={() =>
-                            handleReaction("News", singleNews.data._id, "angry")
-                          }
+                          onClick={() => {
+                            handleReaction(
+                              "News",
+                              singleNews.data._id,
+                              "angry"
+                            );
+                            setShowReaction((state) => (state ? false : true));
+                          }}
                         ></button>
                       </div>
                     </div>
@@ -322,73 +337,94 @@ const NewsDetailPage = ({ t }) => {
                                   >
                                     <button
                                       className="lower lower--like"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "like"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--love"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "love"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--care"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "care"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--laugh"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "laugh"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--wow"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "wow"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--sad"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "sad"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                     <button
                                       className="lower lower--angry"
-                                      onClick={() =>
+                                      onClick={() => {
                                         handleReaction(
                                           "Review",
                                           review._id,
                                           "angry"
-                                        )
-                                      }
+                                        );
+                                        let arr = [...showReviewReaction];
+                                        arr[i] = arr[i] ? false : true;
+                                        setShowReviewReaction(arr);
+                                      }}
                                     ></button>
                                   </div>
                                 </div>
