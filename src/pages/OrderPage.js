@@ -24,7 +24,7 @@ import { withNamespaces } from "react-i18next";
 const OrderPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.userOrders.data);
-  const loading = useSelector((state) => state.order.loading);
+  const loadingList = useSelector((state) => state.order.loadingList);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
@@ -171,7 +171,7 @@ const OrderPage = ({ t }) => {
             </button>
           </div>
         </div>
-        {loading ? (
+        {loadingList ? (
           <Loading />
         ) : orders && orders.data.orders.length ? (
           <div className="order-page__list">

@@ -476,13 +476,20 @@ const NewsPage = ({ t }) => {
                                           >
                                             <button
                                               className="lower lower--like"
-                                              onClick={() =>
+                                              onClick={() => {
                                                 handleReaction(
                                                   "Review",
                                                   review._id,
                                                   "like"
-                                                )
-                                              }
+                                                );
+                                                let arr = [
+                                                  ...showReviewReaction,
+                                                ];
+                                                arr[i][j] = arr[i][j]
+                                                  ? false
+                                                  : true;
+                                                setShowReviewReaction(arr);
+                                              }}
                                             ></button>
                                             <button
                                               className="lower lower--love"

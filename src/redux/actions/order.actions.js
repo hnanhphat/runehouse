@@ -17,9 +17,9 @@ const createOrder = (data) => async (dispatch) => {
   }
 };
 
-const getAllOrders = (pageNumber, option) => async (dispatch) => {
+const getAllOrders = (pageNumber, option, loading) => async (dispatch) => {
   try {
-    dispatch({ type: types.GET_LIST_REQUEST });
+    dispatch({ type: types.GET_LIST_REQUEST, payload: loading });
     const res = await api.get(`/order?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,

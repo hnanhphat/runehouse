@@ -14,29 +14,19 @@ const initialState = {
 const newsReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    // CREATE NEWS
     case types.CREATE_NEWS_REQUEST:
-    case types.CREATE_REACTION_REQUEST:
-    case types.CREATE_REVIEW_REQUEST:
-    case types.EDIT_SINGLE_REQUEST:
-    case types.DELETE_SINGLE_REQUEST:
       state.loading = true;
       break;
-    case types.CREATE_NEWS_FAILURE:
-    case types.CREATE_REACTION_FAILURE:
-    case types.CREATE_REVIEW_FAILURE:
-    case types.EDIT_SINGLE_FAILURE:
-    case types.DELETE_SINGLE_FAILURE:
+    case types.CREATE_NEWS_SUCCESS:
       state.loading = false;
       break;
-
-    // CREATE
-    case types.CREATE_NEWS_SUCCESS:
+    case types.CREATE_NEWS_FAILURE:
       state.loading = false;
       break;
 
     // GET LIST
     case types.GET_LIST_REQUEST:
-    case types.GET_SINGLE_REQUEST:
       state.loadingList = payload;
       break;
     case types.GET_LIST_SUCCESS:
@@ -45,24 +35,62 @@ const newsReducer = (state = initialState, action) => {
       state.loadingList = false;
       break;
     case types.GET_LIST_FAILURE:
-    case types.GET_SINGLE_FAILURE:
       state.loadingList = false;
       break;
 
     // GET SINGLE ITEM
+    case types.GET_SINGLE_REQUEST:
+      state.loadingList = true;
+      break;
     case types.GET_SINGLE_SUCCESS:
       state.singleNews = payload;
       state.loadingList = false;
       break;
+    case types.GET_SINGLE_FAILURE:
+      state.loadingList = false;
+      break;
 
+    // CREATE REACTION
+    case types.CREATE_REACTION_REQUEST:
+      state.loading = true;
+      break;
     case types.CREATE_REACTION_SUCCESS:
+      state.loading = false;
+      break;
+    case types.CREATE_REACTION_FAILURE:
+      state.loading = false;
+      break;
+
+    // CREATE REVIEW
+    case types.CREATE_REVIEW_REQUEST:
+      state.loading = true;
+      break;
     case types.CREATE_REVIEW_SUCCESS:
       state.loading = false;
+      break;
+    case types.CREATE_REVIEW_FAILURE:
+      state.loading = false;
+      break;
+
+    // EDIT
+    case types.EDIT_SINGLE_REQUEST:
+      state.loading = true;
       break;
     case types.EDIT_SINGLE_SUCCESS:
       state.loading = false;
       break;
+    case types.EDIT_SINGLE_FAILURE:
+      state.loading = false;
+      break;
+
+    // DELETE
+    case types.DELETE_SINGLE_REQUEST:
+      state.loading = true;
+      break;
     case types.DELETE_SINGLE_SUCCESS:
+      state.loading = false;
+      break;
+    case types.DELETE_SINGLE_FAILURE:
       state.loading = false;
       break;
     default:

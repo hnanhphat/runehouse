@@ -11,34 +11,58 @@ const initialState = {
 const cardReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    // CREATE
     case types.CREATE_CARD_REQUEST:
-    case types.GET_LIST_REQUEST:
-    case types.GET_SINGLE_REQUEST:
-    case types.GET_RANDOM_REQUEST:
       state.loading = true;
-      break;
-    case types.CREATE_CARD_FAILURE:
-    case types.GET_LIST_FAILURE:
-    case types.GET_SINGLE_FAILURE:
-    case types.GET_RANDOM_FAILURE:
-      state.error = payload;
-      state.loading = false;
       break;
     case types.CREATE_CARD_SUCCESS:
       state.loading = false;
+      break;
+    case types.CREATE_CARD_FAILURE:
+      state.error = payload;
+      state.loading = false;
+      break;
+
+    // GET LIST
+    case types.GET_LIST_REQUEST:
+      state.loading = true;
       break;
     case types.GET_LIST_SUCCESS:
       state.cards = payload;
       state.loading = false;
       break;
+    case types.GET_LIST_FAILURE:
+      state.error = payload;
+      state.loading = false;
+      break;
+
+    // GET SINGLE
+    case types.GET_SINGLE_REQUEST:
+      state.loading = true;
+      break;
     case types.GET_SINGLE_SUCCESS:
       state.single = payload;
       state.loading = false;
+      break;
+    case types.GET_SINGLE_FAILURE:
+      state.error = payload;
+      state.loading = false;
+      break;
+
+    // GET RANDOM
+    case types.GET_RANDOM_REQUEST:
+      state.loading = true;
       break;
     case types.GET_RANDOM_SUCCESS:
       state.random = payload;
       state.loading = false;
       break;
+    case types.GET_RANDOM_FAILURE:
+      state.error = payload;
+      state.loading = false;
+      break;
+
+    // REMOVE CARD
     case types.REMOVE_CARD:
       state.random = [];
       state.loading = false;

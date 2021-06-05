@@ -14,14 +14,13 @@ const createCart = (data) => async (dispatch) => {
 
 const getUserCart = (pageNumber, option, loading) => async (dispatch) => {
   try {
-    dispatch({ type: types.GET_USER_CART_REQUEST });
+    dispatch({ type: types.GET_USER_CART_REQUEST, payload: loading });
     const res = await api.get(`/cart?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_USER_CART_SUCCESS,
       payload: {
         data: res,
         totalPages: res.data.data.totalPages,
-        loading: loading,
       },
     });
   } catch (error) {
@@ -34,7 +33,7 @@ const updateCart = (data, id, pageNumber, option) => async (dispatch) => {
     dispatch({ type: types.UPDATE_CART_REQUEST, payload: null });
     const res = await api.put(`/cart/${id}`, data);
     dispatch({ type: types.UPDATE_CART_SUCCESS, payload: res });
-    dispatch(getUserCart(pageNumber, option));
+    dispatch(getUserCart(pageNumber, option, false));
   } catch (error) {
     dispatch({ type: types.UPDATE_CART_FAILURE, payload: error.message });
   }
@@ -45,7 +44,7 @@ const deleteCart = (id, pageNumber, option) => async (dispatch) => {
     dispatch({ type: types.DELETE_CART_REQUEST, payload: null });
     const res = await api.delete(`/cart/${id}`);
     dispatch({ type: types.DELETE_CART_SUCCESS, payload: res });
-    dispatch(getUserCart(pageNumber, option));
+    dispatch(getUserCart(pageNumber, option, false));
   } catch (error) {
     dispatch({ type: types.DELETE_CART_FAILURE, payload: error.message });
   }
