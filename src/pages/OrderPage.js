@@ -358,14 +358,14 @@ const OrderPage = ({ t }) => {
               <ul className="order__list">
                 {singleOrders.data.carts.map((cart) => (
                   <li key={cart._id}>
-                    <div
+                    {/* <div
                       className="img"
                       style={{
                         backgroundImage: `url('${
                           cart.decks.image ? cart.decks.image : noimg
                         }')`,
                       }}
-                    ></div>
+                    ></div> */}
                     <div className="info">
                       <p>{cart.decks.name}</p>
                       <span>

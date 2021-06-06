@@ -7,6 +7,7 @@ const initialState = {
   totalPages: 1,
   loadingList: false,
   loading: false,
+  loadingSingle: false,
   error: "",
 };
 

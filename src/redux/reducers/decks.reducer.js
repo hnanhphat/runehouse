@@ -6,6 +6,7 @@ const initialState = {
   search: [],
   totalPages: 1,
   loading: false,
+  loadingSingle: false,
   error: "",
   searchField: "",
   cateField: "All",
@@ -45,15 +46,15 @@ const decksReducer = (state = initialState, action) => {
 
     // GET SINGLE
     case types.GET_SINGLE_REQUEST:
-      state.loading = true;
+      state.loadingSingle = true;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleDecks = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
     case types.GET_SINGLE_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
 
     // REMOVE

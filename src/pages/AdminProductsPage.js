@@ -23,6 +23,7 @@ const AdminProductsPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
   const loading = useSelector((state) => state.decks.loading);
+  const loadingSingle = useSelector((state) => state.decks.loadingSingle);
   const singleDecks = useSelector((state) => state.decks.singleDecks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
   const [searchInput, setSearchInput] = useState("");
@@ -539,120 +540,130 @@ const AdminProductsPage = ({ t }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="reader">
-            <button
-              className="reader__avatar"
-              style={{
-                backgroundImage: `url('${
-                  formEdit.image ? formEdit.image : noimg
-                }')`,
-              }}
-              onClick={handleEditImages}
-            >
-              <span>{t("ap.Edit")}</span>
-            </button>
-          </div>
-          <form className="form">
-            <div className="form__group">
-              <div className="item">
-                <input
-                  type="text"
-                  name="name"
-                  value={formEdit.name}
-                  placeholder={t("ap.Product Name")}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div className="item">
-                <select
-                  name="saleChecked"
-                  value={formEdit.saleChecked}
-                  onChange={handleEditChange}
+          {loadingSingle ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="reader">
+                <button
+                  className="reader__avatar"
+                  style={{
+                    backgroundImage: `url('${
+                      formEdit.image ? formEdit.image : noimg
+                    }')`,
+                  }}
+                  onClick={handleEditImages}
                 >
-                  <option value="Not Sale">{t("ap.Not Sale")}</option>
-                  <option value="Sale">{t("ap.Sale")}</option>
-                </select>
+                  <span>{t("ap.Edit")}</span>
+                </button>
               </div>
-            </div>
-            <div className="form__group">
-              <div className="item">
-                <input
-                  type="number"
-                  name="defaultPrice"
-                  value={
-                    formEdit.defaultPrice
-                      ? formEdit.defaultPrice
-                      : formEdit.oficialPrice
-                  }
-                  placeholder={t("ap.Price")}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div className="item">
-                <input
-                  type="number"
-                  name="salePrice"
-                  placeholder={t("ap.Discount")}
-                  value={
-                    formEdit.saleChecked === "Not Sale"
-                      ? ""
-                      : formEdit.salePrice
-                  }
-                  disabled={
-                    formEdit.saleChecked === "Not Sale" ? "disabled" : ""
-                  }
-                  onChange={handleEditChange}
-                />
-              </div>
-            </div>
-            <div className="form__group">
-              <div className="item">
-                <select
-                  name="category"
-                  value={formEdit.category}
-                  onChange={handleEditChange}
-                >
-                  <option value="Tarot">Tarot</option>
-                  <option value="Oracle">Oracle</option>
-                  <option value="Lenormand">Lenormand</option>
-                  <option value="I Ching">I Ching</option>
-                  <option value="Tea Leaf">Tea Leaf</option>
-                  <option value="Blanket">{t("ap.Blanket")}</option>
-                  <option value="Book">{t("ap.Book")}</option>
-                  <option value="Rune">Rune</option>
-                  <option value="Accessories">{t("ap.Accessories")}</option>
-                </select>
-              </div>
-              <div className="item">
-                <select
-                  name="genres"
-                  value={formEdit.genres}
-                  onChange={handleEditChange}
-                >
-                  <option value="Edge Plating">{t("ap.Edge Plating")}</option>
-                  <option value="God">{t("ap.God")}</option>
-                  <option value="Devil">{t("ap.Devil")}</option>
-                  <option value="Home Tools">{t("ap.Home Tools")}</option>
-                  <option value="Life Journey">{t("ap.Life Journey")}</option>
-                  <option value="Magic">{t("ap.Magic")}</option>
-                  <option value="Nature">{t("ap.Nature")}</option>
-                  <option value="Fairy Tale">{t("ap.Fairy Tale")}</option>
-                  <option value="18+">{t("ap.18+")}</option>
-                  <option value="Other">{t("ap.Other")}</option>
-                </select>
-              </div>
-            </div>
-            <div className="form__group">
-              <div className="item item--full">
-                <textarea
-                  name="description"
-                  value={formEdit.description}
-                  placeholder={t("ap.Description")}
-                  onChange={handleEditChange}
-                ></textarea>
-              </div>
-            </div>
-          </form>
+              <form className="form">
+                <div className="form__group">
+                  <div className="item">
+                    <input
+                      type="text"
+                      name="name"
+                      value={formEdit.name}
+                      placeholder={t("ap.Product Name")}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                  <div className="item">
+                    <select
+                      name="saleChecked"
+                      value={formEdit.saleChecked}
+                      onChange={handleEditChange}
+                    >
+                      <option value="Not Sale">{t("ap.Not Sale")}</option>
+                      <option value="Sale">{t("ap.Sale")}</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form__group">
+                  <div className="item">
+                    <input
+                      type="number"
+                      name="defaultPrice"
+                      value={
+                        formEdit.defaultPrice
+                          ? formEdit.defaultPrice
+                          : formEdit.oficialPrice
+                      }
+                      placeholder={t("ap.Price")}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                  <div className="item">
+                    <input
+                      type="number"
+                      name="salePrice"
+                      placeholder={t("ap.Discount")}
+                      value={
+                        formEdit.saleChecked === "Not Sale"
+                          ? ""
+                          : formEdit.salePrice
+                      }
+                      disabled={
+                        formEdit.saleChecked === "Not Sale" ? "disabled" : ""
+                      }
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                </div>
+                <div className="form__group">
+                  <div className="item">
+                    <select
+                      name="category"
+                      value={formEdit.category}
+                      onChange={handleEditChange}
+                    >
+                      <option value="Tarot">Tarot</option>
+                      <option value="Oracle">Oracle</option>
+                      <option value="Lenormand">Lenormand</option>
+                      <option value="I Ching">I Ching</option>
+                      <option value="Tea Leaf">Tea Leaf</option>
+                      <option value="Blanket">{t("ap.Blanket")}</option>
+                      <option value="Book">{t("ap.Book")}</option>
+                      <option value="Rune">Rune</option>
+                      <option value="Accessories">{t("ap.Accessories")}</option>
+                    </select>
+                  </div>
+                  <div className="item">
+                    <select
+                      name="genres"
+                      value={formEdit.genres}
+                      onChange={handleEditChange}
+                    >
+                      <option value="Edge Plating">
+                        {t("ap.Edge Plating")}
+                      </option>
+                      <option value="God">{t("ap.God")}</option>
+                      <option value="Devil">{t("ap.Devil")}</option>
+                      <option value="Home Tools">{t("ap.Home Tools")}</option>
+                      <option value="Life Journey">
+                        {t("ap.Life Journey")}
+                      </option>
+                      <option value="Magic">{t("ap.Magic")}</option>
+                      <option value="Nature">{t("ap.Nature")}</option>
+                      <option value="Fairy Tale">{t("ap.Fairy Tale")}</option>
+                      <option value="18+">{t("ap.18+")}</option>
+                      <option value="Other">{t("ap.Other")}</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form__group">
+                  <div className="item item--full">
+                    <textarea
+                      name="description"
+                      value={formEdit.description}
+                      placeholder={t("ap.Description")}
+                      onChange={handleEditChange}
+                    ></textarea>
+                  </div>
+                </div>
+              </form>
+            </>
+          )}
         </Modal.Body>
 
         <Modal.Footer>

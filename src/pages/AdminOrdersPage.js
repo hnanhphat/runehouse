@@ -23,6 +23,7 @@ const AdminOrdersPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders.data);
   const loading = useSelector((state) => state.order.loading);
+  const loadingSingle = useSelector((state) => state.order.loadingSingle);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
@@ -237,7 +238,7 @@ const AdminOrdersPage = ({ t }) => {
           </ul>
         </div>
       ) : (
-        <p className="admin__no-item">{t("ao.Do not have any Orders.")}</p>
+        <p className="admin__no-item">{t("ao.Do not have any Order.")}</p>
       )}
 
       {totalPage > 1 ? (
@@ -337,7 +338,9 @@ const AdminOrdersPage = ({ t }) => {
           <Modal.Title>{t("ao.Order Detail")}</Modal.Title>
         </Modal.Header>
 
-        {singleOrders ? (
+        {loadingSingle ? (
+          <Loading />
+        ) : singleOrders ? (
           <Modal.Body className="modal-body--large">
             <div className="reader">
               <div

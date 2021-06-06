@@ -21,6 +21,7 @@ const AdminCardsPage = ({ t }) => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.card.cards.data);
   const loading = useSelector((state) => state.card.loading);
+  const loadingSingle = useSelector((state) => state.card.loadingSingle);
   const singleCards = useSelector((state) => state.card.single.data);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
@@ -158,11 +159,13 @@ const AdminCardsPage = ({ t }) => {
       {/* ORIGINAL */}
       <Modal show={showOriginal} onHide={() => setShowOriginal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{"ac.Original Meaning"}</Modal.Title>
+          <Modal.Title>{t("ac.Original Meaning")}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
-          {singleCards ? (
+          {loadingSingle ? (
+            <Loading />
+          ) : singleCards ? (
             <div className="card">
               <div className="card__heading">
                 <div className="img">
@@ -261,7 +264,9 @@ const AdminCardsPage = ({ t }) => {
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
-          {singleCards ? (
+          {loadingSingle ? (
+            <Loading />
+          ) : singleCards ? (
             <div className="card">
               <div className="card__heading card__heading--reversed">
                 <div className="img">

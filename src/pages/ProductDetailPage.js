@@ -18,7 +18,7 @@ const ProductDetailPage = ({ t }) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const decks = useSelector((state) => state.decks.singleDecks.data);
-  const loading = useSelector((state) => state.decks.loading);
+  const loadingSingle = useSelector((state) => state.decks.loadingSingle);
   const [quantity, setQuantity] = useState(1);
 
   const handleAddCart = (val) => {
@@ -40,7 +40,7 @@ const ProductDetailPage = ({ t }) => {
     <div id="proudct-detail" className="proudct-detail bg-grey">
       <MainVisual heading={decks && decks.data.name} />
       <Breadcrumb branch="products" leaf={decks && decks.data.name} />
-      {loading ? (
+      {loadingSingle ? (
         <Loading />
       ) : (
         <div className="product-detail__area">
@@ -56,9 +56,13 @@ const ProductDetailPage = ({ t }) => {
             <div className="content">
               <h3 className="name">{decks && decks.data.name}</h3>
               <p className="price">
-                <span className="price__before">
-                  ${decks && decks.data.defaultPrice}
-                </span>
+                {decks && decks.data.defaultPrice ? (
+                  <span className="price__before">
+                    ${decks.data.defaultPrice}
+                  </span>
+                ) : (
+                  ""
+                )}
                 <span className="price__after">
                   ${decks && decks.data.oficialPrice}
                 </span>
