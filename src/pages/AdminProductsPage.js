@@ -30,8 +30,6 @@ const AdminProductsPage = ({ t }) => {
   const [filterStt, setFilterStt] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // console.log(singleDecks);
-
   const [showCreate, setShowCreate] = useState(false);
   const [formCreate, setFormCreate] = useState({
     image: "",
@@ -191,17 +189,6 @@ const AdminProductsPage = ({ t }) => {
       formEdit;
     if (formEdit.saleChecked === "Sale") {
       const oficialPrice = formEdit.defaultPrice - formEdit.salePrice;
-
-      console.log({
-        image,
-        name,
-        sale: true,
-        defaultPrice,
-        oficialPrice: oficialPrice,
-        category,
-        genres,
-        description,
-      });
       dispatch(
         decksActions.editDecks(
           {
@@ -222,17 +209,6 @@ const AdminProductsPage = ({ t }) => {
       );
     } else if (formEdit.saleChecked === "Not Sale") {
       const oficialPrice = formEdit.defaultPrice;
-
-      console.log({
-        image,
-        name,
-        sale: false,
-        defaultPrice,
-        oficialPrice: oficialPrice,
-        category,
-        genres,
-        description,
-      });
       dispatch(
         decksActions.editDecks(
           {
@@ -569,11 +545,11 @@ const AdminProductsPage = ({ t }) => {
           <Modal.Title>{t("ap.Edit Product")}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {loadingSingle ? (
-            <Loading />
-          ) : (
-            <>
+        {loadingSingle ? (
+          <Loading />
+        ) : (
+          <>
+            <Modal.Body>
               <div className="reader">
                 <button
                   className="reader__avatar"
@@ -688,26 +664,26 @@ const AdminProductsPage = ({ t }) => {
                   </div>
                 </div>
               </form>
-            </>
-          )}
-        </Modal.Body>
+            </Modal.Body>
 
-        <Modal.Footer>
-          <button
-            className={
-              formEdit.name && formEdit.defaultPrice
-                ? formEdit.saleChecked === "Sale"
-                  ? formEdit.salePrice
-                    ? "active"
+            <Modal.Footer>
+              <button
+                className={
+                  formEdit.name && formEdit.defaultPrice
+                    ? formEdit.saleChecked === "Sale"
+                      ? formEdit.salePrice
+                        ? "active"
+                        : ""
+                      : "active"
                     : ""
-                  : "active"
-                : ""
-            }
-            onClick={() => handleEditProduct(editTarget)}
-          >
-            {t("ap.Edit")}
-          </button>
-        </Modal.Footer>
+                }
+                onClick={() => handleEditProduct(editTarget)}
+              >
+                {t("ap.Edit")}
+              </button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
 
       {/* DELETE  */}

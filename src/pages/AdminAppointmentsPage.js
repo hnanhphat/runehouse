@@ -333,85 +333,93 @@ const AdminAppointmentsPage = ({ t }) => {
           <Modal.Title>{t("apm.Change Status")}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {singleAppointment ? (
-            <div className="reader">
-              <div className="reader__appointment">
-                <div className="img">
-                  <div
-                    className="img__item"
-                    style={{
-                      backgroundImage: `url('${
-                        singleAppointment.data.from.avatar
-                          ? singleAppointment.data.from.avatar
-                          : noimg
-                      }')`,
-                    }}
-                  ></div>
-                  <div
-                    className="img__item"
-                    style={{
-                      backgroundImage: `url('${
-                        singleAppointment.data.to.avatar
-                          ? singleAppointment.data.to.avatar
-                          : noimg
-                      }')`,
-                    }}
-                  ></div>
-                </div>
-                <div className="info">
-                  <div className="info__item">
-                    <p className="name">
-                      {singleAppointment.data.from.fullname}
-                    </p>
-                    <p className="position">
-                      {singleAppointment.data.from.position}{" "}
-                      {singleAppointment.data.from.role === "Reader"
-                        ? "Reader"
-                        : ""}
-                    </p>
+        {loadingSingle ? (
+          <Loading />
+        ) : (
+          <>
+            <Modal.Body>
+              {singleAppointment ? (
+                <div className="reader">
+                  <div className="reader__appointment">
+                    <div className="img">
+                      <div
+                        className="img__item"
+                        style={{
+                          backgroundImage: `url('${
+                            singleAppointment.data.from.avatar
+                              ? singleAppointment.data.from.avatar
+                              : noimg
+                          }')`,
+                        }}
+                      ></div>
+                      <div
+                        className="img__item"
+                        style={{
+                          backgroundImage: `url('${
+                            singleAppointment.data.to.avatar
+                              ? singleAppointment.data.to.avatar
+                              : noimg
+                          }')`,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="info">
+                      <div className="info__item">
+                        <p className="name">
+                          {singleAppointment.data.from.fullname}
+                        </p>
+                        <p className="position">
+                          {singleAppointment.data.from.position}{" "}
+                          {singleAppointment.data.from.role === "Reader"
+                            ? "Reader"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="info__item">
+                        <p className="name">
+                          {singleAppointment.data.to.fullname}
+                        </p>
+                        <p className="position">
+                          {singleAppointment.data.to.position}{" "}
+                          {singleAppointment.data.to.position === "Admin"
+                            ? ""
+                            : "Reader"}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="info__item">
-                    <p className="name">{singleAppointment.data.to.fullname}</p>
-                    <p className="position">
-                      {singleAppointment.data.to.position}{" "}
-                      {singleAppointment.data.to.position === "Admin"
-                        ? ""
-                        : "Reader"}
-                    </p>
+                </div>
+              ) : (
+                ""
+              )}
+              <form className="form">
+                <div className="form__group">
+                  <div className="item item--full">
+                    <select
+                      name="status"
+                      value={formEdit.status}
+                      onChange={handleChange}
+                    >
+                      <option value="Requesting">{t("apm.Requesting")}</option>
+                      <option value="Processing">{t("apm.Processing")}</option>
+                      <option value="Completed">{t("apm.Completed")}</option>
+                      <option value="Cancelled">{t("apm.Cancelled")}</option>
+                    </select>
                   </div>
                 </div>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-          <form className="form">
-            <div className="form__group">
-              <div className="item item--full">
-                <select
-                  name="status"
-                  value={formEdit.status}
-                  onChange={handleChange}
-                >
-                  <option value="Requesting">{t("apm.Requesting")}</option>
-                  <option value="Processing">{t("apm.Processing")}</option>
-                  <option value="Completed">{t("apm.Completed")}</option>
-                  <option value="Cancelled">{t("apm.Cancelled")}</option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </Modal.Body>
+              </form>
+            </Modal.Body>
 
-        <Modal.Footer>
-          <button
-            className={formEdit.status !== editStatus ? "active" : ""}
-            onClick={() => handleEdit(target)}
-          >
-            {t("apm.Change")}
-          </button>
-        </Modal.Footer>
+            <Modal.Footer>
+              <button
+                className={formEdit.status !== editStatus ? "active" : ""}
+                onClick={() => handleEdit(target)}
+              >
+                {t("apm.Change")}
+              </button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
 
       {/* DELETE  */}
@@ -445,115 +453,125 @@ const AdminAppointmentsPage = ({ t }) => {
           <Modal.Title>{t("apm.Summary Appointment")}</Modal.Title>
         </Modal.Header>
 
-        {singleAppointment ? (
-          <Modal.Body>
-            <div className="reader">
-              <div className="reader__appointment">
-                <div className="img">
-                  <div
-                    className="img__item"
-                    style={{
-                      backgroundImage: `url('${
-                        singleAppointment.data.from.avatar
-                          ? singleAppointment.data.from.avatar
-                          : noimg
-                      }')`,
-                    }}
-                  ></div>
-                  <div
-                    className="img__item"
-                    style={{
-                      backgroundImage: `url('${
-                        singleAppointment.data.to.avatar
-                          ? singleAppointment.data.to.avatar
-                          : noimg
-                      }')`,
-                    }}
-                  ></div>
-                </div>
-                <div className="info">
-                  <div className="info__item">
-                    <p className="name">
-                      {singleAppointment.data.from.fullname}
-                    </p>
-                    <p className="position">
-                      {singleAppointment.data.from.position}{" "}
-                      {singleAppointment.data.from.role === "Reader"
-                        ? "Reader"
-                        : ""}
-                    </p>
-                  </div>
-                  <div className="info__item">
-                    <p className="name">{singleAppointment.data.to.fullname}</p>
-                    <p className="position">
-                      {singleAppointment.data.to.position}{" "}
-                      {singleAppointment.data.to.position === "Admin"
-                        ? ""
-                        : "Reader"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="order order--admin order--appointment">
-              <div className="order__heading">
-                <p>
-                  {t("apm.Phone")}:{" "}
-                  <strong>{singleAppointment.data.clientPhone}</strong>
-                </p>
-                <p>
-                  {t("apm.Status")}:{" "}
-                  <strong
-                    className={`status-other ${singleAppointment.data.status
-                      .toLowerCase()
-                      .replace(" ", "")}`}
-                  >
-                    {singleAppointment.data.status}
-                  </strong>
-                </p>
-              </div>
-              <ul className="order__info">
-                <li>
-                  <div className="col col--half">
-                    <strong>{t("apm.Date")}</strong>
-                  </div>
-                  <div className="col col--half">
-                    <strong>{t("apm.Type")}</strong>
-                  </div>
-                </li>
-                <li>
-                  <div className="col col--half">
-                    <span>{singleAppointment.data.appointmentDate}</span>
-                  </div>
-                  <div className="col col--half">
-                    <span>
-                      {t(`apm.${singleAppointment.data.serviceType}`)}
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </Modal.Body>
+        {loadingSingle ? (
+          <Loading />
         ) : (
-          ""
-        )}
+          <>
+            {singleAppointment ? (
+              <Modal.Body>
+                <div className="reader">
+                  <div className="reader__appointment">
+                    <div className="img">
+                      <div
+                        className="img__item"
+                        style={{
+                          backgroundImage: `url('${
+                            singleAppointment.data.from.avatar
+                              ? singleAppointment.data.from.avatar
+                              : noimg
+                          }')`,
+                        }}
+                      ></div>
+                      <div
+                        className="img__item"
+                        style={{
+                          backgroundImage: `url('${
+                            singleAppointment.data.to.avatar
+                              ? singleAppointment.data.to.avatar
+                              : noimg
+                          }')`,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="info">
+                      <div className="info__item">
+                        <p className="name">
+                          {singleAppointment.data.from.fullname}
+                        </p>
+                        <p className="position">
+                          {singleAppointment.data.from.position}{" "}
+                          {singleAppointment.data.from.role === "Reader"
+                            ? "Reader"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="info__item">
+                        <p className="name">
+                          {singleAppointment.data.to.fullname}
+                        </p>
+                        <p className="position">
+                          {singleAppointment.data.to.position}{" "}
+                          {singleAppointment.data.to.position === "Admin"
+                            ? ""
+                            : "Reader"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="order order--admin order--appointment">
+                  <div className="order__heading">
+                    <p>
+                      {t("apm.Phone")}:{" "}
+                      <strong>{singleAppointment.data.clientPhone}</strong>
+                    </p>
+                    <p>
+                      {t("apm.Status")}:{" "}
+                      <strong
+                        className={`status-other ${singleAppointment.data.status
+                          .toLowerCase()
+                          .replace(" ", "")}`}
+                      >
+                        {singleAppointment.data.status}
+                      </strong>
+                    </p>
+                  </div>
+                  <ul className="order__info">
+                    <li>
+                      <div className="col col--half">
+                        <strong>{t("apm.Date")}</strong>
+                      </div>
+                      <div className="col col--half">
+                        <strong>{t("apm.Type")}</strong>
+                      </div>
+                    </li>
+                    <li>
+                      <div className="col col--half">
+                        <span>{singleAppointment.data.appointmentDate}</span>
+                      </div>
+                      <div className="col col--half">
+                        <span>
+                          {t(`apm.${singleAppointment.data.serviceType}`)}
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </Modal.Body>
+            ) : (
+              ""
+            )}
 
-        {singleAppointment &&
-        singleAppointment.data.serviceType === "Recruitment" &&
-        singleUser &&
-        singleUser.data.position === "User" ? (
-          <Modal.Footer>
-            <button
-              className={
-                singleAppointment.data.status === "Completed" ? "active" : ""
-              }
-              onClick={() => handleAccept(targetApply)}
-            >
-              {t("apm.Accept")}
-            </button>
-          </Modal.Footer>
-        ) : (
-          ""
+            {singleAppointment &&
+            singleAppointment.data.serviceType === "Recruitment" &&
+            singleUser &&
+            singleUser.data.position === "User" ? (
+              <Modal.Footer>
+                <button
+                  className={
+                    singleAppointment.data.status === "Completed"
+                      ? "active"
+                      : ""
+                  }
+                  onClick={() => handleAccept(targetApply)}
+                >
+                  {t("apm.Accept")}
+                </button>
+              </Modal.Footer>
+            ) : (
+              ""
+            )}
+          </>
         )}
       </Modal>
     </div>
