@@ -52,15 +52,15 @@ const cardReducer = (state = initialState, action) => {
 
     // GET RANDOM
     case types.GET_RANDOM_REQUEST:
-      state.loading = true;
+      state.loadingSingle = true;
       break;
     case types.GET_RANDOM_SUCCESS:
       state.random = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
     case types.GET_RANDOM_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
 
     // REMOVE CARD
