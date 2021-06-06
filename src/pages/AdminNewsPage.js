@@ -22,6 +22,7 @@ const AdminNewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
   const loadingList = useSelector((state) => state.news.loadingList);
+  const loadingSingle = useSelector((state) => state.news.loadingSingle);
   const singleNews = useSelector((state) => state.news.singleNews.data);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
@@ -404,72 +405,80 @@ const AdminNewsPage = ({ t }) => {
           <Modal.Title>{t("an.Edit News")}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {singleNews ? (
-            <div className="reader">
-              <div
-                className="reader__avatar"
-                style={{
-                  backgroundImage: `url('${
-                    singleNews.data.author.avatar
-                      ? singleNews.data.author.avatar
-                      : noimg
-                  }')`,
-                }}
-              ></div>
-              <div className="reader__info">
-                <p className="name">{singleNews.data.author.fullname}</p>
-                <p className="position">{singleNews.data.author.position}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-          <form className="form">
-            <div className="form__group">
-              <div className="item">
-                <input
-                  type="text"
-                  name="title"
-                  value={formEdit.title}
-                  placeholder={t("an.News Title")}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div className="item">
-                <select
-                  name="category"
-                  value={formEdit.category}
-                  onChange={handleEditChange}
-                >
-                  <option value="Sharing">{t("an.Sharing")}</option>
-                  <option value="Researching">{t("an.Researching")}</option>
-                  <option value="Rating">{t("an.Rating")}</option>
-                  <option value="Review">{t("an.Review")}</option>
-                </select>
-              </div>
-            </div>
-            <div className="form__group">
-              <div className="item item--full">
-                <textarea
-                  name="content"
-                  value={formEdit.content}
-                  placeholder={t("an.Description")}
-                  onChange={handleEditChange}
-                ></textarea>
-              </div>
-            </div>
-          </form>
-        </Modal.Body>
+        {loadingSingle ? (
+          <Loading />
+        ) : (
+          <>
+            <Modal.Body>
+              {singleNews ? (
+                <div className="reader">
+                  <div
+                    className="reader__avatar"
+                    style={{
+                      backgroundImage: `url('${
+                        singleNews.data.author.avatar
+                          ? singleNews.data.author.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                  <div className="reader__info">
+                    <p className="name">{singleNews.data.author.fullname}</p>
+                    <p className="position">
+                      {singleNews.data.author.position}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              <form className="form">
+                <div className="form__group">
+                  <div className="item">
+                    <input
+                      type="text"
+                      name="title"
+                      value={formEdit.title}
+                      placeholder={t("an.News Title")}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                  <div className="item">
+                    <select
+                      name="category"
+                      value={formEdit.category}
+                      onChange={handleEditChange}
+                    >
+                      <option value="Sharing">{t("an.Sharing")}</option>
+                      <option value="Researching">{t("an.Researching")}</option>
+                      <option value="Rating">{t("an.Rating")}</option>
+                      <option value="Review">{t("an.Review")}</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form__group">
+                  <div className="item item--full">
+                    <textarea
+                      name="content"
+                      value={formEdit.content}
+                      placeholder={t("an.Description")}
+                      onChange={handleEditChange}
+                    ></textarea>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
 
-        <Modal.Footer>
-          <button
-            className={formEdit.title && formEdit.content ? "active" : ""}
-            onClick={() => handleEditNews(editTarget)}
-          >
-            {t("an.Edit")}
-          </button>
-        </Modal.Footer>
+            <Modal.Footer>
+              <button
+                className={formEdit.title && formEdit.content ? "active" : ""}
+                onClick={() => handleEditNews(editTarget)}
+              >
+                {t("an.Edit")}
+              </button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
 
       {/* DELETE  */}

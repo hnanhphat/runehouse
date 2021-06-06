@@ -257,56 +257,64 @@ const AdminOrdersPage = ({ t }) => {
           <Modal.Title>{t("ao.Change Status")}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {singleOrders ? (
-            <div className="reader">
-              <div
-                className="reader__avatar"
-                style={{
-                  backgroundImage: `url('${
-                    singleOrders.data.customer.avatar
-                      ? singleOrders.data.customer.avatar
-                      : noimg
-                  }')`,
-                }}
-              ></div>
-              <div className="reader__info">
-                <p className="name">{singleOrders.data.customer.fullname}</p>
-                <p className="position">
-                  {singleOrders.data.customer.position}
-                </p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-          <form className="form">
-            <div className="form__group">
-              <div className="item item--full">
-                <select
-                  name="status"
-                  value={formEdit.status}
-                  onChange={handleChange}
-                >
-                  <option value="To Pay">{t("ao.To Pay")}</option>
-                  <option value="To Ship">{t("ao.To Ship")}</option>
-                  <option value="To Receive">{t("ao.To Receive")}</option>
-                  <option value="Completed">{t("ao.Completed")}</option>
-                  <option value="Cancelled">{t("ao.Cancelled")}</option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </Modal.Body>
+        {loadingSingle ? (
+          <Loading />
+        ) : (
+          <>
+            <Modal.Body>
+              {singleOrders ? (
+                <div className="reader">
+                  <div
+                    className="reader__avatar"
+                    style={{
+                      backgroundImage: `url('${
+                        singleOrders.data.customer.avatar
+                          ? singleOrders.data.customer.avatar
+                          : noimg
+                      }')`,
+                    }}
+                  ></div>
+                  <div className="reader__info">
+                    <p className="name">
+                      {singleOrders.data.customer.fullname}
+                    </p>
+                    <p className="position">
+                      {singleOrders.data.customer.position}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              <form className="form">
+                <div className="form__group">
+                  <div className="item item--full">
+                    <select
+                      name="status"
+                      value={formEdit.status}
+                      onChange={handleChange}
+                    >
+                      <option value="To Pay">{t("ao.To Pay")}</option>
+                      <option value="To Ship">{t("ao.To Ship")}</option>
+                      <option value="To Receive">{t("ao.To Receive")}</option>
+                      <option value="Completed">{t("ao.Completed")}</option>
+                      <option value="Cancelled">{t("ao.Cancelled")}</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
 
-        <Modal.Footer>
-          <button
-            className={formEdit.status !== editStatus ? "active" : ""}
-            onClick={() => handleEdit(target)}
-          >
-            {t("ao.Change")}
-          </button>
-        </Modal.Footer>
+            <Modal.Footer>
+              <button
+                className={formEdit.status !== editStatus ? "active" : ""}
+                onClick={() => handleEdit(target)}
+              >
+                {t("ao.Change")}
+              </button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
 
       {/* DELETE  */}
