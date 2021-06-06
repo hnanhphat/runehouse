@@ -207,7 +207,7 @@ const AdminNewsPage = ({ t }) => {
                   <div className="btns">
                     <button
                       onClick={() => {
-                        dispatch(newsActions.getSingleNews(item._id));
+                        dispatch(newsActions.getSingleNews(item._id, true));
                         setEditTarget(item._id);
                         setShowEdit(true);
                       }}
