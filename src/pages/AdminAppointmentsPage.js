@@ -119,11 +119,7 @@ const AdminAppointmentsPage = ({ t }) => {
   useEffect(() => {
     if (isAdmin === "Admin") {
       dispatch(
-        appointmentActions.getListOfAppointments(
-          currentPage,
-          searchInput,
-          false
-        )
+        appointmentActions.getListOfAppointments(currentPage, searchInput, true)
       );
     } else {
       if (currentUser) {

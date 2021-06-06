@@ -77,7 +77,7 @@ const AdminOrdersPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(orderActions.getAllOrders(currentPage, searchInput));
+    dispatch(orderActions.getAllOrders(currentPage, searchInput, true));
   }, [dispatch, currentPage, searchInput]);
 
   useEffect(() => {
