@@ -55,18 +55,22 @@ const ProductDetailPage = ({ t }) => {
             ></div>
             <div className="content">
               <h3 className="name">{decks && decks.data.name}</h3>
-              <p className="price">
-                {decks && decks.data.defaultPrice ? (
+              {decks && decks.data.sale ? (
+                <p className="price">
                   <span className="price__before">
                     ${decks.data.defaultPrice}
                   </span>
-                ) : (
-                  ""
-                )}
-                <span className="price__after">
-                  ${decks && decks.data.oficialPrice}
-                </span>
-              </p>
+                  <span className="price__after">
+                    ${decks && decks.data.oficialPrice}
+                  </span>
+                </p>
+              ) : (
+                <p className="price">
+                  <span className="price__after">
+                    ${decks && decks.data.oficialPrice}
+                  </span>
+                </p>
+              )}
               <p className="description">{decks && decks.data.description}</p>
               {isAuth ? (
                 <>

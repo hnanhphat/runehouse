@@ -6,6 +6,7 @@ const initialState = {
   search: [],
   totalPages: 1,
   loading: false,
+  loadingList: false,
   loadingSingle: false,
   error: "",
   searchField: "",
@@ -32,16 +33,16 @@ const decksReducer = (state = initialState, action) => {
 
     // GET LIST
     case types.GET_LIST_REQUEST:
-      state.loading = true;
+      state.loadingList = payload;
       break;
     case types.GET_LIST_SUCCESS:
       state[payload.storage] = payload.data;
       state.totalPages = payload.totalPages;
-      state.loading = false;
+      state.loadingList = false;
       break;
     case types.GET_LIST_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingList = false;
       break;
 
     // GET SINGLE

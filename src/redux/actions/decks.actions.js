@@ -8,28 +8,29 @@ const createDecks = (data, pageNumber, option, storage) => async (dispatch) => {
     const res = await api.post(`/decks`, data);
     dispatch({ type: types.CREATE_DECKS_SUCCESS, payload: res });
     toast.success(res.data.message);
-    dispatch(getListOfDecks(pageNumber, option, storage));
+    dispatch(getListOfDecks(pageNumber, option, storage, false));
   } catch (error) {
     dispatch({ type: types.CREATE_DECKS_FAILURE, payload: error.message });
   }
 };
 
-const getListOfDecks = (pageNumber, option, storage) => async (dispatch) => {
-  try {
-    dispatch({ type: types.GET_LIST_REQUEST });
-    const res = await api.get(`/decks?page=${pageNumber + option}`);
-    dispatch({
-      type: types.GET_LIST_SUCCESS,
-      payload: {
-        data: res,
-        totalPages: res.data.data.totalPages,
-        storage: storage,
-      },
-    });
-  } catch (error) {
-    dispatch({ type: types.GET_LIST_FAILURE, payload: error.message });
-  }
-};
+const getListOfDecks =
+  (pageNumber, option, storage, loading) => async (dispatch) => {
+    try {
+      dispatch({ type: types.GET_LIST_REQUEST, payload: loading });
+      const res = await api.get(`/decks?page=${pageNumber + option}`);
+      dispatch({
+        type: types.GET_LIST_SUCCESS,
+        payload: {
+          data: res,
+          totalPages: res.data.data.totalPages,
+          storage: storage,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: types.GET_LIST_FAILURE, payload: error.message });
+    }
+  };
 
 const getSingleDecks = (id) => async (dispatch) => {
   try {
@@ -52,7 +53,7 @@ const editDecks =
       const res = await api.put(`/decks/${id}`, data);
       dispatch({ type: types.EDIT_SINGLE_SUCCESS, payload: res });
       toast.success(res.data.message);
-      dispatch(getListOfDecks(pageNumber, option, storage));
+      dispatch(getListOfDecks(pageNumber, option, storage, false));
     } catch (error) {
       dispatch({ type: types.EDIT_SINGLE_FAILURE, payload: error.message });
     }
@@ -64,7 +65,7 @@ const deleteDecks = (id, pageNumber, option, storage) => async (dispatch) => {
     const res = await api.delete(`/decks/${id}`);
     dispatch({ type: types.DELETE_SINGLE_SUCCESS, payload: res });
     toast.success(res.data.message);
-    dispatch(getListOfDecks(pageNumber, option, storage));
+    dispatch(getListOfDecks(pageNumber, option, storage, false));
   } catch (error) {
     dispatch({ type: types.DELETE_SINGLE_FAILURE, payload: error.message });
   }

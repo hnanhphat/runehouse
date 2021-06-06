@@ -22,7 +22,7 @@ import { withNamespaces } from "react-i18next";
 const AdminOrdersPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders.data);
-  const loading = useSelector((state) => state.order.loading);
+  const loadingList = useSelector((state) => state.order.loadingList);
   const loadingSingle = useSelector((state) => state.order.loadingSingle);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
@@ -126,7 +126,7 @@ const AdminOrdersPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loading ? (
+      {loadingList ? (
         <Loading />
       ) : orders && orders.data.orders.length ? (
         <div className="admin__orders">

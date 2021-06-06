@@ -28,7 +28,7 @@ const cartReducer = (state = initialState, action) => {
 
     //GET LIST
     case types.GET_LIST_REQUEST:
-      state.loadingList = true;
+      state.loadingList = payload;
       break;
     case types.GET_LIST_SUCCESS:
       state.orders = payload.data;
@@ -42,7 +42,7 @@ const cartReducer = (state = initialState, action) => {
 
     // GET USER ORDER
     case types.GET_USER_REQUEST:
-      state.loadingList = true;
+      state.loadingList = payload;
       break;
     case types.GET_USER_SUCCESS:
       state.userOrders = payload.data;
@@ -56,15 +56,15 @@ const cartReducer = (state = initialState, action) => {
 
     // GET SINGLE
     case types.GET_SINGLE_REQUEST:
-      state.loading = true;
+      state.loadingSingle = true;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleOrders = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
     case types.GET_SINGLE_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
 
     // EDIT

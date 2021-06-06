@@ -5,6 +5,8 @@ const initialState = {
   singleAppointment: [],
   totalPages: 1,
   loading: false,
+  loadingList: false,
+  loadingSingle: false,
   error: "",
 };
 
@@ -13,16 +15,16 @@ const appointmentReducer = (state = initialState, action) => {
   switch (type) {
     // LIST
     case types.GET_LIST_REQUEST:
-      state.loading = true;
+      state.loadingList = payload;
       break;
     case types.GET_LIST_SUCCESS:
       state.appointments = payload.data;
       state.totalPages = payload.totalPages;
-      state.loading = false;
+      state.loadingList = false;
       break;
     case types.GET_LIST_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingList = false;
       break;
 
     // SEND
@@ -39,15 +41,15 @@ const appointmentReducer = (state = initialState, action) => {
 
     // GET SINGLE
     case types.GET_SINGLE_REQUEST:
-      state.loading = true;
+      state.loadingSingle = true;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleAppointment = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
     case types.GET_SINGLE_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
 
     // EDIT
@@ -62,7 +64,7 @@ const appointmentReducer = (state = initialState, action) => {
       state.loading = false;
       break;
 
-    // EDIT
+    // DELETE
     case types.DELETE_SINGLE_REQUEST:
       state.loading = true;
       break;

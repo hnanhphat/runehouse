@@ -22,13 +22,15 @@ import { withNamespaces } from "react-i18next";
 const AdminProductsPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
-  const loading = useSelector((state) => state.decks.loading);
+  const loadingList = useSelector((state) => state.decks.loadingList);
   const loadingSingle = useSelector((state) => state.decks.loadingSingle);
   const singleDecks = useSelector((state) => state.decks.singleDecks.data);
   const totalPage = useSelector((state) => state.decks.totalPages);
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // console.log(singleDecks);
 
   const [showCreate, setShowCreate] = useState(false);
   const [formCreate, setFormCreate] = useState({
@@ -134,6 +136,7 @@ const AdminProductsPage = ({ t }) => {
             image,
             name,
             sale: false,
+            defaultPrice,
             oficialPrice: oficialPrice,
             category,
             genres,
@@ -188,6 +191,17 @@ const AdminProductsPage = ({ t }) => {
       formEdit;
     if (formEdit.saleChecked === "Sale") {
       const oficialPrice = formEdit.defaultPrice - formEdit.salePrice;
+
+      console.log({
+        image,
+        name,
+        sale: true,
+        defaultPrice,
+        oficialPrice: oficialPrice,
+        category,
+        genres,
+        description,
+      });
       dispatch(
         decksActions.editDecks(
           {
@@ -206,14 +220,26 @@ const AdminProductsPage = ({ t }) => {
           "decks"
         )
       );
-    } else {
+    } else if (formEdit.saleChecked === "Not Sale") {
       const oficialPrice = formEdit.defaultPrice;
+
+      console.log({
+        image,
+        name,
+        sale: false,
+        defaultPrice,
+        oficialPrice: oficialPrice,
+        category,
+        genres,
+        description,
+      });
       dispatch(
         decksActions.editDecks(
           {
             image,
             name,
             sale: false,
+            defaultPrice,
             oficialPrice: oficialPrice,
             category,
             genres,
@@ -235,7 +261,9 @@ const AdminProductsPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(decksActions.getListOfDecks(currentPage, searchInput, "decks"));
+    dispatch(
+      decksActions.getListOfDecks(currentPage, searchInput, "decks", true)
+    );
   }, [dispatch, currentPage, searchInput]);
 
   useEffect(() => {
@@ -244,8 +272,9 @@ const AdminProductsPage = ({ t }) => {
       name: singleDecks && singleDecks.data.name,
       saleChecked: singleDecks && singleDecks.data.sale ? "Sale" : "Not Sale",
       salePrice:
-        singleDecks &&
-        singleDecks.data.defaultPrice - singleDecks.data.oficialPrice,
+        singleDecks && singleDecks.data.sale
+          ? singleDecks.data.defaultPrice - singleDecks.data.oficialPrice
+          : "",
       defaultPrice: singleDecks && singleDecks.data.defaultPrice,
       oficialPrice: singleDecks && singleDecks.data.oficialPrice,
       category: singleDecks && singleDecks.data.category,
@@ -311,7 +340,7 @@ const AdminProductsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loading ? (
+      {loadingList ? (
         <Loading />
       ) : decks && decks.data.decks.length ? (
         <ul className="admin__products">
@@ -323,7 +352,6 @@ const AdminProductsPage = ({ t }) => {
                   backgroundImage: `url('${deck.image ? deck.image : noimg}')`,
                 }}
               >
-                {/* <img src={deck.image ? deck.image : noimg} alt={deck.name} /> */}
                 <div className="btns">
                   <button
                     onClick={() => {
@@ -374,14 +402,16 @@ const AdminProductsPage = ({ t }) => {
                 {deck.sale ? <p className="sale">SALE</p> : ""}
               </div>
               <div className="name">{deck.name}</div>
-              <p className="price">
-                {deck.defaultPrice ? (
+              {deck.sale ? (
+                <p className="price">
                   <span className="price__before">${deck.defaultPrice}</span>
-                ) : (
-                  ""
-                )}
-                <span className="price__after">${deck.oficialPrice}</span>
-              </p>
+                  <span className="price__after">${deck.oficialPrice}</span>
+                </p>
+              ) : (
+                <p className="price">
+                  <span className="price__after">${deck.oficialPrice}</span>
+                </p>
+              )}
             </li>
           ))}
         </ul>
@@ -584,11 +614,7 @@ const AdminProductsPage = ({ t }) => {
                     <input
                       type="number"
                       name="defaultPrice"
-                      value={
-                        formEdit.defaultPrice
-                          ? formEdit.defaultPrice
-                          : formEdit.oficialPrice
-                      }
+                      value={formEdit.defaultPrice}
                       placeholder={t("ap.Price")}
                       onChange={handleEditChange}
                     />

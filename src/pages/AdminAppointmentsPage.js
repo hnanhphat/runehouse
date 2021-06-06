@@ -31,7 +31,8 @@ const AdminAppointmentsPage = ({ t }) => {
   const singleAppointment = useSelector(
     (state) => state.appointment.singleAppointment.data
   );
-  const loading = useSelector((state) => state.appointment.loading);
+  const loadingList = useSelector((state) => state.appointment.loadingList);
+  const loadingSingle = useSelector((state) => state.appointment.loadingSingle);
   const totalPage = useSelector((state) => state.appointment.totalPages);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,14 +119,19 @@ const AdminAppointmentsPage = ({ t }) => {
   useEffect(() => {
     if (isAdmin === "Admin") {
       dispatch(
-        appointmentActions.getListOfAppointments(currentPage, searchInput)
+        appointmentActions.getListOfAppointments(
+          currentPage,
+          searchInput,
+          false
+        )
       );
     } else {
       if (currentUser) {
         dispatch(
           appointmentActions.getListOfAppointments(
             currentPage,
-            `&to=${currentUser.data._id}${searchInput}`
+            `&to=${currentUser.data._id}${searchInput}`,
+            true
           )
         );
       }
@@ -188,7 +194,7 @@ const AdminAppointmentsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loading ? (
+      {loadingList ? (
         <Loading />
       ) : appointments && appointments.data.appointments.length ? (
         <div className="admin__appointments">

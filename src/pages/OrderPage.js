@@ -25,6 +25,7 @@ const OrderPage = ({ t }) => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.userOrders.data);
   const loadingList = useSelector((state) => state.order.loadingList);
+  const loadingSingle = useSelector((state) => state.order.loadingSingle);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
   const totalPage = useSelector((state) => state.order.totalPages);
 
@@ -62,7 +63,7 @@ const OrderPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(orderActions.getUserOrders(currentPage, searchInput));
+    dispatch(orderActions.getUserOrders(currentPage, searchInput, true));
   }, [dispatch, currentPage, searchInput]);
 
   return (
@@ -313,7 +314,9 @@ const OrderPage = ({ t }) => {
         </Modal.Header>
 
         <Modal.Body className="modal-body--large">
-          {singleOrders ? (
+          {loadingSingle ? (
+            <Loading />
+          ) : singleOrders ? (
             <div className="order">
               <div className="order__heading">
                 <p>
