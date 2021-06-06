@@ -524,7 +524,9 @@ const AdminProductsPage = ({ t }) => {
         <Modal.Footer>
           <button
             className={
-              formCreate.name && formCreate.defaultPrice
+              formCreate.name &&
+              formCreate.defaultPrice &&
+              formCreate.description
                 ? formCreate.saleChecked === "Sale"
                   ? formCreate.salePrice
                     ? "active"
@@ -669,7 +671,7 @@ const AdminProductsPage = ({ t }) => {
             <Modal.Footer>
               <button
                 className={
-                  formEdit.name && formEdit.defaultPrice
+                  formEdit.name && formEdit.defaultPrice && formEdit.description
                     ? formEdit.saleChecked === "Sale"
                       ? formEdit.salePrice
                         ? "active"
