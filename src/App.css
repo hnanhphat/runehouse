@@ -489,6 +489,15 @@ select:focus {
     height: 60px;
   }
 }
+.modal .modal-dialog .modal-content .modal-body .reader__avatar--rectangle {
+  background-size: contain;
+  border-radius: 0;
+  width: 150px;
+  height: 90px;
+}
+.modal .modal-dialog .modal-content .modal-body .reader__avatar.active {
+  background-size: cover;
+}
 .modal .modal-dialog .modal-content .modal-body .reader__avatar span {
   position: absolute;
   background: rgba(0, 0, 0, 0.5);

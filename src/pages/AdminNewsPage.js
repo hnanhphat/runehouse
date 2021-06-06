@@ -33,6 +33,7 @@ const AdminNewsPage = ({ t }) => {
 
   const [showCreate, setShowCreate] = useState(false);
   const [formCreate, setFormCreate] = useState({
+    image: "",
     title: "",
     category: "Sharing",
     content: "",
@@ -73,27 +74,76 @@ const AdminNewsPage = ({ t }) => {
   };
 
   // CREATE
+  const handleCreateImages = (e) => {
+    e.preventDefault();
+    window.cloudinary.openUploadWidget(
+      {
+        cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+        upload_preset: process.env.REACT_APP_CLOUDINARY_PRESET,
+        multiple: false,
+      },
+      function (error, result) {
+        if (!error) {
+          if (result.event === "success") {
+            setFormCreate({ ...formCreate, image: result.info.url });
+          }
+        } else {
+          console.log(error);
+        }
+      }
+    );
+  };
+
   const handleCreateChange = (e) => {
     setFormCreate({ ...formCreate, [e.target.name]: e.target.value });
   };
 
   const handleCreateNews = (pageNum, query) => {
-    const { title, category, content } = formCreate;
+    const { image, title, category, content } = formCreate;
     dispatch(
-      newsActions.createNews({ title, category, content }, pageNum, query)
+      newsActions.createNews(
+        { image, title, category, content },
+        pageNum,
+        query
+      )
     );
     setShowCreate(false);
   };
 
   // EDIT
+  const handleEditImages = (e) => {
+    e.preventDefault();
+    window.cloudinary.openUploadWidget(
+      {
+        cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+        upload_preset: process.env.REACT_APP_CLOUDINARY_PRESET,
+        multiple: false,
+      },
+      function (error, result) {
+        if (!error) {
+          if (result.event === "success") {
+            setFormEdit({ ...formEdit, image: result.info.url });
+          }
+        } else {
+          console.log(error);
+        }
+      }
+    );
+  };
+
   const handleEditChange = (e) => {
     setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
   };
 
   const handleEditNews = (val, pageNum, query) => {
-    const { title, category, content } = formEdit;
+    const { image, title, category, content } = formEdit;
     dispatch(
-      newsActions.editNews({ title, category, content }, val, pageNum, query)
+      newsActions.editNews(
+        { image, title, category, content },
+        val,
+        pageNum,
+        query
+      )
     );
     setShowEdit(false);
   };
@@ -121,6 +171,7 @@ const AdminNewsPage = ({ t }) => {
 
   useEffect(() => {
     setFormEdit({
+      image: singleNews && singleNews.data.image,
       title: singleNews && singleNews.data.title,
       category: singleNews && singleNews.data.category,
       content: singleNews && singleNews.data.content,
@@ -332,24 +383,21 @@ const AdminNewsPage = ({ t }) => {
         </Modal.Header>
 
         <Modal.Body>
-          {currentUser ? (
-            <div className="reader">
-              <div
-                className="reader__avatar"
-                style={{
-                  backgroundImage: `url('${
-                    currentUser.data.avatar ? currentUser.data.avatar : noimg
-                  }')`,
-                }}
-              ></div>
-              <div className="reader__info">
-                <p className="name">{currentUser.data.fullname}</p>
-                <p className="position">{currentUser.data.position}</p>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
+          <div className="reader">
+            <button
+              className={`reader__avatar reader__avatar--rectangle ${
+                formCreate.image ? "active" : ""
+              }`}
+              style={{
+                backgroundImage: `url('${
+                  formCreate.image ? formCreate.image : noimg
+                }')`,
+              }}
+              onClick={handleCreateImages}
+            >
+              <span>{t("an.Edit")}</span>
+            </button>
+          </div>
           <form className="form">
             <div className="form__group">
               <div className="item">
@@ -416,31 +464,21 @@ const AdminNewsPage = ({ t }) => {
         ) : (
           <>
             <Modal.Body>
-              {singleNews ? (
-                <div className="reader">
-                  <div
-                    className="reader__avatar"
-                    style={{
-                      backgroundImage: `url('${
-                        singleNews.data.author.avatar
-                          ? singleNews.data.author.avatar
-                          : noimg
-                      }')`,
-                    }}
-                  ></div>
-                  <div className="reader__info">
-                    <p className="name">{singleNews.data.author.fullname}</p>
-                    <p className="position">
-                      {singleNews.data.author.position}
-                      {singleNews.data.author.role === "Reader"
-                        ? " Reader"
-                        : ""}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
+              <div className="reader">
+                <button
+                  className={`reader__avatar reader__avatar--rectangle ${
+                    formEdit.image ? "active" : ""
+                  }`}
+                  style={{
+                    backgroundImage: `url('${
+                      formEdit.image ? formEdit.image : noimg
+                    }')`,
+                  }}
+                  onClick={handleEditImages}
+                >
+                  <span>{t("an.Edit")}</span>
+                </button>
+              </div>
               <form className="form">
                 <div className="form__group">
                   <div className="item">

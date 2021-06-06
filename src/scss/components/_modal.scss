@@ -114,6 +114,15 @@
               width: 60px;
               height: 60px;
             }
+            &--rectangle {
+              background-size: contain;
+              border-radius: 0;
+              width: 150px;
+              height: 90px;
+            }
+            &.active {
+              background-size: cover;
+            }
             span {
               position: absolute;
               background: rgba($color: $black, $alpha: 0.5);
