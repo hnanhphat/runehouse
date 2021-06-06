@@ -5,6 +5,7 @@ const initialState = {
   single: [],
   random: [],
   loading: false,
+  loadingSingle: false,
   error: "",
 };
 
@@ -38,15 +39,15 @@ const cardReducer = (state = initialState, action) => {
 
     // GET SINGLE
     case types.GET_SINGLE_REQUEST:
-      state.loading = true;
+      state.loadingSingle = true;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.single = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
     case types.GET_SINGLE_FAILURE:
       state.error = payload;
-      state.loading = false;
+      state.loadingSingle = false;
       break;
 
     // GET RANDOM

@@ -3,12 +3,13 @@ import * as types from "../constants/news.constants";
 const initialState = {
   news: [],
   search: [],
-  totalPages: 1,
-  loadingList: false,
-  loading: false,
-  error: "",
   singleNews: [],
   comment: [],
+  totalPages: 1,
+  loadingList: false,
+  loadingSingle: false,
+  loading: false,
+  error: "",
 };
 
 const newsReducer = (state = initialState, action) => {
@@ -40,14 +41,14 @@ const newsReducer = (state = initialState, action) => {
 
     // GET SINGLE ITEM
     case types.GET_SINGLE_REQUEST:
-      state.loadingList = true;
+      state.loadingSingle = payload;
       break;
     case types.GET_SINGLE_SUCCESS:
       state.singleNews = payload;
-      state.loadingList = false;
+      state.loadingSingle = false;
       break;
     case types.GET_SINGLE_FAILURE:
-      state.loadingList = false;
+      state.loadingSingle = false;
       break;
 
     // CREATE REACTION

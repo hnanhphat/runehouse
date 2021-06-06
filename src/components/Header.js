@@ -39,7 +39,7 @@ const Header = ({ t, status, setStatus }) => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const carts = useSelector((state) => state.cart.carts.data);
   const card = useSelector((state) => state.card.random.data);
-  const cardLoading = useSelector((state) => state.card.loading);
+  const cardLoading = useSelector((state) => state.card.loadingSingle);
 
   const [random, setRandom] = useState(Math.floor(Math.random() * 2));
   const [randomArray, setRandomArray] = useState([

@@ -21,7 +21,7 @@ import { withNamespaces } from "react-i18next";
 const AdminNewsPage = ({ t }) => {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.news.data);
-  const loading = useSelector((state) => state.news.loading);
+  const loadingList = useSelector((state) => state.news.loadingList);
   const singleNews = useSelector((state) => state.news.singleNews.data);
   const totalPage = useSelector((state) => state.news.totalPages);
   const currentUser = useSelector((state) => state.user.currentUser.data);
@@ -113,13 +113,14 @@ const AdminNewsPage = ({ t }) => {
 
   useEffect(() => {
     if (isAdmin === "Admin") {
-      dispatch(newsActions.getListOfNews(currentPage, searchInput));
+      dispatch(newsActions.getListOfNews(currentPage, searchInput, true));
     } else {
       if (currentUser) {
         dispatch(
           newsActions.getListOfNews(
             currentPage,
-            `&author=${currentUser.data._id}${searchInput}`
+            `&author=${currentUser.data._id}${searchInput}`,
+            true
           )
         );
       }
@@ -191,7 +192,7 @@ const AdminNewsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loading ? (
+      {loadingList ? (
         <Loading />
       ) : news && news.data.news.length ? (
         <ul className="admin__news">

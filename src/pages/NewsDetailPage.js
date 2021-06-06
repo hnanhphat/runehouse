@@ -16,7 +16,7 @@ const NewsDetailPage = ({ t }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const singleNews = useSelector((state) => state.news.singleNews.data);
-  const loadingList = useSelector((state) => state.news.loadingList);
+  const loadingSingle = useSelector((state) => state.news.loadingSingle);
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [showComment, setShowComment] = useState(false);
@@ -64,7 +64,7 @@ const NewsDetailPage = ({ t }) => {
         branchTxt={t("nd.News")}
         leaf={singleNews && singleNews.data.title}
       />
-      {loadingList ? (
+      {loadingSingle ? (
         <Loading />
       ) : singleNews ? (
         <div className="container">
