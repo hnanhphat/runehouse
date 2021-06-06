@@ -356,30 +356,31 @@ const OrderPage = ({ t }) => {
                 </li>
               </ul>
               <ul className="order__list">
-                {singleOrders.data.carts.map((cart) => (
-                  <li key={cart._id}>
-                    {/* <div
-                      className="img"
-                      style={{
-                        backgroundImage: `url('${
-                          cart.decks.image ? cart.decks.image : noimg
-                        }')`,
-                      }}
-                    ></div> */}
-                    <div className="info">
-                      <p>{cart.decks.name}</p>
-                      <span>
-                        {t("o.Quantity")}: {cart.quantity}
-                      </span>
-                      <span>
-                        {t("o.Unit Price")}: {cart.decks.oficialPrice}
-                      </span>
-                    </div>
-                    <div className="price">
-                      ${cart.quantity * cart.decks.oficialPrice}
-                    </div>
-                  </li>
-                ))}
+                {singleOrders &&
+                  singleOrders.data.carts.map((cart) => (
+                    <li key={cart._id}>
+                      <div
+                        className="img"
+                        style={{
+                          backgroundImage: `url('${
+                            cart.decks.image ? cart.decks.image : noimg
+                          }')`,
+                        }}
+                      ></div>
+                      <div className="info">
+                        <p>{cart.decks.name}</p>
+                        <span>
+                          {t("o.Quantity")}: {cart.quantity}
+                        </span>
+                        <span>
+                          {t("o.Unit Price")}: {cart.decks.oficialPrice}
+                        </span>
+                      </div>
+                      <div className="price">
+                        ${cart.quantity * cart.decks.oficialPrice}
+                      </div>
+                    </li>
+                  ))}
               </ul>
               <div className="order__total">
                 <div className="box">
