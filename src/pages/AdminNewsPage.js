@@ -77,14 +77,10 @@ const AdminNewsPage = ({ t }) => {
     setFormCreate({ ...formCreate, [e.target.name]: e.target.value });
   };
 
-  const handleCreateNews = () => {
+  const handleCreateNews = (pageNum, query) => {
     const { title, category, content } = formCreate;
     dispatch(
-      newsActions.createNews(
-        { title, category, content },
-        currentPage,
-        searchInput
-      )
+      newsActions.createNews({ title, category, content }, pageNum, query)
     );
     setShowCreate(false);
   };
@@ -94,22 +90,17 @@ const AdminNewsPage = ({ t }) => {
     setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
   };
 
-  const handleEditNews = (val) => {
+  const handleEditNews = (val, pageNum, query) => {
     const { title, category, content } = formEdit;
     dispatch(
-      newsActions.editNews(
-        { title, category, content },
-        val,
-        currentPage,
-        searchInput
-      )
+      newsActions.editNews({ title, category, content }, val, pageNum, query)
     );
     setShowEdit(false);
   };
 
   // DELETE
-  const handleDeleteNews = (val) => {
-    dispatch(newsActions.deleteNews(val, currentPage, searchInput));
+  const handleDeleteNews = (val, pageNum, query) => {
+    dispatch(newsActions.deleteNews(val, pageNum, query));
   };
 
   useEffect(() => {
@@ -196,141 +187,142 @@ const AdminNewsPage = ({ t }) => {
       {loadingList ? (
         <Loading />
       ) : news && news.data.news.length ? (
-        <ul className="admin__news">
-          {news.data.news.map((item) => (
-            <li key={item._id}>
-              {item.image ? (
-                <div
-                  className="img"
-                  style={{ backgroundImage: `url('${item.image}')` }}
-                >
-                  <div className="btns">
-                    <button
-                      onClick={() => {
-                        dispatch(newsActions.getSingleNews(item._id, true));
-                        setEditTarget(item._id);
-                        setShowEdit(true);
-                      }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="pencil-alt"
-                        className="svg-inline--fa fa-pencil-alt fa-w-16"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+        <>
+          <ul className="admin__news">
+            {news.data.news.map((item) => (
+              <li key={item._id}>
+                {item.image ? (
+                  <div
+                    className="img"
+                    style={{ backgroundImage: `url('${item.image}')` }}
+                  >
+                    <div className="btns">
+                      <button
+                        onClick={() => {
+                          dispatch(newsActions.getSingleNews(item._id, true));
+                          setEditTarget(item._id);
+                          setShowEdit(true);
+                        }}
                       >
-                        <path
-                          fill="currentColor"
-                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                        ></path>
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setDeleteTarget(item._id);
-                        setShowDelete(true);
-                      }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="trash-alt"
-                        className="svg-inline--fa fa-trash-alt fa-w-14"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="pencil-alt"
+                          className="svg-inline--fa fa-pencil-alt fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                          ></path>
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDeleteTarget(item._id);
+                          setShowDelete(true);
+                        }}
                       >
-                        <path
-                          fill="currentColor"
-                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="trash-alt"
+                          className="svg-inline--fa fa-trash-alt fa-w-14"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div
-                  className="img img--noimg"
-                  style={{ backgroundImage: `url('${noimg}')` }}
-                >
-                  <div className="btns">
-                    <button
-                      onClick={() => {
-                        dispatch(newsActions.getSingleNews(item._id));
-                        setEditTarget(item._id);
-                        setShowEdit(true);
-                      }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="pencil-alt"
-                        className="svg-inline--fa fa-pencil-alt fa-w-16"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                ) : (
+                  <div
+                    className="img img--noimg"
+                    style={{ backgroundImage: `url('${noimg}')` }}
+                  >
+                    <div className="btns">
+                      <button
+                        onClick={() => {
+                          dispatch(newsActions.getSingleNews(item._id));
+                          setEditTarget(item._id);
+                          setShowEdit(true);
+                        }}
                       >
-                        <path
-                          fill="currentColor"
-                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                        ></path>
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setDeleteTarget(item._id);
-                        setShowDelete(true);
-                      }}
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="trash-alt"
-                        className="svg-inline--fa fa-trash-alt fa-w-14"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="pencil-alt"
+                          className="svg-inline--fa fa-pencil-alt fa-w-16"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                          ></path>
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDeleteTarget(item._id);
+                          setShowDelete(true);
+                        }}
                       >
-                        <path
-                          fill="currentColor"
-                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="trash-alt"
+                          className="svg-inline--fa fa-trash-alt fa-w-14"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
+                )}
+                <p className="tit">{item.title}</p>
+                <div className="group">
+                  <span className="time">
+                    <Moment format="MMM D, YYYY" withTitle={item.createdAt} />
+                  </span>
+                  <span className="comments">
+                    {item.reviews.length ? item.reviews.length : 0}{" "}
+                    {t("an.Comment(s)")}
+                  </span>
                 </div>
-              )}
-              <p className="tit">{item.title}</p>
-              <div className="group">
-                <span className="time">
-                  <Moment format="MMM D, YYYY" withTitle={item.createdAt} />
-                </span>
-                <span className="comments">
-                  {item.reviews.length ? item.reviews.length : 0}{" "}
-                  {t("an.Comment(s)")}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+          {totalPage > 1 ? (
+            <PaginationBar
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPage={totalPage}
+            />
+          ) : (
+            ""
+          )}
+        </>
       ) : (
         <p className="admin__no-item">{t("an.Do not have any News.")}</p>
-      )}
-
-      {totalPage > 1 ? (
-        <PaginationBar
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPage={totalPage}
-        />
-      ) : (
-        ""
       )}
 
       {/* CREATE */}
@@ -390,12 +382,26 @@ const AdminNewsPage = ({ t }) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <button
-            className={formCreate.title && formCreate.content ? "active" : ""}
-            onClick={handleCreateNews}
-          >
-            {t("an.Create")}
-          </button>
+          {isAdmin === "Admin" ? (
+            <button
+              className={formCreate.title && formCreate.content ? "active" : ""}
+              onClick={() => handleCreateNews(currentPage, searchInput)}
+            >
+              {t("an.Create")}
+            </button>
+          ) : (
+            <button
+              className={formCreate.title && formCreate.content ? "active" : ""}
+              onClick={() =>
+                handleCreateNews(
+                  currentPage,
+                  `&author=${currentUser.data._id}${searchInput}`
+                )
+              }
+            >
+              {t("an.Create")}
+            </button>
+          )}
         </Modal.Footer>
       </Modal>
 
@@ -426,6 +432,9 @@ const AdminNewsPage = ({ t }) => {
                     <p className="name">{singleNews.data.author.fullname}</p>
                     <p className="position">
                       {singleNews.data.author.position}
+                      {singleNews.data.author.role === "Reader"
+                        ? " Reader"
+                        : ""}
                     </p>
                   </div>
                 </div>
@@ -470,12 +479,29 @@ const AdminNewsPage = ({ t }) => {
             </Modal.Body>
 
             <Modal.Footer>
-              <button
-                className={formEdit.title && formEdit.content ? "active" : ""}
-                onClick={() => handleEditNews(editTarget)}
-              >
-                {t("an.Edit")}
-              </button>
+              {isAdmin === "Admin" ? (
+                <button
+                  className={formEdit.title && formEdit.content ? "active" : ""}
+                  onClick={() =>
+                    handleEditNews(editTarget, currentPage, searchInput)
+                  }
+                >
+                  {t("an.Edit")}
+                </button>
+              ) : (
+                <button
+                  className={formEdit.title && formEdit.content ? "active" : ""}
+                  onClick={() =>
+                    handleEditNews(
+                      editTarget,
+                      currentPage,
+                      `&author=${currentUser.data._id}${searchInput}`
+                    )
+                  }
+                >
+                  {t("an.Edit")}
+                </button>
+              )}
             </Modal.Footer>
           </>
         )}
@@ -489,14 +515,29 @@ const AdminNewsPage = ({ t }) => {
 
         <Modal.Body>
           <div class="group-btn">
-            <button
-              onClick={() => {
-                handleDeleteNews(deleteTarget);
-                setShowDelete(false);
-              }}
-            >
-              {t("an.Delete")}
-            </button>
+            {isAdmin === "Admin" ? (
+              <button
+                onClick={() => {
+                  handleDeleteNews(deleteTarget, currentPage, searchInput);
+                  setShowDelete(false);
+                }}
+              >
+                {t("an.Delete")}
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  handleDeleteNews(
+                    deleteTarget,
+                    currentPage,
+                    `&author=${currentUser.data._id}${searchInput}`
+                  );
+                  setShowDelete(false);
+                }}
+              >
+                {t("an.Delete")}
+              </button>
+            )}
             <button onClick={() => setShowDelete(false)}>
               {t("an.Cancel")}
             </button>
