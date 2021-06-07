@@ -228,8 +228,12 @@ const HomePage = ({ t }) => {
                     <li key={item._id}>
                       <Link to={`/news/${item._id}`}>
                         <div
-                          className="img"
-                          style={{ backgroundImage: `url('${item.image}')` }}
+                          className={`img ${item.image ? "" : "img--noimg"}`}
+                          style={{
+                            backgroundImage: `url('${
+                              item.image ? item.image : noimg
+                            }')`,
+                          }}
                         ></div>
                         <p className="tit">{item.title}</p>
                         <p className="group">

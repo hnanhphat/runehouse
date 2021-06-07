@@ -67,6 +67,12 @@ const authReducer = (state = initialState, action) => {
       state.error = payload;
       state.loading = false;
       break;
+
+    // CHECK ROLE
+    case types.CHECK_CURRENT_ROLE:
+      state.isAdmin = payload;
+      break;
+
     default:
       return state;
   }

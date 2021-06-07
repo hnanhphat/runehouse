@@ -107,6 +107,14 @@ const verify = (code) => async (dispatch) => {
   }
 };
 
+const checkRole = (role) => (dispatch) => {
+  localStorage.setItem("isAdmin", role);
+  dispatch({
+    type: types.CHECK_CURRENT_ROLE,
+    payload: role,
+  });
+};
+
 export const authActions = {
   register,
   login,
@@ -114,4 +122,5 @@ export const authActions = {
   loginWithGg,
   logout,
   verify,
+  checkRole,
 };

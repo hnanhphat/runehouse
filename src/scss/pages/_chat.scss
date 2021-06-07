@@ -1,0 +1,134 @@
+.chatroom {
+  display: flex;
+  &__sidebar {
+    background: rgba($color: $black, $alpha: 0.8);
+    width: 300px;
+    ul {
+      li {
+        &.current {
+          display: none;
+        }
+        button {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: 5px 10px;
+          &.active {
+            background: rgba($color: $black, $alpha: 0.4);
+          }
+          .img {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+          }
+          .info {
+            padding-left: 10px;
+            text-align: left;
+            p {
+              color: $white;
+              font-size: 16px;
+              padding-bottom: 4px;
+            }
+            span {
+              color: $orange;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__content {
+    display: none;
+    flex: 1;
+    &--show {
+      display: block;
+    }
+  }
+  &__messages {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    overflow: auto;
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 100%;
+      // height: 100%;
+      overflow: auto;
+      padding: 10px;
+      li {
+        display: flex;
+        padding: 2px 0;
+        p {
+          border-radius: 100px;
+          color: $white;
+          max-width: 40%;
+          padding: 0 12px;
+        }
+        img {
+          border-radius: 10px;
+          width: auto;
+          height: auto;
+          max-width: 40%;
+          max-height: 280px;
+        }
+        &.from {
+          justify-content: flex-end;
+          p {
+            background: $orange;
+          }
+        }
+        &.to {
+          justify-content: flex-start;
+          p {
+            background: $grey;
+          }
+        }
+      }
+    }
+  }
+  &__form {
+    background: $white;
+    border-top: 1px solid $grey-light;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 45px;
+    padding: 0 10px;
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: calc(100% - 45px);
+      input {
+        background: $grey;
+        border: none;
+        border-radius: 100px;
+        color: $white;
+        width: calc(100% - 45px);
+        height: 35px;
+        padding: 10px 20px;
+        &::first-letter {
+          text-transform: uppercase;
+        }
+        &::placeholder {
+          color: rgba($color: $white, $alpha: 0.5);
+        }
+      }
+    }
+    button {
+      background: $orange;
+      border-radius: 50%;
+      color: $white;
+      width: 35px;
+      height: 35px;
+      svg {
+        width: 20px;
+      }
+    }
+  }
+}

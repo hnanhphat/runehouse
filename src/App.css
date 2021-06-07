@@ -3660,6 +3660,136 @@ select:focus {
   margin-right: auto;
 }
 
+.chatroom {
+  display: flex;
+}
+.chatroom__sidebar {
+  background: rgba(0, 0, 0, 0.8);
+  width: 300px;
+}
+.chatroom__sidebar ul li.current {
+  display: none;
+}
+.chatroom__sidebar ul li button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 10px;
+}
+.chatroom__sidebar ul li button.active {
+  background: rgba(0, 0, 0, 0.4);
+}
+.chatroom__sidebar ul li button .img {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+.chatroom__sidebar ul li button .info {
+  padding-left: 10px;
+  text-align: left;
+}
+.chatroom__sidebar ul li button .info p {
+  color: #fff;
+  font-size: 16px;
+  padding-bottom: 4px;
+}
+.chatroom__sidebar ul li button .info span {
+  color: #d67b35;
+}
+.chatroom__content {
+  display: none;
+  flex: 1;
+}
+.chatroom__content--show {
+  display: block;
+}
+.chatroom__messages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  overflow: auto;
+}
+.chatroom__messages ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  overflow: auto;
+  padding: 10px;
+}
+.chatroom__messages ul li {
+  display: flex;
+  padding: 2px 0;
+}
+.chatroom__messages ul li p {
+  border-radius: 100px;
+  color: #fff;
+  max-width: 40%;
+  padding: 0 12px;
+}
+.chatroom__messages ul li img {
+  border-radius: 10px;
+  width: auto;
+  height: auto;
+  max-width: 40%;
+  max-height: 280px;
+}
+.chatroom__messages ul li.from {
+  justify-content: flex-end;
+}
+.chatroom__messages ul li.from p {
+  background: #d67b35;
+}
+.chatroom__messages ul li.to {
+  justify-content: flex-start;
+}
+.chatroom__messages ul li.to p {
+  background: #888;
+}
+.chatroom__form {
+  background: #fff;
+  border-top: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 45px;
+  padding: 0 10px;
+}
+.chatroom__form form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 45px);
+}
+.chatroom__form form input {
+  background: #888;
+  border: none;
+  border-radius: 100px;
+  color: #fff;
+  width: calc(100% - 45px);
+  height: 35px;
+  padding: 10px 20px;
+}
+.chatroom__form form input::first-letter {
+  text-transform: uppercase;
+}
+.chatroom__form form input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.chatroom__form button {
+  background: #d67b35;
+  border-radius: 50%;
+  color: #fff;
+  width: 35px;
+  height: 35px;
+}
+.chatroom__form button svg {
+  width: 20px;
+}
+
 .collection .container {
   padding: 40px 0 80px;
 }
@@ -4400,6 +4530,7 @@ select:focus {
 }
 #home .news__list li a .img--noimg {
   background-size: contain;
+  border: 1px solid #d67b35;
 }
 #home .news__list li a .tit {
   font-size: 15px;

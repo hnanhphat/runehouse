@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 const getListOfUsers = (pageNumber, option) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_LIST_REQUEST });
+    console.log(`/users?page=${pageNumber + option}`);
     const res = await api.get(`/users?page=${pageNumber + option}`);
     dispatch({
       type: types.GET_LIST_SUCCESS,
