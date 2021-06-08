@@ -14,7 +14,7 @@ import { withNamespaces } from "react-i18next";
 const ProductPage = ({ t }) => {
   const dispatch = useDispatch();
   const decks = useSelector((state) => state.decks.decks.data);
-  const loading = useSelector((state) => state.decks.loading);
+  const loadingList = useSelector((state) => state.decks.loadingList);
   const totalPage = useSelector((state) => state.decks.totalPages);
   const searchField = useSelector((state) => state.decks.searchField);
   const cateField = useSelector((state) => state.decks.cateField);
@@ -36,7 +36,9 @@ const ProductPage = ({ t }) => {
   };
 
   useEffect(() => {
-    dispatch(decksActions.getListOfDecks(currentPage, searchField, "decks"));
+    dispatch(
+      decksActions.getListOfDecks(currentPage, searchField, "decks", true)
+    );
   }, [dispatch, currentPage, searchField]);
 
   return (
@@ -181,7 +183,7 @@ const ProductPage = ({ t }) => {
             </button>
           </li>
         </ul>
-        {loading ? (
+        {loadingList ? (
           <Loading />
         ) : decks && decks.data.decks.length ? (
           <ul className="products__list">

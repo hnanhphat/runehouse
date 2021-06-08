@@ -1,12 +1,14 @@
 import api from "../../apiService";
 import * as types from "../constants/cart.constants";
+import { toast } from "react-toastify";
 
-const createCart = (data) => async (dispatch) => {
+const createCart = (data, txt) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_CART_REQUEST, payload: null });
     const res = await api.post(`/cart`, data);
     dispatch({ type: types.CREATE_CART_SUCCESS, payload: res });
     dispatch(getUserCart(1, "&isOrdered=false"));
+    toast.success(txt);
   } catch (error) {
     dispatch({ type: types.CREATE_CART_FAILURE, payload: error.message });
   }

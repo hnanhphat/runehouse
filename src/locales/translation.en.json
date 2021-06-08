@@ -358,6 +358,9 @@
   "apm.Cancel": "Cancel",
   "apm.Summary Appointment": "Summary Appointment",
   "apm.Phone": "Phone",
-  "apm.Accept": "Accept"
+  "apm.Accept": "Accept",
+
+  "__TOAST": "TOAST",
+  "t.Product added to cart.": "Product added to cart."
 
 }

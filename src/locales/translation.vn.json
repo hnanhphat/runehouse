@@ -358,6 +358,9 @@
   "apm.Cancel": "Huỷ",
   "apm.Summary Appointment": "Tóm Tắt Yêu Cầu",
   "apm.Phone": "Điện Thoại",
-  "apm.Accept": "Chấp Nhận"
+  "apm.Accept": "Chấp Nhận",
+
+  "__TOAST": "TOAST",
+  "t.Product added to cart.": "Sản phẩm đã được thêm vào giỏ hàng."
 
 }

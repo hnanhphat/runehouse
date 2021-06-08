@@ -21,8 +21,13 @@ const ProductDetailPage = ({ t }) => {
   const loadingSingle = useSelector((state) => state.decks.loadingSingle);
   const [quantity, setQuantity] = useState(1);
 
-  const handleAddCart = (val) => {
-    dispatch(cartActions.createCart({ decks: val, quantity: quantity }));
+  const handleAddCart = (val, txt) => {
+    dispatch(
+      cartActions.createCart(
+        { decks: val, quantity: quantity },
+        t("t.Product added to cart.")
+      )
+    );
   };
 
   useEffect(() => {
