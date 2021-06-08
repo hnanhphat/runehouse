@@ -83,3 +83,7 @@ select {
   max-width: 1024px;
   margin: 0 auto;
 }
+
+.Toastify__toast--success {
+  background: $orange !important;
+}

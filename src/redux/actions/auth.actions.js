@@ -33,7 +33,7 @@ const login = (data) => async (dispatch) => {
         isAdmin: res.data.data.user.position,
       },
     });
-    toast.success(res.data.message);
+    toast.success(`Welcom ${res.data.data.user.fullname}`);
   } catch (error) {
     dispatch({ type: types.LOGIN_FAILURE, payload: error.message });
   }
