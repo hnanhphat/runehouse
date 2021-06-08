@@ -195,18 +195,22 @@ const HomePage = ({ t }) => {
                         ></div>
                         {deck.sale ? <p className="sale">SALE</p> : ""}
                         <p className="name">{deck.name}</p>
-                        <p className="price">
-                          {deck.defaultPrice ? (
+                        {deck.sale ? (
+                          <p className="price">
                             <span className="price__before">
                               ${deck.defaultPrice}
                             </span>
-                          ) : (
-                            ""
-                          )}
-                          <span className="price__after">
-                            ${deck.oficialPrice}
-                          </span>
-                        </p>
+                            <span className="price__after">
+                              ${deck.oficialPrice}
+                            </span>
+                          </p>
+                        ) : (
+                          <p className="price">
+                            <span className="price__after">
+                              ${deck.oficialPrice}
+                            </span>
+                          </p>
+                        )}
                       </Link>
                     </li>
                   ))}

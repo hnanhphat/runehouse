@@ -9,6 +9,7 @@ import { routeActions } from "../redux/actions/route.actions";
 import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
@@ -101,6 +102,7 @@ const CartPage = ({ t }) => {
         setCreated(od.saved);
       });
       if (created) {
+        toast.success("The order has been created!");
         dispatch(routeActions.redirect("/orders"));
         dispatch(cartActions.getUserCart(1, "&isOrdered=false"));
       }

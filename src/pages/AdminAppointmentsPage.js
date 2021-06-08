@@ -156,7 +156,7 @@ const AdminAppointmentsPage = ({ t }) => {
     if (socket) {
       socket.on("apm.request", (apm) => {
         console.log(("I got it from backend", apm));
-        setAppointments((state) => [apm, ...state]);
+        setAppointments((state) => [apm.appointment, ...state]);
         setLoadingAppointment(false);
       });
 

@@ -7,6 +7,7 @@ import { userActions } from "../redux/actions/user.actions";
 import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import MainVisual from "../components/MainVisual";
 import Breadcrumb from "../components/Breadcrumb";
@@ -75,13 +76,6 @@ const ReaderPage = ({ t }) => {
 
   const handleSend = (id) => {
     const { serviceType, appointmentDate, clientPhone } = formInput;
-    // dispatch(
-    //   appointmentActions.sendAppointment(id, {
-    //     serviceType,
-    //     appointmentDate,
-    //     clientPhone,
-    //   })
-    // );
     socket.emit("apm.create", {
       fromId: currentUser && currentUser.data._id,
       toId: id,
@@ -117,6 +111,17 @@ const ReaderPage = ({ t }) => {
     return () => {
       socket.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("apm.request", (apm) => {
+        console.log(("I got it from backend", apm));
+        if (apm.sent) {
+          toast.success("The request has been sent!");
+        }
+      });
+    }
   }, []);
 
   return (

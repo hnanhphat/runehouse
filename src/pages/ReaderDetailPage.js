@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { userActions } from "../redux/actions/user.actions";
 import { newsActions } from "../redux/actions/news.actions";
-import { appointmentActions } from "../redux/actions/appointment.actions";
+// import { appointmentActions } from "../redux/actions/appointment.actions";
+import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
+
 import Moment from "react-moment";
 import LinesEllipsis from "react-lines-ellipsis";
 
@@ -18,6 +21,8 @@ import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
+let socket;
+const BE_URL = process.env.REACT_APP_BACKEND_API;
 const ReaderDetailPage = ({ t }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -86,13 +91,20 @@ const ReaderDetailPage = ({ t }) => {
 
   const handleSend = () => {
     const { serviceType, appointmentDate, clientPhone } = formInput;
-    dispatch(
-      appointmentActions.sendAppointment(id, {
-        serviceType,
-        appointmentDate,
-        clientPhone,
-      })
-    );
+    // dispatch(
+    //   appointmentActions.sendAppointment(id, {
+    //     serviceType,
+    //     appointmentDate,
+    //     clientPhone,
+    //   })
+    // );
+    socket.emit("apm.create", {
+      fromId: currentUser && currentUser.data._id,
+      toId: id,
+      serviceType,
+      appointmentDate,
+      clientPhone,
+    });
     setShowModal(false);
   };
 
@@ -109,6 +121,25 @@ const ReaderDetailPage = ({ t }) => {
       news && news.data.news.map((el) => Array(el.reviews.length).fill(false))
     );
   }, [news]);
+
+  useEffect(() => {
+    socket = socketIOClient(BE_URL);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("apm.request", (apm) => {
+        console.log(("I got it from backend", apm));
+        if (apm.sent) {
+          toast.success("The request has been sent!");
+        }
+      });
+    }
+  }, []);
 
   return (
     <div id="reader-detail" className="reader-detail bg-grey">
