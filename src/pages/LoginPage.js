@@ -89,7 +89,7 @@ const LoginPage = () => {
   }, [dispatch, history, redirectTo]);
 
   return (
-    <div id="login" className="login">
+    <div id="login" className="login bg-grey">
       <MainVisual heading={path} />
       <Breadcrumb leaf={path} />
       <div

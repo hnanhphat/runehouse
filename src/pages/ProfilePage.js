@@ -54,7 +54,7 @@ const ProfilePage = () => {
   useEffect(() => {}, [dispatch]);
 
   return (
-    <div id="profile" className="profile">
+    <div id="profile" className="profile bg-grey">
       <MainVisual heading="Profile" />
       <Breadcrumb leaf="profile" />
       <div className="container">

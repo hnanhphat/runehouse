@@ -5,7 +5,7 @@ import Breadcrumb from "../components/Breadcrumb";
 
 const NotFoundPage = () => {
   return (
-    <div id="_404" className="_404">
+    <div id="_404" className="_404 bg-grey">
       <MainVisual heading="404" />
       <Breadcrumb leaf="404" />
       <div className="_404__area">
