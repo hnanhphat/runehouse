@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { cartActions } from "../redux/actions/cart.actions";
-import { orderActions } from "../redux/actions/order.actions";
+// import { orderActions } from "../redux/actions/order.actions";
 import { routeActions } from "../redux/actions/route.actions";
+import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
 
@@ -16,6 +17,8 @@ import Loading from "../components/Loading";
 
 import { withNamespaces } from "react-i18next";
 
+let socket;
+const BE_URL = process.env.REACT_APP_BACKEND_API;
 const CartPage = ({ t }) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -31,6 +34,8 @@ const CartPage = ({ t }) => {
     phone: "",
     payment: "COD",
   });
+
+  const [created, setCreated] = useState(false);
 
   const handleUpdate = (quantity, id) => {
     dispatch(
@@ -62,17 +67,15 @@ const CartPage = ({ t }) => {
     const quantity =
       carts && carts.data.carts.reduce((a, b) => a + b.quantity, 0);
     const { shipping, phone, payment } = formInput;
-    dispatch(
-      orderActions.createOrder({
-        customer,
-        carts: cartsId,
-        total,
-        shipping,
-        phone,
-        payment,
-        quantity,
-      })
-    );
+    socket.emit("od.create", {
+      customer,
+      carts: cartsId,
+      total,
+      shipping,
+      phone,
+      payment,
+      quantity,
+    });
     setShowModal(false);
   };
 
@@ -82,6 +85,27 @@ const CartPage = ({ t }) => {
       dispatch(routeActions.removeRedirectTo());
     }
   }, [dispatch, history, redirectTo, currentPage]);
+
+  useEffect(() => {
+    socket = socketIOClient(BE_URL);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("od.request", (od) => {
+        console.log(("I got it from backend", od));
+        setCreated(od.saved);
+      });
+      if (created) {
+        dispatch(routeActions.redirect("/orders"));
+        dispatch(cartActions.getUserCart(1, "&isOrdered=false"));
+      }
+    }
+  }, [dispatch, created]);
 
   return (
     <div id="cart-page" className="cart-page bg-grey">

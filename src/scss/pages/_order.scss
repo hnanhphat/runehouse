@@ -206,6 +206,14 @@
             background: rgba($color: $red, $alpha: 0.1);
             color: $red;
           }
+          &.requesting {
+            background: rgba($color: $blue, $alpha: 0.1);
+            color: $blue;
+          }
+          &.processing {
+            background: rgba($color: $orange, $alpha: 0.1);
+            color: $orange;
+          }
         }
 
         &.no-item {

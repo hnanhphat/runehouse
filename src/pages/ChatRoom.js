@@ -160,7 +160,11 @@ const Chatroom = ({ t }) => {
                       : "to"
                   }
                 >
-                  {msg.body ? <p>{msg.body}</p> : <img src={msg.image} />}
+                  {msg.body ? (
+                    <p>{msg.body}</p>
+                  ) : (
+                    <img src={msg.image} alt={msg._id} />
+                  )}
                 </li>
               ))}
           </ul>

@@ -2,7 +2,6 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../redux/actions/order.actions";
-import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
 import Moment from "react-moment";
@@ -20,18 +19,14 @@ import cancel from "../img/categoris/cancel.svg";
 
 import { withNamespaces } from "react-i18next";
 
-let socket;
-const BE_URL = process.env.REACT_APP_BACKEND_API;
 const AdminOrdersPage = ({ t }) => {
   const dispatch = useDispatch();
-
+  const orders = useSelector((state) => state.order.orders.data);
+  const loadingList = useSelector((state) => state.order.loadingList);
   const loadingSingle = useSelector((state) => state.order.loadingSingle);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
+  const totalPage = useSelector((state) => state.order.totalPages);
 
-  const [orders, setOrders] = useState([]);
-  const [loadingOrders, setLoadingOrders] = useState(true);
-
-  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderStatus, setOrderStatus] = useState("All");
   const [searchInput, setSearchInput] = useState("");
@@ -49,16 +44,16 @@ const AdminOrdersPage = ({ t }) => {
 
   const filter = [
     { title: "All", image: all, search: "" },
-    { title: "To Pay", image: wallet, search: { status: "To Pay" } },
-    { title: "To Ship", image: box, search: { status: "To Ship" } },
-    { title: "To Receive", image: truck, search: { status: "To Receive" } },
-    { title: "Completed", image: checked, search: { status: "Completed" } },
-    { title: "Cancelled", image: cancel, search: { status: "Cancelled" } },
+    { title: "To Pay", image: wallet, search: "&status=To%20Pay" },
+    { title: "To Ship", image: box, search: "&status=To%20Ship" },
+    { title: "To Receive", image: truck, search: "&status=To%20Receive" },
+    { title: "Completed", image: checked, search: "&status=Completed" },
+    { title: "Cancelled", image: cancel, search: "&status=Cancelled" },
   ];
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchInput({ payment: e.target.searchInput.value });
+    setSearchInput(`&payment=${e.target.searchInput.value}`);
     if (e.target.searchInput.value) {
       setOrderStatus("");
     } else {
@@ -68,9 +63,7 @@ const AdminOrdersPage = ({ t }) => {
   };
 
   const handleDelete = (id) => {
-    socket.emit("od.delete", {
-      id: id,
-    });
+    dispatch(orderActions.deleteOrder(id, currentPage, searchInput));
   };
 
   const handleChange = (e) => {
@@ -79,12 +72,13 @@ const AdminOrdersPage = ({ t }) => {
 
   const handleEdit = (id) => {
     const { status } = formEdit;
-    socket.emit("od.change", {
-      id: id,
-      status: status,
-    });
+    dispatch(orderActions.editOrder({ status }, id, currentPage, searchInput));
     setShowEdit(false);
   };
+
+  useEffect(() => {
+    dispatch(orderActions.getAllOrders(currentPage, searchInput, true));
+  }, [dispatch, currentPage, searchInput]);
 
   useEffect(() => {
     setFormEdit({
@@ -92,68 +86,11 @@ const AdminOrdersPage = ({ t }) => {
     });
   }, [singleOrders]);
 
-  useEffect(() => {
-    socket = socketIOClient(BE_URL);
-    socket.emit("od.init", {
-      page: currentPage,
-      ...searchInput,
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [currentPage, searchInput]);
-
-  useEffect(() => {
-    setLoadingOrders(true);
-    if (socket) {
-      socket.on("od.request", (od) => {
-        console.log(("I got it from backend", od));
-        setOrders((state) => [od.order, ...state]);
-        setLoadingOrders(false);
-      });
-
-      socket.on("od.receive", (od) => {
-        console.log(("I got it from backend", od));
-        setOrders((state) => {
-          state.forEach((el) => {
-            if (el._id === od._id) {
-              el.status = od.status;
-            }
-          });
-          return [...state];
-        });
-        setLoadingOrders(false);
-      });
-
-      socket.on("od.deleted", (od) => {
-        console.log(("I got it from backend", od));
-        setOrders((state) => {
-          const index = state.findIndex((el) => el._id === od._id);
-          state.splice(index, 1);
-          return [...state];
-        });
-        setLoadingOrders(false);
-      });
-
-      socket.on("od.noti", (od) => {
-        console.log(("I got it from backend", od));
-        setOrders(od.orders);
-        setTotalPage(od.totalPages);
-        setLoadingOrders(false);
-      });
-    }
-  }, [currentPage, searchInput]);
-
   return (
     <div id="admin-cards" className="admin__content">
       <div className="admin__controller">
         <form onSubmit={handleSearch} className="search">
-          <input
-            type="text"
-            name="searchInput"
-            placeholder={t("ao.Search by Payment")}
-          />
+          <input type="text" name="searchInput" placeholder={t("ao.Search")} />
           <button>
             <svg
               aria-hidden="true"
@@ -189,9 +126,9 @@ const AdminOrdersPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loadingOrders ? (
+      {loadingList ? (
         <Loading />
-      ) : orders.length > 0 ? (
+      ) : orders && orders.data.orders.length ? (
         <div className="admin__orders">
           <ul>
             <li>
@@ -212,8 +149,8 @@ const AdminOrdersPage = ({ t }) => {
               </div>
               <div className="col col--06"></div>
             </li>
-            {orders.map((order, i) => (
-              <li key={i}>
+            {orders.data.orders.map((order, i) => (
+              <li key={order._id}>
                 <div className="col col--01">
                   <span>{i + 1}</span>
                 </div>

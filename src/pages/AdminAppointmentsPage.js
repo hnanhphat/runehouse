@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appointmentActions } from "../redux/actions/appointment.actions";
 import { userActions } from "../redux/actions/user.actions";
+import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
 
@@ -20,20 +21,22 @@ import cancelled from "../img/categoris/cancel.svg";
 
 import { withNamespaces } from "react-i18next";
 
+let socket;
+const BE_URL = process.env.REACT_APP_BACKEND_API;
 const AdminAppointmentsPage = ({ t }) => {
   const dispatch = useDispatch();
+
   const currentUser = useSelector((state) => state.user.currentUser.data);
   const singleUser = useSelector((state) => state.user.singleUser.data);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
-  const appointments = useSelector(
-    (state) => state.appointment.appointments.data
-  );
   const singleAppointment = useSelector(
     (state) => state.appointment.singleAppointment.data
   );
-  const loadingList = useSelector((state) => state.appointment.loadingList);
   const loadingSingle = useSelector((state) => state.appointment.loadingSingle);
-  const totalPage = useSelector((state) => state.appointment.totalPages);
+
+  const [appointments, setAppointments] = useState([]);
+  const [loadingAppointment, setLoadingAppointment] = useState(false);
+  const [totalPage, setTotalPage] = useState(1);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
@@ -70,19 +73,20 @@ const AdminAppointmentsPage = ({ t }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchInput(`&fullname=${e.target.searchInput.value}`);
     if (e.target.searchInput.value) {
+      setSearchInput({ _id: e.target.searchInput.value });
       setFilterStt("");
     } else {
+      setSearchInput("");
       setFilterStt("All");
     }
     e.target.reset();
   };
 
   const handleDelete = (id) => {
-    dispatch(
-      appointmentActions.deleteAppointment(id, currentPage, searchInput)
-    );
+    socket.emit("apm.delete", {
+      id: id,
+    });
   };
 
   const handleChange = (e) => {
@@ -91,14 +95,10 @@ const AdminAppointmentsPage = ({ t }) => {
 
   const handleEdit = (id) => {
     const { status } = formEdit;
-    dispatch(
-      appointmentActions.editAppointment(
-        { status },
-        id,
-        currentPage,
-        searchInput
-      )
-    );
+    socket.emit("apm.change", {
+      id: id,
+      status: status,
+    });
     setShowEdit(false);
   };
 
@@ -133,6 +133,64 @@ const AdminAppointmentsPage = ({ t }) => {
       }
     }
   }, [dispatch, searchInput, currentPage, currentUser, isAdmin]);
+
+  useEffect(() => {
+    socket = socketIOClient(BE_URL);
+    if (isAdmin === "Admin") {
+      socket.emit("apm.init", { page: currentPage, ...searchInput });
+    } else {
+      socket.emit("apm.init", {
+        page: currentPage,
+        to: currentUser && currentUser.data._id,
+        ...searchInput,
+      });
+    }
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [currentUser, searchInput, isAdmin, currentPage]);
+
+  useEffect(() => {
+    setLoadingAppointment(true);
+    if (socket) {
+      socket.on("apm.request", (apm) => {
+        console.log(("I got it from backend", apm));
+        setAppointments((state) => [apm, ...state]);
+        setLoadingAppointment(false);
+      });
+
+      socket.on("apm.receive", (apm) => {
+        console.log(("I got it from backend", apm));
+        setAppointments((state) => {
+          state.forEach((el) => {
+            if (el._id === apm._id) {
+              el.status = apm.status;
+            }
+          });
+          return [...state];
+        });
+        setLoadingAppointment(false);
+      });
+
+      socket.on("apm.deleted", (apm) => {
+        console.log(("I got it from backend", apm));
+        setAppointments((state) => {
+          const index = state.findIndex((el) => el._id === apm._id);
+          state.splice(index, 1);
+          return [...state];
+        });
+        setLoadingAppointment(false);
+      });
+
+      socket.on("apm.noti", (apm) => {
+        console.log(("I got it from backend", apm));
+        setAppointments(apm.appointments);
+        setTotalPage(apm.totalPages);
+        setLoadingAppointment(false);
+      });
+    }
+  }, [currentUser, searchInput, isAdmin, currentPage]);
 
   useEffect(() => {
     setFormEdit({
@@ -190,9 +248,9 @@ const AdminAppointmentsPage = ({ t }) => {
           ))}
         </ul>
       </div>
-      {loadingList ? (
+      {loadingAppointment ? (
         <Loading />
-      ) : appointments && appointments.data.appointments.length ? (
+      ) : appointments.length > 0 ? (
         <div className="admin__appointments">
           <ul>
             <li>
@@ -200,7 +258,7 @@ const AdminAppointmentsPage = ({ t }) => {
                 <strong>#</strong>
               </div>
               <div className="col col--02">
-                <strong>{t("apm.Order")}</strong>
+                <strong>{t("apm.Appointment")}</strong>
               </div>
               <div className="col col--03">
                 <strong>{t("apm.Date")}</strong>
@@ -213,7 +271,7 @@ const AdminAppointmentsPage = ({ t }) => {
               </div>
               <div className="col col--06"></div>
             </li>
-            {appointments.data.appointments.map((appointment, i) => (
+            {appointments.map((appointment, i) => (
               <li key={appointment._id}>
                 <div className="col col--01">
                   <span>{i + 1}</span>

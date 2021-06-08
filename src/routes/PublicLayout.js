@@ -21,6 +21,8 @@ import CartPage from "../pages/CartPage";
 
 import OrderPage from "../pages/OrderPage";
 
+import AppointmentPage from "../pages/AppointmentPage";
+
 import ChatRoom from "../pages/ChatRoom";
 
 import VerifyPage from "../pages/VerifyPage";
@@ -55,6 +57,9 @@ const PublicLayout = () => {
 
         {/* ORDER */}
         <Route exact path="/orders" component={OrderPage} />
+
+        {/* APPOINTMENT */}
+        <Route exact path="/appointments" component={AppointmentPage} />
 
         {/* CHAT ROOM */}
         <Route exact path="/chat" component={ChatRoom} />

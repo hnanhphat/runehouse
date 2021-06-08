@@ -155,13 +155,15 @@ const AdminNewsPage = ({ t }) => {
 
   useEffect(() => {
     if (isAdmin === "Admin") {
-      dispatch(newsActions.getListOfNews(currentPage, searchInput, true));
+      dispatch(
+        newsActions.getListOfNews(currentPage, `&limit=6${searchInput}`, true)
+      );
     } else {
       if (currentUser) {
         dispatch(
           newsActions.getListOfNews(
             currentPage,
-            `&author=${currentUser.data._id}${searchInput}`,
+            `&limit=6&author=${currentUser.data._id}${searchInput}`,
             true
           )
         );

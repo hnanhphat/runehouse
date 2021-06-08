@@ -238,7 +238,12 @@ const AdminProductsPage = ({ t }) => {
 
   useEffect(() => {
     dispatch(
-      decksActions.getListOfDecks(currentPage, searchInput, "decks", true)
+      decksActions.getListOfDecks(
+        currentPage,
+        `&limit=12${searchInput}`,
+        "decks",
+        true
+      )
     );
   }, [dispatch, currentPage, searchInput]);
 

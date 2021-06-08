@@ -1308,7 +1308,7 @@ select:focus {
   pointer-events: none;
 }
 .pagination .page-item.active .page-link {
-  color: #000;
+  color: #d67b35;
 }
 .pagination .page-item.disabled {
   visibility: hidden;
@@ -6436,6 +6436,14 @@ select:focus {
 .order-page__list ul li span.cancelled {
   background: rgba(255, 0, 0, 0.1);
   color: #ff0000;
+}
+.order-page__list ul li span.requesting {
+  background: rgba(30, 144, 255, 0.1);
+  color: #1e90ff;
+}
+.order-page__list ul li span.processing {
+  background: rgba(214, 123, 53, 0.1);
+  color: #d67b35;
 }
 .order-page__list ul li.no-item {
   background: #fff;

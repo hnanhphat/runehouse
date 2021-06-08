@@ -2,6 +2,7 @@ import noimg from "../noimg.jpeg";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../redux/actions/order.actions";
+import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
 import Moment from "react-moment";
@@ -21,19 +22,23 @@ import cancel from "../img/categoris/cancel.svg";
 
 import { withNamespaces } from "react-i18next";
 
+let socket;
+const BE_URL = process.env.REACT_APP_BACKEND_API;
 const OrderPage = ({ t }) => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.order.userOrders.data);
-  const loadingList = useSelector((state) => state.order.loadingList);
+
+  const currentUser = useSelector((state) => state.user.currentUser.data);
   const loadingSingle = useSelector((state) => state.order.loadingSingle);
   const singleOrders = useSelector((state) => state.order.singleOrders.data);
-  const totalPage = useSelector((state) => state.order.totalPages);
 
-  console.log(singleOrders);
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [totalPage, setTotalPage] = useState(1);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [orderStatus, setOrderStatus] = useState("All");
   const [searchInput, setSearchInput] = useState("");
+
   const [showDelete, setShowDelete] = useState(false);
   const [target, setTarget] = useState("");
   const [showDetail, setShowDetail] = useState(false);
@@ -42,7 +47,7 @@ const OrderPage = ({ t }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchInput(`&payment=${e.target.searchInput.value}`);
+    setSearchInput({ payment: e.target.searchInput.value });
     if (e.target.searchInput.value) {
       setOrderStatus("");
     } else {
@@ -52,28 +57,61 @@ const OrderPage = ({ t }) => {
   };
 
   const handleDelete = (id) => {
-    dispatch(
-      orderActions.editOrder(
-        { status: "Cancelled" },
-        id,
-        currentPage,
-        searchInput
-      )
-    );
+    socket.emit("od.change", {
+      id: id,
+      status: "Cancelled",
+    });
   };
 
   useEffect(() => {
-    dispatch(orderActions.getUserOrders(currentPage, searchInput, true));
-  }, [dispatch, currentPage, searchInput]);
+    socket = socketIOClient(BE_URL);
+    socket.emit("od.user_init", {
+      id: currentUser && currentUser.data._id,
+      ...searchInput,
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [currentUser, searchInput]);
+
+  useEffect(() => {
+    setLoadingOrders(true);
+    if (socket) {
+      socket.on("od.receive", (od) => {
+        console.log(("I got it from backend", od));
+        setOrders((state) => {
+          state.forEach((el) => {
+            if (el._id === od._id) {
+              el.status = od.status;
+            }
+          });
+          return [...state];
+        });
+        setLoadingOrders(false);
+      });
+
+      socket.on("od.user_noti", (od) => {
+        console.log(("I got it from backend", od));
+        setOrders(od.orders);
+        setTotalPage(od.totalPages);
+        setLoadingOrders(false);
+      });
+    }
+  }, [currentUser, searchInput]);
 
   return (
-    <div id="order-page" className="order-page">
+    <div id="order-page" className="order-page bg-grey">
       <MainVisual heading={t("o.Orders")} />
       <Breadcrumb leaf={t("o.Orders")} />
       <div className="container">
         <div className="order-page__controller">
           <form onSubmit={handleSearch} className="search">
-            <input type="text" name="searchInput" placeholder={t("o.Search")} />
+            <input
+              type="text"
+              name="searchInput"
+              placeholder={t("o.Search by Payment")}
+            />
             <button>
               <svg
                 aria-hidden="true"
@@ -110,7 +148,7 @@ const OrderPage = ({ t }) => {
                 className={`${orderStatus === "To Pay" ? "active" : ""}`}
                 onClick={() => {
                   setOrderStatus("To Pay");
-                  setSearchInput("&status=To%20Pay");
+                  setSearchInput({ status: "To Pay" });
                 }}
               >
                 <img src={wallet} alt="To Pay" />
@@ -122,7 +160,7 @@ const OrderPage = ({ t }) => {
                 className={`${orderStatus === "To Ship" ? "active" : ""}`}
                 onClick={() => {
                   setOrderStatus("To Ship");
-                  setSearchInput("&status=To%20Ship");
+                  setSearchInput({ status: "To Ship" });
                 }}
               >
                 <img src={box} alt="To Ship" />
@@ -134,7 +172,7 @@ const OrderPage = ({ t }) => {
                 className={`${orderStatus === "To Receive" ? "active" : ""}`}
                 onClick={() => {
                   setOrderStatus("To Receive");
-                  setSearchInput("&status=To%20Receive");
+                  setSearchInput({ status: "To Receive" });
                 }}
               >
                 <img src={truck} alt="To Receive" />
@@ -146,7 +184,7 @@ const OrderPage = ({ t }) => {
                 className={`${orderStatus === "Completed" ? "active" : ""}`}
                 onClick={() => {
                   setOrderStatus("Completed");
-                  setSearchInput("&status=Completed");
+                  setSearchInput({ status: "Completed" });
                 }}
               >
                 <img src={checked} alt="Completed" />
@@ -158,7 +196,7 @@ const OrderPage = ({ t }) => {
                 className={`${orderStatus === "Cancelled" ? "active" : ""}`}
                 onClick={() => {
                   setOrderStatus("Cancelled");
-                  setSearchInput("&status=Cancelled");
+                  setSearchInput({ status: "Cancelled" });
                 }}
               >
                 <img src={cancel} alt="Cancelled" />
@@ -174,9 +212,9 @@ const OrderPage = ({ t }) => {
             </button>
           </div>
         </div>
-        {loadingList ? (
+        {loadingOrders ? (
           <Loading />
-        ) : orders && orders.data.orders.length ? (
+        ) : orders.length > 0 ? (
           <div className="order-page__list">
             <ul>
               <li>
@@ -197,7 +235,7 @@ const OrderPage = ({ t }) => {
                 </div>
                 <div className="col col--06"></div>
               </li>
-              {orders.data.orders.map((order, i) => (
+              {orders.map((order, i) => (
                 <li key={order._id}>
                   <div className="col col--01">
                     <span>{i + 1}</span>
@@ -275,6 +313,7 @@ const OrderPage = ({ t }) => {
             </p>
           </div>
         )}
+
         {totalPage > 1 ? (
           <PaginationBar
             currentPage={currentPage}

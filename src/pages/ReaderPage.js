@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/actions/user.actions";
-import { appointmentActions } from "../redux/actions/appointment.actions";
+// import { appointmentActions } from "../redux/actions/appointment.actions";
+import socketIOClient from "socket.io-client";
 
 import { Modal } from "react-bootstrap";
 
@@ -22,6 +23,8 @@ import tealeaf from "../img/categoris/wall-clock.svg";
 
 import { withNamespaces } from "react-i18next";
 
+let socket;
+const BE_URL = process.env.REACT_APP_BACKEND_API;
 const ReaderPage = ({ t }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.allUser.data);
@@ -72,26 +75,33 @@ const ReaderPage = ({ t }) => {
 
   const handleSend = (id) => {
     const { serviceType, appointmentDate, clientPhone } = formInput;
-    dispatch(
-      appointmentActions.sendAppointment(id, {
-        serviceType,
-        appointmentDate,
-        clientPhone,
-      })
-    );
+    // dispatch(
+    //   appointmentActions.sendAppointment(id, {
+    //     serviceType,
+    //     appointmentDate,
+    //     clientPhone,
+    //   })
+    // );
+    socket.emit("apm.create", {
+      fromId: currentUser && currentUser.data._id,
+      toId: id,
+      serviceType,
+      appointmentDate,
+      clientPhone,
+    });
     setShowModal(false);
   };
 
   const handleApplySend = () => {
     const { serviceType, position, appointmentDate, clientPhone } = formApply;
-    dispatch(
-      appointmentActions.sendAppointment("60a1440bf93fdb1099248396", {
-        serviceType,
-        position,
-        appointmentDate,
-        clientPhone,
-      })
-    );
+    socket.emit("apm.create", {
+      fromId: currentUser && currentUser.data._id,
+      toId: "60a1440bf93fdb1099248396",
+      serviceType,
+      position,
+      appointmentDate,
+      clientPhone,
+    });
     setShowApply(false);
   };
 
@@ -100,6 +110,14 @@ const ReaderPage = ({ t }) => {
       userActions.getListOfUsers(currentPage, `&isReader=true${searchInput}`)
     );
   }, [dispatch, currentPage, searchInput]);
+
+  useEffect(() => {
+    socket = socketIOClient(BE_URL);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div id="readers" className="readers bg-grey">
