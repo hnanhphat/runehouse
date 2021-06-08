@@ -3,6 +3,10 @@
   &__sidebar {
     background: rgba($color: $black, $alpha: 0.8);
     width: 300px;
+    overflow: auto;
+    @include respond(phone) {
+      width: 76px;
+    }
     ul {
       li {
         &.current {
@@ -27,6 +31,9 @@
           .info {
             padding-left: 10px;
             text-align: left;
+            @include respond(phone) {
+              display: none;
+            }
             p {
               color: $white;
               font-size: 16px;

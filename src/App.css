@@ -3670,6 +3670,12 @@ select:focus {
 .chatroom__sidebar {
   background: rgba(0, 0, 0, 0.8);
   width: 300px;
+  overflow: auto;
+}
+@media only screen and (max-width: 48em) {
+  .chatroom__sidebar {
+    width: 76px;
+  }
 }
 .chatroom__sidebar ul li.current {
   display: none;
@@ -3694,6 +3700,11 @@ select:focus {
 .chatroom__sidebar ul li button .info {
   padding-left: 10px;
   text-align: left;
+}
+@media only screen and (max-width: 48em) {
+  .chatroom__sidebar ul li button .info {
+    display: none;
+  }
 }
 .chatroom__sidebar ul li button .info p {
   color: #fff;
