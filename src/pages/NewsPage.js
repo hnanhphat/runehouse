@@ -168,14 +168,14 @@ const NewsPage = ({ t }) => {
                   <li key={el._id}>
                     <div className="top">
                       <div className="top__left">
-                        <div
+                        {/* <div
                           className="avatar"
                           style={{
                             backgroundImage: `url(${
                               el.author.avatar ? el.author.avatar : noimg
                             })`,
                           }}
-                        ></div>
+                        ></div> */}
                         <div className="info">
                           <p className="name">{el.author.fullname}</p>
                           <p className="time">
@@ -395,7 +395,7 @@ const NewsPage = ({ t }) => {
                               >
                                 {el.reviews.map((review, j) => (
                                   <div className="list__item" key={review._id}>
-                                    <div
+                                    {/* <div
                                       className="avatar"
                                       style={{
                                         backgroundImage: `url('${
@@ -404,7 +404,7 @@ const NewsPage = ({ t }) => {
                                             : noimg
                                         }')`,
                                       }}
-                                    ></div>
+                                    ></div> */}
                                     <div className="content">
                                       <div className="info">
                                         <strong className="name">
@@ -614,7 +614,7 @@ const NewsPage = ({ t }) => {
                               className="form"
                             >
                               <div className="group">
-                                <div
+                                {/* <div
                                   className="avatar"
                                   style={{
                                     backgroundImage: `url(${
@@ -623,7 +623,7 @@ const NewsPage = ({ t }) => {
                                         : noimg
                                     })`,
                                   }}
-                                ></div>
+                                ></div> */}
                                 <input
                                   type="text"
                                   name="comment"
@@ -697,7 +697,7 @@ const NewsPage = ({ t }) => {
                                   className="list__item list__item--space"
                                   key={review._id}
                                 >
-                                  <div
+                                  {/* <div
                                     className="avatar"
                                     style={{
                                       backgroundImage: `url('${
@@ -706,7 +706,7 @@ const NewsPage = ({ t }) => {
                                           : noimg
                                       }')`,
                                     }}
-                                  ></div>
+                                  ></div> */}
                                   <div className="content">
                                     <div className="info">
                                       <strong className="name">
