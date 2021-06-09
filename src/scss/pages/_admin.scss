@@ -382,6 +382,15 @@
             text-align: center;
             line-height: 22px;
           }
+          .verify {
+            text-align: center;
+            &--green {
+              color: $green;
+            }
+            &--red {
+              color: $red;
+            }
+          }
         }
         button {
           background: $orange;

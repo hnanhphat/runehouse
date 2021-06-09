@@ -24,6 +24,8 @@ const AdminUsersPage = ({ t }) => {
   const [searchInput, setSearchInput] = useState("");
   const [filterStt, setFilterStt] = useState("All");
 
+  console.log(users);
+
   const filter = [
     { title: "All", image: all, search: "" },
     { title: "Admin", image: admin, search: "&role=Admin" },
@@ -110,6 +112,11 @@ const AdminUsersPage = ({ t }) => {
                       ? user.position
                       : `${user.position} Reader`}
                   </div>
+                  {user.emailVerified ? (
+                    <p className="verify verify--green">Verified</p>
+                  ) : (
+                    <p className="verify verify--red">Not Verified</p>
+                  )}
                 </div>
                 {/* <button>Manage</button> */}
               </div>

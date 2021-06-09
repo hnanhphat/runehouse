@@ -2816,6 +2816,15 @@ select:focus {
   text-align: center;
   line-height: 22px;
 }
+.admin__users li .user__info .verify {
+  text-align: center;
+}
+.admin__users li .user__info .verify--green {
+  color: #32cd32;
+}
+.admin__users li .user__info .verify--red {
+  color: #ff0000;
+}
 .admin__users li .user button {
   background: #d67b35;
   border-radius: 100px;
